@@ -1,0 +1,6 @@
+jdbc=jdbc:sqlserver://
+servidor=(local)\SQLEXPRESS
+usuario=A_Interactivas_
+password=1234
+conexiones=3
+database=Api
