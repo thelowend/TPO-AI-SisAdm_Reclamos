@@ -1,5 +1,5 @@
 jdbc=jdbc:sqlserver://
-servidor=(local)\SQLEXPRESS
+servidor=ELAD
 usuario=A_Interactivas_
 password=1234
 conexiones=3

@@ -1,6 +1,5 @@
 package Main;
 import Model.*;
-import Model.Usuario;
 import Persistencia.AdministradorPersistenciaUsuario;
 
 public class Controller {

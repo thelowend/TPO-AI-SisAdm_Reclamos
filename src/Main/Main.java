@@ -1,5 +1,7 @@
 package Main;
 
+
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -15,8 +17,11 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Main window = new Main();
-					window.frame.setVisible(true);
+					JFrame frame = new JFrame();
+					frame.setBounds(100, 100, 450, 300);
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					frame.setContentPane(new Login().getLoginPanel());
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

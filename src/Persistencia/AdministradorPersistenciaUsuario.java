@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class AdministradorPersistenciaUsuario {
@@ -26,15 +25,14 @@ public class AdministradorPersistenciaUsuario {
         Usuario usuario = new Usuario();
         try
         {
-            String queryInsertPrenda = "select * from Roles r INNER JOIN Usuarios_Roles ur on r.Id = ur.role_id " +
-                    "Inner Join Usuarios u on u.Id = ur.usuario_id" +
-                    "where legajo = ? and clave = ? ";
-            PreparedStatement ps = con.prepareStatement(queryInsertPrenda);
+            String query = "select * from Roles r INNER JOIN Usuarios_Roles ur on r.Id = ur.role_id Inner Join " +
+                    "Usuarios u on u.Id = ur.usuario_id where legajo = ? and clave = ?";
+            PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, legajo);
             ps.setString(2, clave);
             ResultSet result = ps.executeQuery();
 
-            if (result != null){
+            if (result.isBeforeFirst()){
                 usuario.setLegajo(legajo);
                 usuario.setClave(clave);
                 ArrayList<Role> roles = new ArrayList<Role>();
