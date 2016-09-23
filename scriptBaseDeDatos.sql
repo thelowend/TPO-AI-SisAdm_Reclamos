@@ -19,6 +19,67 @@ Create Table Usuarios_Roles (
 	FOREIGN KEY (role_id) REFERENCES Roles(Id)
 )
 
+Create Table Producto (
+	codigo int Identity(1,1),
+	titulo nvarchar(100) NOT NULL,
+	descripcion nvarchar(100),
+	precio int NOT NULL,
+	PRIMARY KEY (codigo)
+)
+
+Create Table Factura (
+	numero int Identity(1,1),
+	fecah datetime NOT NULL,
+	PRIMARY KEY (numero)
+)
+
+Create Table Cliente (
+	Id int Identity(1,1),
+	nombre nvarchar(100),
+	domicilio nvarchar(100),
+	telefono nvarchar(100),
+	mail nvarchar(100),
+	PRIMARY KEY (Id)
+)
+
+Create Table Combo(
+	Id int Identity(1,1),
+	PRIMARY KEY(Id)
+)
+
+Create Table Reclamo(
+	Id int Identity(1,1),
+	combo_id int NULL,
+	tipoReclamo nvarchar(50) NOT NULL,
+	fechaCreacion datetime NOT NULL,
+	fechaCierre datetime NOT NULL,
+	descripcion nvarchar(100),
+	cliente_id int NOT NULL,
+	estado int NOT NULL,
+	zona nvarchar(100) NULL,
+	PRIMARY KEY (Id),
+	FOREIGN KEY (cliente_id) REFERENCES Cliente(Id),
+	FOREIGN KEY (combo_id) REFERENCES Combo(Id)
+)
+
+Create Table Reclamo_Producto(
+	Id int Identity(1,1),
+	reclamo_id int NOT NULL,
+	producto_id int NOT NULL,
+	PRIMARY KEY (Id),
+	FOREIGN KEY (reclamo_id) REFERENCES Reclamo(Id), 
+	FOREIGN KEY (producto_id) REFERENCES Producto(codigo) 
+)
+
+Create Table Reclamo_Factura(
+	Id int Identity(1,1),
+	reclamo_id int NOT NULL,
+	factura_id int NOT NULL,
+	PRIMARY KEY (Id),
+	FOREIGN KEY (reclamo_id) REFERENCES Reclamo(Id), 
+	FOREIGN KEY (factura_id) REFERENCES Factura(numero) 
+)
+
 
 ---post deployment script
 
@@ -51,5 +112,3 @@ Insert Into Usuarios_Roles (usuario_id,role_id) Values
 ((select Id from Usuarios where legajo = 'UsuarioEntrega'),(select Id from Roles where nombreRole = 'Entrega')),
 ((select Id from Usuarios where legajo = 'UsuarioConsulta'),(select Id from Roles where nombreRole = 'Consulta')),	
 ((select Id from Usuarios where legajo = 'UsuarioCallCenter'),(select Id from Roles where nombreRole = 'CallCenter'))
-
-

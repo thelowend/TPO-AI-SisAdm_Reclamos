@@ -3,12 +3,17 @@ package Model;
 import java.util.Date;
 
 public class Reclamo {
+
 	protected Date fechaCreacion;
 	protected int numeroReclamo;
 	protected Date fechaCierre;
 	protected Cliente cliente;
 	protected String descripcion;
+	protected EstadoReclamo estado;
 
+	public Reclamo(){
+
+	}
 	public void setFechaCreacion(Date fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
@@ -34,15 +39,6 @@ public class Reclamo {
 		return descripcion;
 	}
 
-
-	 
-	
-	public Reclamo(){
-
-	}
-	
-	public void agregarDetalle(){}
-	
 	public float calcularTiempoResolucion(){
 		return 1;
 	}

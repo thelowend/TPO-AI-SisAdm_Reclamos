@@ -1,23 +1,24 @@
-package Model;
+package Vistas;
 
 import java.util.ArrayList;
 
-public class Usuario extends Entity {
+public class UsuarioView extends EntityVista{
 	
-	private ArrayList<Role> roles;
+	private ArrayList<RoleView> roles;
 	private String legajo;
 	private String clave;
 
-	public Usuario(){
-		roles = new ArrayList<Role>();
-	};
-
-	public Usuario(int id){
-		super(id);
-		roles = new ArrayList<Role>();
+	public UsuarioView(){
+		super();
+		roles = new ArrayList<RoleView>();
 	}
 
-	public void setRoles(ArrayList<Role> roles) {
+	public UsuarioView(int id){
+		super(id);
+		roles = new ArrayList<RoleView>();
+	}
+
+	public void setRoles(ArrayList<RoleView> roles) {
 		this.roles = roles;
 	}
 
@@ -29,7 +30,7 @@ public class Usuario extends Entity {
 		this.clave = clave;
 	}
 
-	public ArrayList<Role> getRoles() {
+	public ArrayList<RoleView> getRoles() {
 
 		return roles;
 	}

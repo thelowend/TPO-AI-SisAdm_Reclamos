@@ -1,6 +1,6 @@
-package Model;
+package Vistas;
 
-public class Role extends Entity{
+public class RoleView extends EntityVista{
 	private String RoleName;
 
 	public void setRoleName(String roleName) {
@@ -12,8 +12,13 @@ public class Role extends Entity{
 		return RoleName;
 	}
 
-	public Role(int id,String roleName){
+	public RoleView(int id,String roleName){
 		super(id);
+		this.RoleName = roleName;
+	}
+
+	public RoleView(String roleName){
+		super();
 		this.RoleName = roleName;
 	}
 }

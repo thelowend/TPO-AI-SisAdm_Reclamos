@@ -1,4 +1,7 @@
-package Main;
+package Pantallas;
+
+import Main.Controller;
+import Vistas.UsuarioView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,10 +23,16 @@ public class Login {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Controller.getInstancia().ValidarIngreso(usuarioField1.getText(), String.valueOf(passwordField1.getPassword())))
-                    JOptionPane.showMessageDialog(null, "Esta loguado");
-                else
-                    JOptionPane.showMessageDialog(null, "Clave Incorrecta");
+                UsuarioView u = Controller.getInstancia().ValidarIngreso(usuarioField1.getText(), String.valueOf(passwordField1.getPassword()));
+                if (u.getRoles() != null) {
+                    if (u.getRoles().stream().filter(r -> r.getRoleName().compareTo("Administrador") == 0).count() > 0) {
+                        loginPanel.setVisible(false);
+                        loginPanel.getRootPane().setContentPane(new PantallAdministrador());
+                    }
+                    else
+                        JOptionPane.showMessageDialog(null, "Usuario Commun");
+                } else
+                    JOptionPane.showMessageDialog(null, "Clave y/o Usuario Incorrectos");
             }
         });
     }

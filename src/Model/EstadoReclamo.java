@@ -1,6 +1,6 @@
 package Model;
 
-public enum ClaimEstado {
+public enum EstadoReclamo {
 	Ingresado,
 	EnTratamiento,
 	Cerrado,
