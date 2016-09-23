@@ -19,21 +19,21 @@ Create Table Usuarios_Roles (
 	FOREIGN KEY (role_id) REFERENCES Roles(Id)
 )
 
-Create Table Producto (
+Create Table Productos (
 	codigo int Identity(1,1),
 	titulo nvarchar(100) NOT NULL,
 	descripcion nvarchar(100),
-	precio int NOT NULL,
+	precio float NOT NULL,
 	PRIMARY KEY (codigo)
 )
 
-Create Table Factura (
+Create Table Facturas (
 	numero int Identity(1,1),
-	fecah datetime NOT NULL,
+	fecha datetime NOT NULL,
 	PRIMARY KEY (numero)
 )
 
-Create Table Cliente (
+Create Table Clientes (
 	Id int Identity(1,1),
 	nombre nvarchar(100),
 	domicilio nvarchar(100),
@@ -42,12 +42,12 @@ Create Table Cliente (
 	PRIMARY KEY (Id)
 )
 
-Create Table Combo(
+Create Table Combos(
 	Id int Identity(1,1),
 	PRIMARY KEY(Id)
 )
 
-Create Table Reclamo(
+Create Table Reclamos(
 	Id int Identity(1,1),
 	combo_id int NULL,
 	tipoReclamo nvarchar(50) NOT NULL,
@@ -62,8 +62,9 @@ Create Table Reclamo(
 	FOREIGN KEY (combo_id) REFERENCES Combo(Id)
 )
 
-Create Table Reclamo_Producto(
+Create Table Reclamos_Productos(
 	Id int Identity(1,1),
+	cantidad int NOT NULL,
 	reclamo_id int NOT NULL,
 	producto_id int NOT NULL,
 	PRIMARY KEY (Id),
@@ -71,7 +72,7 @@ Create Table Reclamo_Producto(
 	FOREIGN KEY (producto_id) REFERENCES Producto(codigo) 
 )
 
-Create Table Reclamo_Factura(
+Create Table Reclamos_Facturas(
 	Id int Identity(1,1),
 	reclamo_id int NOT NULL,
 	factura_id int NOT NULL,

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="file://C:/Microsoft JDBC Driver 4.0 for SQL Server/sqljdbc_4.0/esn/sqljdbc4.jar" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/src" expected_position="0" />
+    </src_description>
+  </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/bin" />
     <exclude-output />
@@ -11,12 +17,12 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/sqljdbc4.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/sqljdbc4-2.0.jar.zip!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+        <jarDirectory url="jar://$USER_HOME$/Downloads/sqljdbc4-2.0.jar.zip!/" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="JGoodies Forms" level="project" />
   </component>
 </module>

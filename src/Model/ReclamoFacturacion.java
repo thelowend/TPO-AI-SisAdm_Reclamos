@@ -10,7 +10,14 @@ public class ReclamoFacturacion extends Reclamo{
 	public ReclamoFacturacion(){
 		facturas = new ArrayList<Factura>();
 	}
-	
+
+	public ArrayList<Factura> getFacturas() {
+		return facturas;
+	}
+
+	public void setFacturas(ArrayList<Factura> facturas) {
+		this.facturas = facturas;
+	}
 }
 	
 	

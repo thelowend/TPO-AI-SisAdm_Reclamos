@@ -14,12 +14,8 @@ public class Reclamo {
 	public Reclamo(){
 
 	}
-	public void setFechaCreacion(Date fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
-	}
 
 	public Date getFechaCreacion() {
-
 		return fechaCreacion;
 	}
 
@@ -39,8 +35,31 @@ public class Reclamo {
 		return descripcion;
 	}
 
-	public float calcularTiempoResolucion(){
-		return 1;
+	public EstadoReclamo getEstado() {
+		return estado;
 	}
 
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+
+	public void setNumeroReclamo(int numeroReclamo) {
+		this.numeroReclamo = numeroReclamo;
+	}
+
+	public void setFechaCierre(Date fechaCierre) {
+		this.fechaCierre = fechaCierre;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public void setEstado(EstadoReclamo estado) {
+		this.estado = estado;
+	}
 }
