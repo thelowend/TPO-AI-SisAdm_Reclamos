@@ -17,51 +17,23 @@ public class AdministradorPersistenciaReclamos {
     public void agregarReclamo(Reclamo reclamo) {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         try {
-            String query = "INSERT INTO Reclamos Values (?,?,?,?,?,?,?)";
+            String query = "INSERT INTO Reclamos Values (?,?,?,?,?,?,?,?);";
             String query2 = "INSERT INTO Reclamos_Productos VALUES (?,?,?)";
             String query3 = "INSERT INTO Reclamos_Facturas VALUES (?,?)";
             String query4 = "UPDATE Reclamos SET zona = ? where Id = ?";
-            PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+            ps.setObject(1,null);
             ps.setString(2,reclamo.getClass().getName());
             ps.setDate(3,java.sql.Date.valueOf(java.time.LocalDate.now()));
+            ps.setObject(4,null);
             ps.setString(5,reclamo.getDescripcion());
             ps.setInt(6,reclamo.getCliente().getClienteId());
             ps.setInt(7,reclamo.getEstado().ordinal());
+            ps.setObject(8,null);
             ps.executeUpdate();
             ResultSet result = ps.getGeneratedKeys();
-            while(result.next()) {
-                int reclamo_id = result.getInt("Id");
-                switch (reclamo.getClass().getName()) {
-                    case "ReclamoCantidadas":
-                        ps = con.prepareStatement(query2);
-                        ps.setInt(1, ((ReclamoProducto) reclamo).getDetalleProducto().getCantidad());
-                        ps.setInt(2, reclamo_id);
-                        ps.setInt(3, ((ReclamoProducto) reclamo).getDetalleProducto().getProducto().getCodigo());
-                        ps.execute();
-                        break;
-                    case "ReclamoProducto":
-                        for (DetalleProducto detalleProducto : ((ReclamoCantidades) reclamo).getProductos()) {
-                            ps = con.prepareStatement(query2);
-                            ps.setInt(1, detalleProducto.getCantidad());
-                            ps.setInt(2, reclamo_id);
-                            ps.setInt(3, detalleProducto.getProducto().getCodigo());
-                            ps.execute();
-                        }
-                        break;
-                    case "ReclamoFacturacion":
-                        for (Factura factura : ((ReclamoFacturacion) reclamo).getFacturas()) {
-                            ps = con.prepareStatement(query3);
-                            ps.setInt(1, reclamo_id);
-                            ps.setInt(2, factura.getNumero());
-                            ps.execute();
-                        }
-                        break;
-                    case "ReclamoZona":
-                        ps = con.prepareStatement(query4);
-                        ps.setString(1, ((ReclamoZona) reclamo).getZona());
-                        ps.setInt(2, reclamo_id);
-                        ps.execute();
-                }
+            if (result.next()) {
+                if
             }
 
         } catch (SQLException e) {
@@ -72,14 +44,60 @@ public class AdministradorPersistenciaReclamos {
         }
     }
 
-    public void cambiarEstadoReclamo(Reclamo reclamo) {
+    private void insertReclamoByType(ResutltSet result,Connection con){
+        try {
+            PreparedStatement ps;
+            int reclamo_id = result.getInt(1);
+            String reclamoName = reclamo.getClass().getSimpleName();
+            switch (reclamoName) {
+                case "ReclamoProducto":
+                    ps = con.prepareStatement(query2);
+                    ps.setInt(1, ((ReclamoProducto) reclamo).getDetalleProducto().getCantidad());
+                    ps.setInt(2, reclamo_id);
+                    ps.setInt(3, ((ReclamoProducto) reclamo).getDetalleProducto().getProducto().getCodigo());
+                    ps.execute();
+                    break;
+                case "ReclamoCantidades":
+                    for (DetalleProducto detalleProducto : ((ReclamoCantidades) reclamo).getProductos()) {
+                        ps = con.prepareStatement(query2);
+                        ps.setInt(1, detalleProducto.getCantidad());
+                        ps.setInt(2, reclamo_id);
+                        ps.setInt(3, detalleProducto.getProducto().getCodigo());
+                        ps.execute();
+                    }
+                    break;
+                case "ReclamoFacturacion":
+                    for (Factura factura : ((ReclamoFacturacion) reclamo).getFacturas()) {
+                        ps = con.prepareStatement(query3);
+                        ps.setInt(1, reclamo_id);
+                        ps.setInt(2, factura.getNumero());
+                        ps.execute();
+                    }
+                    break;
+                case "ReclamoZona":
+                    ps = con.prepareStatement(query4);
+                    ps.setString(1, ((ReclamoZona) reclamo).getZona());
+                    ps.setInt(2, reclamo_id);
+                    ps.execute();
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void cambiarEstadoReclamo(Reclamo reclamo,EstadoReclamo estado) {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         try {
-            String query = "Update Reclamos Set estado = ? where Id = ?";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1,reclamo.getEstado().ordinal());
-            ps.setInt(2,reclamo.getNumeroReclamo());
-            ps.execute();
+                String query;
+                if (reclamo.getClass().getSimpleName() == "ReclamoCombo")
+                    query = "Update Reclamos Set estado = ? where combo_id = ?";
+                else
+                    query = "Update Reclamos Set estado = ? where Id = ?";
+                PreparedStatement ps = con.prepareStatement(query);
+                ps.setInt(1,estado.ordinal());
+                ps.setInt(2,reclamo.getNumeroReclamo());
+                ps.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -213,7 +231,7 @@ public class AdministradorPersistenciaReclamos {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         Producto producto = new Producto();
         try {
-            String query = "SELECT * from Productos where codgio = ?";
+            String query = "SELECT * from Productos where codigo = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1,codigo);
             ResultSet result = ps.executeQuery();
@@ -252,6 +270,32 @@ public class AdministradorPersistenciaReclamos {
         finally {
             PoolConnection.getPoolConnection().realeaseConnection(con);
             return factura;
+        }
+    }
+
+    public Cliente getClienteByName(String nombre){
+        Connection con = PoolConnection.getPoolConnection().getConnection();
+        Cliente cliente = new Cliente();
+        try {
+            String query = "SELECT * from Clientes where nombre = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1,nombre);
+            ResultSet result = ps.executeQuery();
+            while(result.next()) {
+                cliente.setClienteId(result.getInt("Id"));
+                cliente.setNombre(result.getString("nombre"));
+                cliente.setDomicilio(result.getString("domicilio"));
+                cliente.setMail(result.getString("mail"));
+                cliente.setTelefono(result.getString("telefono"));
+            }
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            cliente = null;
+        }
+        finally {
+            PoolConnection.getPoolConnection().realeaseConnection(con);
+            return cliente;
         }
     }
 

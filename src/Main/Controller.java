@@ -1,8 +1,10 @@
 package Main;
 import Model.*;
+import Persistencia.AdministradorPersistenciaReclamos;
 import Vistas.*;
 import Mapper.Mapper;
 import Persistencia.AdministradorPersistenciaUsuario;
+import com.sun.scenario.effect.impl.prism.PrDrawable;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -75,4 +77,39 @@ public class Controller {
             throw ex;
         }
     }
+
+    public Factura getFactura(int numero){
+        try {
+            return AdministradorPersistenciaReclamos.getInstancia().getFactura(numero);
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public Producto getProducto(int codigo) {
+        try {
+            return AdministradorPersistenciaReclamos.getInstancia().getProducto(codigo);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public void addReclamo(Reclamo reclamo){
+        try {
+            AdministradorPersistenciaReclamos.getInstancia().agregarReclamo(reclamo);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public Cliente getClienteByName(String nombre){
+        try {
+            return AdministradorPersistenciaReclamos.getInstancia().getClienteByName(nombre);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+
 }

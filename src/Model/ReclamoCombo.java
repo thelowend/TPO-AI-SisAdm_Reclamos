@@ -10,7 +10,10 @@ public class ReclamoCombo extends Reclamo {
 	public ReclamoCombo(){
 		reclamos = new ArrayList<Reclamo>();
 	}
-	
+
+	public ArrayList<Reclamo> getReclamos() {
+		return reclamos;
+	}
 }
 	
 	

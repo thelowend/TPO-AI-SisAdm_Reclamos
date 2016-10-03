@@ -27,7 +27,7 @@ public class Login {
                 if (u.getRoles() != null) {
                     if (u.getRoles().stream().filter(r -> r.getRoleName().compareTo("Administrador") == 0).count() > 0) {
                         loginPanel.setVisible(false);
-                        loginPanel.getRootPane().setContentPane(new PantallAdministrador());
+                       // loginPanel.getRootPane().setContentPane();
                     }
                     else
                         JOptionPane.showMessageDialog(null, "Usuario Commun");

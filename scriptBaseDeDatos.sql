@@ -58,8 +58,8 @@ Create Table Reclamos(
 	estado int NOT NULL,
 	zona nvarchar(100) NULL,
 	PRIMARY KEY (Id),
-	FOREIGN KEY (cliente_id) REFERENCES Cliente(Id),
-	FOREIGN KEY (combo_id) REFERENCES Combo(Id)
+	FOREIGN KEY (cliente_id) REFERENCES Clientes(Id),
+	FOREIGN KEY (combo_id) REFERENCES Combos(Id)
 )
 
 Create Table Reclamos_Productos(
@@ -68,8 +68,8 @@ Create Table Reclamos_Productos(
 	reclamo_id int NOT NULL,
 	producto_id int NOT NULL,
 	PRIMARY KEY (Id),
-	FOREIGN KEY (reclamo_id) REFERENCES Reclamo(Id), 
-	FOREIGN KEY (producto_id) REFERENCES Producto(codigo) 
+	FOREIGN KEY (reclamo_id) REFERENCES Reclamos(Id), 
+	FOREIGN KEY (producto_id) REFERENCES Productos(codigo) 
 )
 
 Create Table Reclamos_Facturas(
@@ -77,8 +77,8 @@ Create Table Reclamos_Facturas(
 	reclamo_id int NOT NULL,
 	factura_id int NOT NULL,
 	PRIMARY KEY (Id),
-	FOREIGN KEY (reclamo_id) REFERENCES Reclamo(Id), 
-	FOREIGN KEY (factura_id) REFERENCES Factura(numero) 
+	FOREIGN KEY (reclamo_id) REFERENCES Reclamos(Id), 
+	FOREIGN KEY (factura_id) REFERENCES Facturas(numero) 
 )
 
 
@@ -113,3 +113,9 @@ Insert Into Usuarios_Roles (usuario_id,role_id) Values
 ((select Id from Usuarios where legajo = 'UsuarioEntrega'),(select Id from Roles where nombreRole = 'Entrega')),
 ((select Id from Usuarios where legajo = 'UsuarioConsulta'),(select Id from Roles where nombreRole = 'Consulta')),	
 ((select Id from Usuarios where legajo = 'UsuarioCallCenter'),(select Id from Roles where nombreRole = 'CallCenter'))
+
+
+Insert Into Productos Values ('Remera','Remera Blanca',10),
+('Pantalon','Pantalon Blanco',20)
+
+Insert Into Facturas Values (GETDATE()),(GETDATE())  
