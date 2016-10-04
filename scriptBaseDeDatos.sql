@@ -42,24 +42,18 @@ Create Table Clientes (
 	PRIMARY KEY (Id)
 )
 
-Create Table Combos(
-	Id int Identity(1,1),
-	PRIMARY KEY(Id)
-)
-
 Create Table Reclamos(
 	Id int Identity(1,1),
 	combo_id int NULL,
 	tipoReclamo nvarchar(50) NOT NULL,
 	fechaCreacion datetime NOT NULL,
-	fechaCierre datetime NOT NULL,
+	fechaCierre datetime NULL,
 	descripcion nvarchar(100),
 	cliente_id int NOT NULL,
 	estado int NOT NULL,
 	zona nvarchar(100) NULL,
 	PRIMARY KEY (Id),
 	FOREIGN KEY (cliente_id) REFERENCES Clientes(Id),
-	FOREIGN KEY (combo_id) REFERENCES Combos(Id)
 )
 
 Create Table Reclamos_Productos(
@@ -119,3 +113,5 @@ Insert Into Productos Values ('Remera','Remera Blanca',10),
 ('Pantalon','Pantalon Blanco',20)
 
 Insert Into Facturas Values (GETDATE()),(GETDATE())  
+
+Insert Into Clientes Values ('elad','av. sadfas','43315081','eladhaim22@gmail.com')

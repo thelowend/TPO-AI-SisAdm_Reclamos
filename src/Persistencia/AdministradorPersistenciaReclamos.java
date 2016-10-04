@@ -14,16 +14,16 @@ public class AdministradorPersistenciaReclamos {
         return pool;
     }
 
-    public void agregarReclamo(Reclamo reclamo) {
+    public void agregarReclamo(Reclamo reclamo,int id ) {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         try {
             String query = "INSERT INTO Reclamos Values (?,?,?,?,?,?,?,?);";
-            String query2 = "INSERT INTO Reclamos_Productos VALUES (?,?,?)";
-            String query3 = "INSERT INTO Reclamos_Facturas VALUES (?,?)";
-            String query4 = "UPDATE Reclamos SET zona = ? where Id = ?";
             PreparedStatement ps = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
-            ps.setObject(1,null);
-            ps.setString(2,reclamo.getClass().getName());
+            if (id != 0)
+                ps.setInt(1,id);
+            else
+                ps.setObject(1,null);
+            ps.setString(2,reclamo.getClass().getSimpleName());
             ps.setDate(3,java.sql.Date.valueOf(java.time.LocalDate.now()));
             ps.setObject(4,null);
             ps.setString(5,reclamo.getDescripcion());
@@ -33,27 +33,34 @@ public class AdministradorPersistenciaReclamos {
             ps.executeUpdate();
             ResultSet result = ps.getGeneratedKeys();
             if (result.next()) {
-                if
+                int reclamo_id = id != 0 ? id : result.getInt(1);
+                if(reclamo.getClass().getSimpleName().compareTo("ReclamoCombo") == 0){
+                    for(Reclamo r : ((ReclamoCombo)reclamo).getReclamos())
+                        agregarReclamo(r,reclamo_id);
+                }
+                else
+                    insertReclamoByType(result.getInt(1),con,reclamo);
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
             PoolConnection.getPoolConnection().realeaseConnection(con);
-
         }
     }
 
-    private void insertReclamoByType(ResutltSet result,Connection con){
+    private void insertReclamoByType(int reclamoId,Connection con,Reclamo reclamo){
         try {
+            String query2 = "INSERT INTO Reclamos_Productos VALUES (?,?,?)";
+            String query3 = "INSERT INTO Reclamos_Facturas VALUES (?,?)";
+            String query4 = "UPDATE Reclamos SET zona = ? where Id = ?";
             PreparedStatement ps;
-            int reclamo_id = result.getInt(1);
             String reclamoName = reclamo.getClass().getSimpleName();
             switch (reclamoName) {
                 case "ReclamoProducto":
                     ps = con.prepareStatement(query2);
                     ps.setInt(1, ((ReclamoProducto) reclamo).getDetalleProducto().getCantidad());
-                    ps.setInt(2, reclamo_id);
+                    ps.setInt(2, reclamoId);
                     ps.setInt(3, ((ReclamoProducto) reclamo).getDetalleProducto().getProducto().getCodigo());
                     ps.execute();
                     break;
@@ -61,7 +68,7 @@ public class AdministradorPersistenciaReclamos {
                     for (DetalleProducto detalleProducto : ((ReclamoCantidades) reclamo).getProductos()) {
                         ps = con.prepareStatement(query2);
                         ps.setInt(1, detalleProducto.getCantidad());
-                        ps.setInt(2, reclamo_id);
+                        ps.setInt(2, reclamoId);
                         ps.setInt(3, detalleProducto.getProducto().getCodigo());
                         ps.execute();
                     }
@@ -69,7 +76,7 @@ public class AdministradorPersistenciaReclamos {
                 case "ReclamoFacturacion":
                     for (Factura factura : ((ReclamoFacturacion) reclamo).getFacturas()) {
                         ps = con.prepareStatement(query3);
-                        ps.setInt(1, reclamo_id);
+                        ps.setInt(1, reclamoId);
                         ps.setInt(2, factura.getNumero());
                         ps.execute();
                     }
@@ -77,7 +84,7 @@ public class AdministradorPersistenciaReclamos {
                 case "ReclamoZona":
                     ps = con.prepareStatement(query4);
                     ps.setString(1, ((ReclamoZona) reclamo).getZona());
-                    ps.setInt(2, reclamo_id);
+                    ps.setInt(2, reclamoId);
                     ps.execute();
             }
 
@@ -138,13 +145,40 @@ public class AdministradorPersistenciaReclamos {
             PreparedStatement ps;
             ResultSet result2;
             if (tipoDeReclamo == null) {
-                query = "SELECT r.Id as reclamo_id,* FROM Reclamos r INNER JOIN Cliente c on r.cliente_id = c.Id ";
+                query = "SELECT r.Id as reclamo_id,* FROM Reclamos r INNER JOIN Clientes c on r.cliente_id = c.Id where r.combo_id IS NULL ";
                 ps = con.prepareStatement(query);
             } else {
-                query = "SELECT r.Id as reclamo_id,* FROM Reclamos r INNER JOIN Cliente c on r.cliente_id = c.Id  where tipoReclamo = ?";
+                query = "SELECT r.Id as reclamo_id,* FROM Reclamos r INNER JOIN Clientes c on r.cliente_id = c.Id  where tipoReclamo = ?" +
+                "And r.combo_id IS NULL";
                 ps = con.prepareStatement(query);
                 ps.setString(1, tipoDeReclamo);
             }
+            ResultSet result = ps.executeQuery();
+            while(result.next()) {
+                reclamos.add(getReclamobyId(result.getInt("Id")));
+            }
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally
+        {
+            PoolConnection.getPoolConnection().realeaseConnection(con);
+            return reclamos;
+        }
+    }
+
+    public Reclamo getReclamobyId(int reclamoId){
+        Connection con = PoolConnection.getPoolConnection().getConnection();
+        Reclamo r = new Reclamo();
+        try {
+            String tipoReclamo;
+            String query = "";
+            PreparedStatement ps;
+            ResultSet result2;
+            query = "SELECT r.Id as reclamo_id,* FROM Reclamos r INNER JOIN Clientes c on r.cliente_id = c.Id where r.Id = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, reclamoId);
             ResultSet result = ps.executeQuery();
             while(result.next()) {
                 tipoReclamo = result.getString("tipoReclamo");
@@ -161,37 +195,49 @@ public class AdministradorPersistenciaReclamos {
                         ReclamoFacturacion reclamoFacturacion = new ReclamoFacturacion();
                         setCamposBasicos(result,reclamoFacturacion);
                         reclamoFacturacion.setFacturas(facturas);
-                        reclamos.add(reclamoFacturacion);
+                        r = reclamoFacturacion;
                         break;
                     case "ReclamoCantidades":
                     case "ReclamoProducto":
-                        String query3 = "SELECT * FROM Productos p INNER JOIN Reclamos_Prdouctos rp on p.codigo = rp.producto_id where rp.reclamo_id = ?";
+                        String query3 = "SELECT * FROM Productos p INNER JOIN Reclamos_Productos rp on p.codigo = rp.producto_id where rp.reclamo_id = ?";
                         ps = con.prepareStatement(query3);
                         ps.setInt(1, result.getInt("reclamo_id"));
                         result2 = ps.executeQuery();
                         ArrayList<DetalleProducto> detalleProductos = new ArrayList<DetalleProducto>();
                         while (result2.next()) {
                             detalleProductos.add(new DetalleProducto(new Producto(result2.getInt("codigo"), result2.getString("titulo")
-                                    , result2.getString("description"), result2.getFloat("price")), result2.getInt("cantidad")));
+                                    , result2.getString("descripcion"), result2.getFloat("precio")), result2.getInt("cantidad")));
                         }
-                        if (tipoReclamo == "ReclamoCantidades") {
+                        if (tipoReclamo.compareTo("ReclamoCantidades") == 0) {
                             ReclamoCantidades reclamoP = new ReclamoCantidades();
                             setCamposBasicos(result,reclamoP);
                             reclamoP.setProductos(detalleProductos);
-                            reclamos.add(reclamoP);
+                            r = reclamoP;
                         }
                         else{
                             ReclamoProducto reclamoP = new ReclamoProducto();
                             setCamposBasicos(result,reclamoP);
                             reclamoP.setDetalleProducto(detalleProductos.get(0));
-                            reclamos.add(reclamoP);
+                            r = reclamoP;
                         }
                         break;
                     case "ReclamoZona":
                         ReclamoZona reclamoZona = new ReclamoZona();
                         setCamposBasicos(result,reclamoZona);
                         reclamoZona.setZona(result.getString("zona"));
-                        reclamos.add(reclamoZona);
+                        r = reclamoZona;
+                        break;
+                    case "ReclamoCombo":
+                        ReclamoCombo reclamoCombo = new ReclamoCombo();
+                        setCamposBasicos(result,reclamoCombo);
+                        String query4 = "Select * from Reclamos where combo_id = ?";
+                        ps = con.prepareStatement(query4);
+                        ps.setInt(1, reclamoCombo.getNumeroReclamo());
+                        result2 = ps.executeQuery();
+                        while(result2.next()) {
+                            reclamoCombo.getReclamos().add(getReclamobyId(result2.getInt("Id")));
+                        }
+                        r = reclamoCombo;
                         break;
                 }
             }
@@ -202,11 +248,10 @@ public class AdministradorPersistenciaReclamos {
         finally
         {
             PoolConnection.getPoolConnection().realeaseConnection(con);
-            return reclamos;
+            return r;
         }
-
-
     }
+
 
     private void setCamposBasicos(ResultSet result,Reclamo reclamo) {
         try {
@@ -298,9 +343,6 @@ public class AdministradorPersistenciaReclamos {
             return cliente;
         }
     }
-
-
-
 }
 
 

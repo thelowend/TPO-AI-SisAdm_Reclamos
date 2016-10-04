@@ -7,6 +7,7 @@ import Persistencia.AdministradorPersistenciaUsuario;
 import com.sun.scenario.effect.impl.prism.PrDrawable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class Controller {
@@ -97,7 +98,7 @@ public class Controller {
 
     public void addReclamo(Reclamo reclamo){
         try {
-            AdministradorPersistenciaReclamos.getInstancia().agregarReclamo(reclamo);
+            AdministradorPersistenciaReclamos.getInstancia().agregarReclamo(reclamo,0);
         } catch (Exception ex) {
             throw ex;
         }
@@ -106,6 +107,14 @@ public class Controller {
     public Cliente getClienteByName(String nombre){
         try {
             return AdministradorPersistenciaReclamos.getInstancia().getClienteByName(nombre);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public List<Reclamo> listReclamos(){
+        try {
+            return AdministradorPersistenciaReclamos.getInstancia().listarReclamos(null);
         } catch (Exception ex) {
             throw ex;
         }

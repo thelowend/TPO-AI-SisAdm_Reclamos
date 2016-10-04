@@ -8,6 +8,7 @@ import Persistencia.AdministradorPersistenciaReclamos;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -22,8 +23,11 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					List<Reclamo> r = Controller.getInstancia().listReclamos();
+
+					ReclamoCombo reclamoCombo = new ReclamoCombo();
 					Producto p = Controller.getInstancia().getProducto(1);
-					Factura f = Controller.getInstancia().getFactura(1);
+					Factura f = Controller.getInstancia().getFactura(6);
 					ReclamoCantidades rc = new ReclamoCantidades();
 					ArrayList<DetalleProducto> dp = new ArrayList<DetalleProducto>();
 					dp.add(new DetalleProducto(p,10));
@@ -32,16 +36,21 @@ public class Main {
 					rc.setEstado(EstadoReclamo.Cerrado);
 					rc.setFechaCreacion(new Date());
 					rc.setCliente(Controller.getInstancia().getClienteByName("elad"));
-					Controller.getInstancia().addReclamo(rc);
 					ReclamoFacturacion rf = new ReclamoFacturacion();
 					ArrayList<Factura> facturas = new ArrayList<Factura>();
+					facturas.add(f);
 					rf.setDescripcion("asdfasdfasf");
 					rf.setEstado(EstadoReclamo.Cerrado);
 					rf.setFechaCreacion(new Date());
 					rf.setCliente(Controller.getInstancia().getClienteByName("elad"));
 					facturas.add(AdministradorPersistenciaReclamos.getInstancia().getFactura(1));
 					rf.setFacturas(facturas);
-					Controller.getInstancia().addReclamo(rf);
+					reclamoCombo.getReclamos().add(rf);
+					reclamoCombo.getReclamos().add(rc);
+					reclamoCombo.setCliente(rf.getCliente());
+
+					reclamoCombo.setEstado(EstadoReclamo.Cerrado);
+					Controller.getInstancia().addReclamo(reclamoCombo);
 					JFrame frame = new JFrame();
 					frame.setBounds(100, 100, 450, 300);
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
