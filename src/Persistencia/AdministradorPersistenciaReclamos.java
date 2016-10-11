@@ -116,9 +116,9 @@ public class AdministradorPersistenciaReclamos {
     public void borrarReclamo(Reclamo reclamo) {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         try {
-            String query = "Delete INTO Reclamos_Productos where reclamo_id = ?";
-            String query2 = "Delete INTO Reclamos_Facturas  where reclamo_id = ?";
-            String query3 = "Delete  INTO Reclamos  where Id = ?";
+            String query = "Delete Reclamos_Productos where reclamo_id = ?";
+            String query2 = "Delete Reclamos_Facturas where reclamo_id = ?";
+            String query3 = "Delete Reclamos where Id = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, reclamo.getNumeroReclamo());
             ps.execute();
