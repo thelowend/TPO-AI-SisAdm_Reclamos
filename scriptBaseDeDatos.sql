@@ -94,7 +94,7 @@ Insert Into Usuarios (legajo,clave) Values ('Administrador','Administrador'),
 ('UsuarioCallCenter','UsuarioCallCenter')
 
 Insert Into Roles Values ('Administrador'),
-('Facturtacion'),
+('Facturacion'),
 ('Distrubucion'),
 ('Entrega'),
 ('Consulta'),

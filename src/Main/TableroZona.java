@@ -178,8 +178,8 @@ public class TableroZona extends javax.swing.JFrame {
 
 		/*	panel.setPreferredSize(new java.awt.Dimension(113, 346));*/
 
-			pack();
-			this.setSize(578, 396);
+			//pack();
+			this.setSize(686, 656);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

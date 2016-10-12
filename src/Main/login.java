@@ -110,8 +110,8 @@ public class login extends javax.swing.JFrame {
 					}
 				});
 			}
-			pack();
-			this.setSize(555, 355);
+			//pack();
+			this.setSize(304, 278);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

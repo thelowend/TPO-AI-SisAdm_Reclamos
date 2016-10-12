@@ -14,7 +14,7 @@ public class Controller {
     private static Controller Sistema;
 
     public static Controller getInstancia() {
-        if(Sistema == null){
+        if (Sistema == null) {
             Sistema = new Controller();
         }
         return Sistema;
