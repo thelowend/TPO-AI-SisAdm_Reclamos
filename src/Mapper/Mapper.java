@@ -1,5 +1,6 @@
 package Mapper;
 import Model.*;
+import Persistencia.AdministradorPersistenciaCliente;
 import Vistas.*;
 
 import java.util.ArrayList;
@@ -59,5 +60,24 @@ public class Mapper {
             usuario.setLegajo(usuarioView.getLegajo());
         }
         return usuario;
+    }
+
+    public ReclamoZona ReclamoViewToReclamo(ReclamoZonaView reclamoZonaView){
+        ReclamoZona reclamoZona = new ReclamoZona();
+        ReclamoViewToReclamo(reclamoZona,reclamoZonaView);
+        reclamoZona.setCliente(AdministradorPersistenciaCliente.getInstancia().getClienteById(reclamoZonaView.getClienteId()));
+        reclamoZona.setZona(reclamoZonaView.getZona());
+        return reclamoZona;
+    }
+    public Cliente ClienteViewToCilente(ClienteView clienteView){
+        return AdministradorPersistenciaCliente.getInstancia().getClienteById(clienteView.getClienteId());
+    }
+
+    private void ReclamoViewToReclamo(Reclamo reclamo,ReclamoView reclamoView){
+        reclamo.setFechaCreacion(reclamoView.getFechaCreacion());
+        reclamo.setDescripcion(reclamoView.getDescripcion());
+        reclamo.setEstado(reclamoView.getEstado());
+        reclamo.setFechaCierre(reclamoView.getFechaCierre());
+        reclamo.setNumeroReclamo(reclamoView.getNumeroReclamo());
     }
 }

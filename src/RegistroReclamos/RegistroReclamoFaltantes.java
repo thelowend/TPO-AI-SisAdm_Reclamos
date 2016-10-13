@@ -46,7 +46,7 @@ public class RegistroReclamoFaltantes extends JFrame {
 	 * Create the frame.
 	 */
 	public RegistroReclamoFaltantes() {
-		setTitle("Registro de Reclamo de Faltantes");
+		setTitle("Registro de ReclamoView de Faltantes");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 420);
 		contentPane = new JPanel();
@@ -117,7 +117,7 @@ public class RegistroReclamoFaltantes extends JFrame {
 		});
 		scrollPane.setViewportView(tblFaltantesReclamo);
 		
-		JButton btnRegistrarReclamo = new JButton("Registrar Reclamo");
+		JButton btnRegistrarReclamo = new JButton("Registrar ReclamoView");
 		btnRegistrarReclamo.setBounds(10, 347, 286, 23);
 		contentPane.add(btnRegistrarReclamo);
 		
@@ -134,7 +134,7 @@ public class RegistroReclamoFaltantes extends JFrame {
 		txtCliente.setBounds(10, 28, 86, 20);
 		contentPane.add(txtCliente);
 		
-		JLabel lblDescripcionReclamo = new JLabel("Descripci\u00F3n Reclamo:");
+		JLabel lblDescripcionReclamo = new JLabel("Descripci\u00F3n ReclamoView:");
 		lblDescripcionReclamo.setBounds(106, 11, 170, 14);
 		contentPane.add(lblDescripcionReclamo);
 		

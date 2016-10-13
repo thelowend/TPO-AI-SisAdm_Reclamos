@@ -8,6 +8,7 @@ import com.sun.scenario.effect.impl.prism.PrDrawable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class Controller {
@@ -96,8 +97,9 @@ public class Controller {
         }
     }
 
-    public void addReclamo(Reclamo reclamo){
+    public void addReclamo(ReclamoZonaView reclamoView){
         try {
+            ReclamoZona reclamo = Mapper.getMapper().ReclamoViewToReclamo(reclamoView);
             AdministradorPersistenciaReclamos.getInstancia().agregarReclamo(reclamo,0);
         } catch (Exception ex) {
             throw ex;

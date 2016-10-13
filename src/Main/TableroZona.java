@@ -127,7 +127,7 @@ public class TableroZona extends javax.swing.JFrame {
 			{
 				jlzona = new JLabel();
 				getContentPane().add(jlzona);
-				jlzona.setText("Zona Reclamo :");
+				jlzona.setText("Zona ReclamoView :");
 				jlzona.setBounds(191, 129, 110, 17);
 			}
 			{

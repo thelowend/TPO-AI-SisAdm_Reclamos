@@ -42,7 +42,7 @@ public class RegistroReclamoFacturacion extends JFrame {
 	 * Create the frame.
 	 */
 	public RegistroReclamoFacturacion() {
-		setTitle("Registro de Reclamo de Facturaci\u00F3n");
+		setTitle("Registro de ReclamoView de Facturaci\u00F3n");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 580);
 		contentPane = new JPanel();
@@ -71,7 +71,7 @@ public class RegistroReclamoFacturacion extends JFrame {
 		lblDescripcinDeInconsistencia.setBounds(10, 137, 190, 14);
 		contentPane.add(lblDescripcinDeInconsistencia);
 		
-		JLabel lblListadoDeFacturas = new JLabel("Listado de Facturas para Reclamo:");
+		JLabel lblListadoDeFacturas = new JLabel("Listado de Facturas para ReclamoView:");
 		lblListadoDeFacturas.setBounds(10, 311, 190, 14);
 		contentPane.add(lblListadoDeFacturas);
 		
@@ -107,7 +107,7 @@ public class RegistroReclamoFacturacion extends JFrame {
 		btnQuitarFactura.setBounds(324, 457, 100, 23);
 		contentPane.add(btnQuitarFactura);
 		
-		JButton btnRegistrarReclamo = new JButton("Registrar Reclamo");
+		JButton btnRegistrarReclamo = new JButton("Registrar ReclamoView");
 		btnRegistrarReclamo.setBounds(10, 507, 286, 23);
 		contentPane.add(btnRegistrarReclamo);
 		
@@ -128,7 +128,7 @@ public class RegistroReclamoFacturacion extends JFrame {
 		txtCliente.setBounds(10, 28, 86, 20);
 		contentPane.add(txtCliente);
 		
-		JLabel lblDescripcionReclamo = new JLabel("Descripci\u00F3n Reclamo:");
+		JLabel lblDescripcionReclamo = new JLabel("Descripci\u00F3n ReclamoView:");
 		lblDescripcionReclamo.setBounds(106, 11, 170, 14);
 		contentPane.add(lblDescripcionReclamo);
 		

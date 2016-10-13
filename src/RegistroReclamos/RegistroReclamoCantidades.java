@@ -39,8 +39,8 @@ public class RegistroReclamoCantidades extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+	//public static void main(String[] args) {
+	//	EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					RegistroReclamoCantidades frame = new RegistroReclamoCantidades();
@@ -49,14 +49,14 @@ public class RegistroReclamoCantidades extends JFrame {
 					e.printStackTrace();
 				}
 			}
-		});
-	}
+	//	});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
 	public RegistroReclamoCantidades() {
-		setTitle("Registro de Reclamo de Cantidades");
+		setTitle("Registro de ReclamoView de Cantidades");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 380);
 		contentPane = new JPanel();
@@ -91,7 +91,7 @@ public class RegistroReclamoCantidades extends JFrame {
 		btnAgregarAlReclamo.setBounds(306, 107, 118, 23);
 		contentPane.add(btnAgregarAlReclamo);
 		
-		JButton btnRegistrarReclamo = new JButton("Registrar Reclamo");
+		JButton btnRegistrarReclamo = new JButton("Registrar ReclamoView");
 		btnRegistrarReclamo.setBounds(10, 307, 286, 23);
 		contentPane.add(btnRegistrarReclamo);
 		
@@ -141,7 +141,7 @@ public class RegistroReclamoCantidades extends JFrame {
 		JTextPane txtDescripcionReclamo = new JTextPane();
 		scrollPane_1.setViewportView(txtDescripcionReclamo);
 		
-		JLabel lblDescripcinReclamo = new JLabel("Descripci\u00F3n Reclamo:");
+		JLabel lblDescripcinReclamo = new JLabel("Descripci\u00F3n ReclamoView:");
 		lblDescripcinReclamo.setBounds(106, 11, 170, 14);
 		contentPane.add(lblDescripcinReclamo);
 		tblProductosReclamo.getColumnModel().getColumn(0).setResizable(false);

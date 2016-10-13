@@ -1,8 +1,6 @@
 package Vistas;
 
-import Model.Reclamo;
-
-public class ReclamoZonaView extends Reclamo {
+public class ReclamoZonaView extends ReclamoView {
 	private String zona;
 
 	public ReclamoZonaView(){}

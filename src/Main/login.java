@@ -1,4 +1,7 @@
 package Main;
+import RegistroReclamos.RegistroReclamoCantidades;
+import RegistroReclamos.RegistroReclamoZona;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -119,8 +122,8 @@ public class login extends javax.swing.JFrame {
 	private void tryLogin(){
 		if (Controller.getInstancia().ValidarIngreso(jtextUsuario.getText(),jClave.getText()).getRoles()
 				.stream().filter(role -> role.getRoleName().compareTo("CallCenter") == 0).count() > 0){
-			TableroZona tz = new TableroZona();
-			tz.run();
+			RegistroReclamoZona tz = new RegistroReclamoZona();
+			//tz.run();
 		}
 		else{
 

@@ -4,6 +4,7 @@ import Model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class AdministradorPersistenciaReclamos {
     private static AdministradorPersistenciaReclamos pool;
@@ -14,7 +15,7 @@ public class AdministradorPersistenciaReclamos {
         return pool;
     }
 
-    public void agregarReclamo(Reclamo reclamo,int id ) {
+    public void agregarReclamo(Reclamo reclamo,int id) {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         try {
             String query = "INSERT INTO Reclamos Values (?,?,?,?,?,?,?,?);";
@@ -24,11 +25,11 @@ public class AdministradorPersistenciaReclamos {
             else
                 ps.setObject(1,null);
             ps.setString(2,reclamo.getClass().getSimpleName());
-            ps.setDate(3,java.sql.Date.valueOf(java.time.LocalDate.now()));
+            ps.setTimestamp(3, new java.sql.Timestamp(new java.util.Date().getTime()));
             ps.setObject(4,null);
             ps.setString(5,reclamo.getDescripcion());
             ps.setInt(6,reclamo.getCliente().getClienteId());
-            ps.setInt(7,reclamo.getEstado().ordinal());
+            ps.setInt(7,EstadoReclamo.Ingresado.ordinal());
             ps.setObject(8,null);
             ps.executeUpdate();
             ResultSet result = ps.getGeneratedKeys();
