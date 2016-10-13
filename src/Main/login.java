@@ -1,13 +1,9 @@
 package Main;
-import RegistroReclamos.RegistroReclamoCantidades;
-import RegistroReclamos.RegistroReclamoZona;
+import RegistroReclamos.RegistroReclamos;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,7 +11,6 @@ import javax.swing.JTextField;
 
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.text.TabableView;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
@@ -33,10 +28,12 @@ import javax.swing.JPasswordField;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
+@SuppressWarnings("serial")
 public class login extends javax.swing.JFrame {
 	private JPanel panel;
 	private JTextField txtUsuario;
 	private JPasswordField pswClave;
+	private static login inst;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -44,7 +41,7 @@ public class login extends javax.swing.JFrame {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				login inst = new login();
+				inst = new login();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
@@ -53,6 +50,7 @@ public class login extends javax.swing.JFrame {
 	
 	public login() {
 		super();
+		setResizable(false);
 		setTitle("Sistema de Administraci\u00F3n de Reclamos");
 		{
 			panel = new JPanel();
@@ -109,7 +107,6 @@ public class login extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
-			BorderLayout thisLayout = new BorderLayout();
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			//pack();
 			this.setSize(520, 270);
@@ -121,11 +118,15 @@ public class login extends javax.swing.JFrame {
 	private void tryLogin() {
 		if (Controller.getInstancia().ValidarIngreso(txtUsuario.getText(), new String(pswClave.getPassword())).getRoles()
 				.stream().filter(role -> role.getRoleName().compareTo("CallCenter") == 0).count() > 0){
-			RegistroReclamoZona tz = new RegistroReclamoZona();
-			//tz.run();
+			RegistroReclamos rcl = new RegistroReclamos();
+			rcl.setVisible(true);
+			rcl.setLocationRelativeTo(null);
 		}
-		else{
-
+		else {
+			MenuPrincipal menup = new MenuPrincipal(txtUsuario.getText());
+			menup.setVisible(true);
+			menup.setLocationRelativeTo(null);
 		}
+		inst.setVisible(false);
 	}
 }

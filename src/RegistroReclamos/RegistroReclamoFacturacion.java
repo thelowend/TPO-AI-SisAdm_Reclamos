@@ -1,6 +1,5 @@
 package RegistroReclamos;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -15,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
+@SuppressWarnings({ "unchecked", "rawtypes", "serial" })
 public class RegistroReclamoFacturacion extends JFrame {
 
 	private JPanel contentPane;
@@ -108,12 +108,8 @@ public class RegistroReclamoFacturacion extends JFrame {
 		contentPane.add(btnQuitarFactura);
 		
 		JButton btnRegistrarReclamo = new JButton("Registrar ReclamoView");
-		btnRegistrarReclamo.setBounds(10, 507, 286, 23);
+		btnRegistrarReclamo.setBounds(10, 507, 414, 23);
 		contentPane.add(btnRegistrarReclamo);
-		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(335, 507, 89, 23);
-		contentPane.add(btnCancelar);
 		
 		JButton btnBuscar = new JButton("Buscar ->");
 		btnBuscar.setBounds(135, 110, 89, 23);

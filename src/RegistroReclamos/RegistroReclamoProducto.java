@@ -1,6 +1,5 @@
 package RegistroReclamos;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -16,6 +15,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 
+@SuppressWarnings("serial")
 public class RegistroReclamoProducto extends JFrame {
 
 	private JPanel contentPane;
@@ -41,6 +41,7 @@ public class RegistroReclamoProducto extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public RegistroReclamoProducto() {
 		setTitle("Registro de ReclamoView de Producto");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,12 +82,8 @@ public class RegistroReclamoProducto extends JFrame {
 		contentPane.add(txtProductoReclamo);
 		
 		JButton btnRegistrarReclamo = new JButton("Registrar ReclamoView");
-		btnRegistrarReclamo.setBounds(10, 217, 286, 23);
+		btnRegistrarReclamo.setBounds(10, 217, 414, 23);
 		contentPane.add(btnRegistrarReclamo);
-		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(335, 217, 89, 23);
-		contentPane.add(btnCancelar);
 		
 		JLabel lblProductoReclamo = new JLabel("Producto:");
 		lblProductoReclamo.setBounds(10, 153, 190, 14);

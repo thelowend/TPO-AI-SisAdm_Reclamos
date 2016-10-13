@@ -1,10 +1,8 @@
 package RegistroReclamos;
 
 import Main.Controller;
-import Model.ReclamoZona;
 import Vistas.ReclamoZonaView;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,8 +10,10 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+@SuppressWarnings("serial")
 public class RegistroReclamoZona extends JFrame {
 
+	@SuppressWarnings("rawtypes")
 	private JComboBox cbZonaReclamo;
 	private JPanel contentPane;
 	private JTextField txtCliente;
@@ -38,6 +38,7 @@ public class RegistroReclamoZona extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public RegistroReclamoZona() {
 		setTitle("Registro de ReclamoView de Zona");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,12 +61,8 @@ public class RegistroReclamoZona extends JFrame {
 		contentPane.add(cbZonaReclamo);
 
 		JButton btnRegistrarReclamo = new JButton("Registrar ReclamoView");
-		btnRegistrarReclamo.setBounds(10, 137, 286, 23);
+		btnRegistrarReclamo.setBounds(10, 137, 414, 23);
 		contentPane.add(btnRegistrarReclamo);
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(335, 137, 89, 23);
-		contentPane.add(btnCancelar);
 		
 		JLabel lblCliente = new JLabel("Cliente:");
 		lblCliente.setBounds(10, 11, 46, 14);

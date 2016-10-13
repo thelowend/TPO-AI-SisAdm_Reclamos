@@ -4,12 +4,9 @@ import Persistencia.AdministradorPersistenciaReclamos;
 import Vistas.*;
 import Mapper.Mapper;
 import Persistencia.AdministradorPersistenciaUsuario;
-import com.sun.scenario.effect.impl.prism.PrDrawable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 public class Controller {
     private static Controller Sistema;

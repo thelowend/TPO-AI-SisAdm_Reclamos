@@ -1,8 +1,5 @@
 package RegistroReclamos;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -12,16 +9,6 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JList;
-import java.awt.EventQueue;
-
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-import javax.swing.AbstractListModel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
@@ -29,6 +16,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextPane;
 
+@SuppressWarnings({ "unchecked", "rawtypes", "serial" })
 public class RegistroReclamoCantidades extends JFrame {
 
 	private JPanel contentPane;
@@ -92,12 +80,8 @@ public class RegistroReclamoCantidades extends JFrame {
 		contentPane.add(btnAgregarAlReclamo);
 		
 		JButton btnRegistrarReclamo = new JButton("Registrar ReclamoView");
-		btnRegistrarReclamo.setBounds(10, 307, 286, 23);
+		btnRegistrarReclamo.setBounds(10, 307, 414, 23);
 		contentPane.add(btnRegistrarReclamo);
-		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(335, 307, 89, 23);
-		contentPane.add(btnCancelar);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

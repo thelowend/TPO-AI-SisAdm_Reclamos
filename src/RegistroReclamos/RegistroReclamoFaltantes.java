@@ -1,6 +1,5 @@
 package RegistroReclamos;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -18,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextPane;
 
+@SuppressWarnings("serial")
 public class RegistroReclamoFaltantes extends JFrame {
 
 	private JPanel contentPane;
@@ -45,6 +45,7 @@ public class RegistroReclamoFaltantes extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public RegistroReclamoFaltantes() {
 		setTitle("Registro de ReclamoView de Faltantes");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -108,9 +109,11 @@ public class RegistroReclamoFaltantes extends JFrame {
 				"Producto", "Cantidad Solicitada", "Cantidad Recibida"
 			}
 		) {
+
 			Class[] columnTypes = new Class[] {
 				String.class, Integer.class, Integer.class
 			};
+
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -118,12 +121,8 @@ public class RegistroReclamoFaltantes extends JFrame {
 		scrollPane.setViewportView(tblFaltantesReclamo);
 		
 		JButton btnRegistrarReclamo = new JButton("Registrar ReclamoView");
-		btnRegistrarReclamo.setBounds(10, 347, 286, 23);
+		btnRegistrarReclamo.setBounds(10, 347, 414, 23);
 		contentPane.add(btnRegistrarReclamo);
-		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(335, 347, 89, 23);
-		contentPane.add(btnCancelar);
 		
 		JLabel lblCliente = new JLabel("Cliente:");
 		lblCliente.setBounds(10, 11, 46, 14);
