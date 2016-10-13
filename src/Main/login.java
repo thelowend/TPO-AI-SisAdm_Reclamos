@@ -13,6 +13,9 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.text.TabableView;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JPasswordField;
 
 
 /**
@@ -28,13 +31,9 @@ import javax.swing.text.TabableView;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class login extends javax.swing.JFrame {
-	private JPanel jPanel1;
-	private JLabel jContrasena;
-	private JLabel jLogin;
-	private JButton jregistrarse;
-	private JTextField jClave;
-	private JTextField jtextUsuario;
-	private JLabel jLabel1;
+	private JPanel panel;
+	private JTextField txtUsuario;
+	private JPasswordField pswClave;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -51,6 +50,57 @@ public class login extends javax.swing.JFrame {
 	
 	public login() {
 		super();
+		setTitle("Sistema de Administraci\u00F3n de Reclamos");
+		{
+			panel = new JPanel();
+			getContentPane().add(panel, BorderLayout.CENTER);
+			panel.setLayout(null);
+			
+			JLabel lblSistemaDeAdministracin = new JLabel();
+			lblSistemaDeAdministracin.setVerticalAlignment(SwingConstants.TOP);
+			lblSistemaDeAdministracin.setText("Administraci\u00F3n de Reclamos");
+			lblSistemaDeAdministracin.setHorizontalAlignment(SwingConstants.CENTER);
+			lblSistemaDeAdministracin.setFont(new Font("Verdana", Font.BOLD, 20));
+			lblSistemaDeAdministracin.setBounds(0, 22, 504, 23);
+			panel.add(lblSistemaDeAdministracin);
+			
+			txtUsuario = new JTextField();
+			txtUsuario.setBounds(178, 94, 172, 25);
+			panel.add(txtUsuario);
+			
+			JLabel lblUsuario = new JLabel("Usuario:");
+			lblUsuario.setLabelFor(txtUsuario);
+			lblUsuario.setBounds(117, 94, 62, 25);
+			panel.add(lblUsuario);
+			
+			JLabel lblClave = new JLabel();
+			lblClave.setText("Clave :");
+			lblClave.setBounds(117, 137, 62, 25);
+			panel.add(lblClave);
+			
+			JButton btnLogIn = new JButton();
+			btnLogIn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					tryLogin();
+				}
+			});
+			btnLogIn.setText("Iniciar Sesion");
+			btnLogIn.setBounds(178, 179, 172, 25);
+			panel.add(btnLogIn);
+			
+			pswClave = new JPasswordField();
+			lblClave.setLabelFor(pswClave);
+			pswClave.setBounds(178, 137, 172, 25);
+			panel.add(pswClave);
+			
+			JLabel lblalpha = new JLabel("(Alpha 0.1)");
+			lblalpha.setHorizontalAlignment(SwingConstants.RIGHT);
+			lblalpha.setBounds(316, 48, 94, 14);
+			panel.add(lblalpha);
+			
+			//Login con tecla ENTER
+			panel.getRootPane().setDefaultButton(btnLogIn);
+		}
 		initGUI();
 	}
 	
@@ -58,66 +108,15 @@ public class login extends javax.swing.JFrame {
 		try {
 			BorderLayout thisLayout = new BorderLayout();
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			getContentPane().setLayout(null);
-			{
-				jPanel1 = new JPanel();
-				getContentPane().add(jPanel1, BorderLayout.WEST);
-				FlowLayout jPanel1Layout = new FlowLayout();
-				jPanel1.setLayout(jPanel1Layout);
-				jPanel1.setBounds(66, 91, 81, 32);
-				{
-					jLabel1 = new JLabel();
-					jPanel1.add(jLabel1);
-					jLabel1.setText("Usuario: ");
-				/*	jLabel1.setPreferredSize(new java.awt.Dimension(139, 21));*/
-				/*	jLabel1.setSize(200, 21);*/
-					jLabel1.setBounds(600, 600, 200, 21);
-					jLabel1.setPreferredSize(new java.awt.Dimension(58, 29));
-
-				}
-			}
-			{
-				jtextUsuario = new JTextField();
-				getContentPane().add(jtextUsuario);
-				jtextUsuario.setBounds(190, 100, 149, 23);
-			}
-			{
-				jContrasena = new JLabel();
-				getContentPane().add(jContrasena);
-				jContrasena.setText("Clave :");
-				jContrasena.setBounds(78, 156, 65, 25);
-			}
-			{
-				jClave = new JTextField();
-				getContentPane().add(jClave);
-				jClave.setBounds(190, 155, 149, 23);
-			}
-			{
-				jLogin = new JLabel();
-				getContentPane().add(jLogin);
-				jLogin.setText("Administracion Reclamos");
-				jLogin.setBounds(190, 28, 256, 16);
-			}
-			{
-				jregistrarse = new JButton();
-				getContentPane().add(jregistrarse);
-				jregistrarse.setText("Iniciar Sesion");
-				jregistrarse.setBounds(183, 220, 171, 23);
-				jregistrarse.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						tryLogin();
-					}
-				});
-			}
 			//pack();
-			this.setSize(304, 278);
+			this.setSize(520, 270);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	private void tryLogin(){
-		if (Controller.getInstancia().ValidarIngreso(jtextUsuario.getText(),jClave.getText()).getRoles()
+	
+	private void tryLogin() {
+		if (Controller.getInstancia().ValidarIngreso(txtUsuario.getText(), new String(pswClave.getPassword())).getRoles()
 				.stream().filter(role -> role.getRoleName().compareTo("CallCenter") == 0).count() > 0){
 			TableroZona tz = new TableroZona();
 			tz.run();
@@ -126,5 +125,4 @@ public class login extends javax.swing.JFrame {
 
 		}
 	}
-
 }

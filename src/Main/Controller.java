@@ -20,9 +20,13 @@ public class Controller {
         return Sistema;
     }
 
-    public UsuarioView ValidarIngreso(String legajo,String clave){
-        Usuario usuario =  AdministradorPersistenciaUsuario.getInstancia().login(legajo,clave);
-        return Mapper.getMapper().UsuarioToUsuarioView(usuario);
+    public UsuarioView ValidarIngreso(String legajo, String clave) {
+    	try {
+    		Usuario usuario =  AdministradorPersistenciaUsuario.getInstancia().login(legajo,clave);
+    		return Mapper.getMapper().UsuarioToUsuarioView(usuario);
+    	} catch (Exception ex) {
+            throw ex;
+        }
     }
 
     public void addUsuario(UsuarioView usuarioView) {
