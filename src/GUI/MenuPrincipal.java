@@ -1,4 +1,4 @@
-package Main;
+package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class MenuPrincipal extends JFrame {
@@ -37,7 +39,7 @@ public class MenuPrincipal extends JFrame {
 		setResizable(false);
 		setTitle("Sistema de Administraci\u00F3n de Reclamos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 210);
+		setBounds(100, 100, 450, 231);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -52,15 +54,42 @@ public class MenuPrincipal extends JFrame {
 		panel.add(lblBienvenidoa);
 		
 		JButton btnTableroDeAdministracin = new JButton("Tablero de Administraci\u00F3n de Reclamos");
+		btnTableroDeAdministracin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame subVentana = new RegistroReclamos();
+				subVentana.setVisible(true);
+				subVentana.setLocationRelativeTo(null);
+			}
+		});
 		btnTableroDeAdministracin.setBounds(83, 50, 264, 23);
 		panel.add(btnTableroDeAdministracin);
 		
 		JButton btnRegistroDeReclamos = new JButton("Registro de Reclamos");
+		btnRegistroDeReclamos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame subVentana = new RegistroReclamos();
+				subVentana.setVisible(true);
+				subVentana.setLocationRelativeTo(null);
+			}
+		});
 		btnRegistroDeReclamos.setBounds(83, 84, 264, 23);
 		panel.add(btnRegistroDeReclamos);
 		
 		JButton btnZonaDeReportes = new JButton("Zona de Reportes");
+		btnZonaDeReportes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnZonaDeReportes.setBounds(83, 118, 264, 23);
 		panel.add(btnZonaDeReportes);
+		
+		JButton btnConfiguracion = new JButton("Configuraci\u00F3n");
+		btnConfiguracion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnConfiguracion.setBounds(83, 152, 264, 23);
+		panel.add(btnConfiguracion);
 	}
 }

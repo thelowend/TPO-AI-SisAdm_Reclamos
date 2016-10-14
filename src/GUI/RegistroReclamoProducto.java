@@ -1,4 +1,4 @@
-package RegistroReclamos;
+package GUI;
 
 import java.awt.EventQueue;
 

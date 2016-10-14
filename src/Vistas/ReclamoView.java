@@ -1,9 +1,7 @@
 package Vistas;
 
-import Model.DetalleReclamo;
 import Model.EstadoReclamo;
 
-import java.util.Date;
 import java.util.HashMap;
 
 public class ReclamoView {
