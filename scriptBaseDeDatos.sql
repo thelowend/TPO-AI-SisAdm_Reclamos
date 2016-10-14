@@ -46,14 +46,22 @@ Create Table Reclamos(
 	Id int Identity(1,1),
 	combo_id int NULL,
 	tipoReclamo nvarchar(50) NOT NULL,
-	fechaCreacion datetime NOT NULL,
-	fechaCierre datetime NULL,
 	descripcion nvarchar(100),
 	cliente_id int NOT NULL,
-	estado int NOT NULL,
 	zona nvarchar(100) NULL,
 	PRIMARY KEY (Id),
 	FOREIGN KEY (cliente_id) REFERENCES Clientes(Id),
+)
+
+Create Table DetalleReclamos(
+	Id int Identity(1,1),
+	reclamo_id int Not NULL,
+	estado int NOT NULL,
+	fechaInicio datetime NOT NULL,
+	fechaFin datetime NULL,
+	comentrio nvarchar(100) NULL,
+	PRIMARY KEY (Id),
+	FOREIGN KEY (reclamo_id) REFERENCES Reclamos(Id),
 )
 
 Create Table Reclamos_Productos(

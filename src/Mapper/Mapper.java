@@ -4,6 +4,7 @@ import Persistencia.AdministradorPersistenciaCliente;
 import Vistas.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by eladh_000 on 21/9/2016.
@@ -74,10 +75,19 @@ public class Mapper {
     }
 
     private void ReclamoViewToReclamo(Reclamo reclamo,ReclamoView reclamoView){
-        reclamo.setFechaCreacion(reclamoView.getFechaCreacion());
+        HashMap<EstadoReclamo,DetalleReclamo> hashMapDetalleReclamos = new HashMap<EstadoReclamo,DetalleReclamo>();
+        for (EstadoReclamo key : reclamoView.getHashReclamos().keySet()) {
+            hashMapDetalleReclamos.put(key,DetalleReclamoViewToDetalle(
+                    reclamoView.getHashReclamos().get(key)));
+        }
+        reclamo.setHashReclamos(hashMapDetalleReclamos);
         reclamo.setDescripcion(reclamoView.getDescripcion());
-        reclamo.setEstado(reclamoView.getEstado());
-        reclamo.setFechaCierre(reclamoView.getFechaCierre());
         reclamo.setNumeroReclamo(reclamoView.getNumeroReclamo());
+    }
+
+    private DetalleReclamo DetalleReclamoViewToDetalle(DetalleReclamoView detalleReclamoView){
+        DetalleReclamo dr = new DetalleReclamo(detalleReclamoView.getFechaInicacion(),
+                detalleReclamoView.getFechaCierre(),detalleReclamoView.getComentarios());
+        return dr;
     }
 }

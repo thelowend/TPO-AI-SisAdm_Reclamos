@@ -1,32 +1,23 @@
 package Vistas;
 
+import Model.DetalleReclamo;
 import Model.EstadoReclamo;
 
 import java.util.Date;
+import java.util.HashMap;
 
 public class ReclamoView {
 
-	protected Date fechaCreacion;
 	protected int numeroReclamo;
-	protected Date fechaCierre;
 	protected int clienteId;
 	protected String descripcion;
-	protected EstadoReclamo estado;
+	protected HashMap<EstadoReclamo,DetalleReclamoView> hashReclamos;
+	public ReclamoView() {
 
-	public ReclamoView(){
-
-	}
-
-	public Date getFechaCreacion() {
-		return fechaCreacion;
 	}
 
 	public int getNumeroReclamo() {
 		return numeroReclamo;
-	}
-
-	public Date getFechaCierre() {
-		return fechaCierre;
 	}
 
 	public int getClienteId() {
@@ -37,20 +28,8 @@ public class ReclamoView {
 		return descripcion;
 	}
 
-	public EstadoReclamo getEstado() {
-		return estado;
-	}
-
-	public void setFechaCreacion(Date fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
-	}
-
 	public void setNumeroReclamo(int numeroReclamo) {
 		this.numeroReclamo = numeroReclamo;
-	}
-
-	public void setFechaCierre(Date fechaCierre) {
-		this.fechaCierre = fechaCierre;
 	}
 
 	public void setCliente(int clienteId) {
@@ -61,7 +40,13 @@ public class ReclamoView {
 		this.descripcion = descripcion;
 	}
 
-	public void setEstado(EstadoReclamo estado) {
-		this.estado = estado;
+	public void setHashReclamos(HashMap<EstadoReclamo, DetalleReclamoView> hashReclamos) {
+		this.hashReclamos = hashReclamos;
 	}
+
+	public HashMap<EstadoReclamo, DetalleReclamoView> getHashReclamos() {
+
+		return hashReclamos;
+	}
+
 }

@@ -1,30 +1,19 @@
 package Model;
 
 import java.util.Date;
+import java.util.HashMap;
 
 public class Reclamo {
-
-	protected Date fechaCreacion;
 	protected int numeroReclamo;
-	protected Date fechaCierre;
 	protected Cliente cliente;
 	protected String descripcion;
-	protected EstadoReclamo estado;
-
+ 	protected HashMap<EstadoReclamo,DetalleReclamo> hashReclamos;
 	public Reclamo(){
 
 	}
 
-	public Date getFechaCreacion() {
-		return fechaCreacion;
-	}
-
 	public int getNumeroReclamo() {
 		return numeroReclamo;
-	}
-
-	public Date getFechaCierre() {
-		return fechaCierre;
 	}
 
 	public Cliente getCliente() {
@@ -35,20 +24,8 @@ public class Reclamo {
 		return descripcion;
 	}
 
-	public EstadoReclamo getEstado() {
-		return estado;
-	}
-
-	public void setFechaCreacion(Date fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
-	}
-
 	public void setNumeroReclamo(int numeroReclamo) {
 		this.numeroReclamo = numeroReclamo;
-	}
-
-	public void setFechaCierre(Date fechaCierre) {
-		this.fechaCierre = fechaCierre;
 	}
 
 	public void setCliente(Cliente cliente) {
@@ -59,7 +36,11 @@ public class Reclamo {
 		this.descripcion = descripcion;
 	}
 
-	public void setEstado(EstadoReclamo estado) {
-		this.estado = estado;
+	public void setHashReclamos(HashMap<EstadoReclamo, DetalleReclamo> hashReclamos) {
+		this.hashReclamos = hashReclamos;
+	}
+
+	public HashMap<EstadoReclamo, DetalleReclamo> getHashReclamos() {
+		return hashReclamos;
 	}
 }

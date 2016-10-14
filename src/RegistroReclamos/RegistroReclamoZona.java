@@ -1,11 +1,18 @@
 package RegistroReclamos;
 
 import Main.Controller;
+import Model.DetalleReclamo;
+import Model.EstadoReclamo;
+import Model.Reclamo;
+import Vistas.DetalleReclamoView;
 import Vistas.ReclamoZonaView;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -95,6 +102,10 @@ public class RegistroReclamoZona extends JFrame {
 		r.setZona(String.valueOf(cbZonaReclamo.getSelectedItem()));
 		r.setDescripcion(txtDescripcionReclamo.getText());
 		r.setCliente(Integer.parseInt(txtCliente.getText()));
+		DetalleReclamoView detalleReclamoView = new DetalleReclamoView(new java.util.Date(),"comentario");
+		HashMap<EstadoReclamo, DetalleReclamoView> hm = new HashMap<EstadoReclamo, DetalleReclamoView>();
+		hm.put(EstadoReclamo.Ingresado,detalleReclamoView);
+		r.setHashReclamos(hm);
 		Controller.getInstancia().addReclamo(r);
 	}
 

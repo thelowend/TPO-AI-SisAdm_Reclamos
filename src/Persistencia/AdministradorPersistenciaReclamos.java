@@ -5,6 +5,7 @@ import Model.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class AdministradorPersistenciaReclamos {
     private static AdministradorPersistenciaReclamos pool;
@@ -18,29 +19,31 @@ public class AdministradorPersistenciaReclamos {
     public void agregarReclamo(Reclamo reclamo,int id) {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         try {
-            String query = "INSERT INTO Reclamos Values (?,?,?,?,?,?,?,?);";
+            String query = "INSERT INTO Reclamos Values (?,?,?,?,?);";
             PreparedStatement ps = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
             if (id != 0)
                 ps.setInt(1,id);
             else
                 ps.setObject(1,null);
             ps.setString(2,reclamo.getClass().getSimpleName());
-            ps.setTimestamp(3, new java.sql.Timestamp(new java.util.Date().getTime()));
-            ps.setObject(4,null);
-            ps.setString(5,reclamo.getDescripcion());
-            ps.setInt(6,reclamo.getCliente().getClienteId());
-            ps.setInt(7,EstadoReclamo.Ingresado.ordinal());
-            ps.setObject(8,null);
+            ps.setString(3,reclamo.getDescripcion());
+            ps.setInt(4,reclamo.getCliente().getClienteId());
+            ps.setObject(5,null);
             ps.executeUpdate();
             ResultSet result = ps.getGeneratedKeys();
             if (result.next()) {
                 int reclamo_id = id != 0 ? id : result.getInt(1);
+                reclamo.setNumeroReclamo(reclamo_id);
                 if(reclamo.getClass().getSimpleName().compareTo("ReclamoCombo") == 0){
-                    for(Reclamo r : ((ReclamoCombo)reclamo).getReclamos())
-                        agregarReclamo(r,reclamo_id);
+                    for(Reclamo r : ((ReclamoCombo)reclamo).getReclamos()) {
+                        agregarDetallesReclamos(reclamo);
+                        agregarReclamo(r, reclamo_id);
+                    }
                 }
-                else
-                    insertReclamoByType(result.getInt(1),con,reclamo);
+                else {
+                    agregarDetallesReclamos(reclamo);
+                    insertReclamoByType(con, reclamo);
+                }
             }
 
         } catch (SQLException e) {
@@ -50,7 +53,7 @@ public class AdministradorPersistenciaReclamos {
         }
     }
 
-    private void insertReclamoByType(int reclamoId,Connection con,Reclamo reclamo){
+    private void insertReclamoByType(Connection con,Reclamo reclamo){
         try {
             String query2 = "INSERT INTO Reclamos_Productos VALUES (?,?,?)";
             String query3 = "INSERT INTO Reclamos_Facturas VALUES (?,?)";
@@ -61,7 +64,7 @@ public class AdministradorPersistenciaReclamos {
                 case "ReclamoProducto":
                     ps = con.prepareStatement(query2);
                     ps.setInt(1, ((ReclamoProducto) reclamo).getDetalleProducto().getCantidad());
-                    ps.setInt(2, reclamoId);
+                    ps.setInt(2, reclamo.getNumeroReclamo());
                     ps.setInt(3, ((ReclamoProducto) reclamo).getDetalleProducto().getProducto().getCodigo());
                     ps.execute();
                     break;
@@ -69,7 +72,7 @@ public class AdministradorPersistenciaReclamos {
                     for (DetalleProducto detalleProducto : ((ReclamoCantidades) reclamo).getProductos()) {
                         ps = con.prepareStatement(query2);
                         ps.setInt(1, detalleProducto.getCantidad());
-                        ps.setInt(2, reclamoId);
+                        ps.setInt(2, reclamo.getNumeroReclamo());
                         ps.setInt(3, detalleProducto.getProducto().getCodigo());
                         ps.execute();
                     }
@@ -77,7 +80,7 @@ public class AdministradorPersistenciaReclamos {
                 case "ReclamoFacturacion":
                     for (Factura factura : ((ReclamoFacturacion) reclamo).getFacturas()) {
                         ps = con.prepareStatement(query3);
-                        ps.setInt(1, reclamoId);
+                        ps.setInt(1, reclamo.getNumeroReclamo());
                         ps.setInt(2, factura.getNumero());
                         ps.execute();
                     }
@@ -85,7 +88,7 @@ public class AdministradorPersistenciaReclamos {
                 case "ReclamoZona":
                     ps = con.prepareStatement(query4);
                     ps.setString(1, ((ReclamoZona) reclamo).getZona());
-                    ps.setInt(2, reclamoId);
+                    ps.setInt(2, reclamo.getNumeroReclamo());
                     ps.execute();
             }
 
@@ -94,6 +97,7 @@ public class AdministradorPersistenciaReclamos {
         }
     }
 
+    //TODO
     public void cambiarEstadoReclamo(Reclamo reclamo,EstadoReclamo estado) {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         try {
@@ -120,6 +124,7 @@ public class AdministradorPersistenciaReclamos {
             String query = "Delete Reclamos_Productos where reclamo_id = ?";
             String query2 = "Delete Reclamos_Facturas where reclamo_id = ?";
             String query3 = "Delete Reclamos where Id = ?";
+            String query4 = "Delete DetalleReclamos where reclamo_id = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, reclamo.getNumeroReclamo());
             ps.execute();
@@ -127,6 +132,9 @@ public class AdministradorPersistenciaReclamos {
             ps.setInt(1, reclamo.getNumeroReclamo());
             ps.execute();
             ps = con.prepareStatement(query3);
+            ps.setInt(1, reclamo.getNumeroReclamo());
+            ps.execute();
+            ps = con.prepareStatement(query4);
             ps.setInt(1, reclamo.getNumeroReclamo());
             ps.execute();
         } catch (SQLException e) {
@@ -264,14 +272,57 @@ public class AdministradorPersistenciaReclamos {
             cliente.setTelefono(result.getString("telefono"));
             reclamo.setCliente(cliente);
             reclamo.setDescripcion(result.getString("descripcion"));
-            reclamo.setEstado(EstadoReclamo.values()[result.getInt("estado")]);
-            reclamo.setFechaCierre(result.getDate("fechaCierre"));
-            reclamo.setFechaCreacion(result.getDate("fechaCreacion"));
             reclamo.setNumeroReclamo(result.getInt("reclamo_id"));
+            setDetallesReclamos(reclamo);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
+
+    private void agregarDetallesReclamos(Reclamo reclamo){
+        Connection con = PoolConnection.getPoolConnection().getConnection();
+        try{
+            String query = "Insert Into DetalleReclamos Values (?,?,?,?,?)";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1,reclamo.getNumeroReclamo());
+            for (EstadoReclamo key : reclamo.getHashReclamos().keySet()) {
+                ps.setInt(2, key.ordinal());
+                ps.setTimestamp(3, new java.sql.Timestamp(reclamo.getHashReclamos().get(key).getFechaInicacion().getTime()));
+                if(reclamo.getHashReclamos().get(key).getFechaCierre() != null)
+                    ps.setTimestamp(4, new java.sql.Timestamp(reclamo.getHashReclamos().get(key).getFechaCierre().getTime()));
+                else
+                    ps.setNull(4,java.sql.Types.TIMESTAMP);
+                ps.setString(5,reclamo.getHashReclamos().get(key).getComentarios());
+                ps.execute();
+            }
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void setDetallesReclamos(Reclamo reclamo){
+        Connection con = PoolConnection.getPoolConnection().getConnection();
+        try{
+            HashMap<EstadoReclamo,DetalleReclamo> hashMapDetalleReclamos = new HashMap<EstadoReclamo,DetalleReclamo>();
+            String query = "Select * From DetalleReclamos where reclamo_id = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1,reclamo.getNumeroReclamo());
+            ResultSet resultSet = ps.executeQuery();
+            if(resultSet.isBeforeFirst()) {
+                while (resultSet.next()) {
+                    hashMapDetalleReclamos.put(EstadoReclamo.values()[resultSet.getInt("estado")],
+                            new DetalleReclamo(resultSet.getDate("fechaInicio"), resultSet.getDate("fechaFin"),
+                                    resultSet.getString("comentrio")));
+                }
+                reclamo.setHashReclamos(hashMapDetalleReclamos);
+            }
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     public Producto getProducto(int codigo){
         Connection con = PoolConnection.getPoolConnection().getConnection();
