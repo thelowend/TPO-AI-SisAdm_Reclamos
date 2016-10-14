@@ -36,11 +36,11 @@ import javax.swing.JPasswordField;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 @SuppressWarnings("serial")
-public class login extends javax.swing.JFrame {
+public class LogIn extends javax.swing.JFrame {
 	private JPanel panel;
 	private JTextField txtUsuario;
 	private JPasswordField pswClave;
-	private static login inst;
+	private static LogIn inst;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -48,14 +48,14 @@ public class login extends javax.swing.JFrame {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				inst = new login();
+				inst = new LogIn();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
 		});
 	}
 	
-	public login() {
+	public LogIn() {
 		super();
 		setResizable(false);
 		setTitle("Sistema de Administraci\u00F3n de Reclamos");
