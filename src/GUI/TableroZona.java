@@ -95,7 +95,7 @@ public class TableroZona extends javax.swing.JFrame {
 				cboZona.setEnabled(false);
 				getContentPane().add(cboZona);
 				cboZona.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione zona>", "Belgrano", "Palermo", "Tigre"}));
-				cboZona.setBounds(20, 81, 240, 20);
+				cboZona.setBounds(20, 80, 240, 20);
 			}
 			{
 				JBmodif = new JButton();
@@ -105,7 +105,7 @@ public class TableroZona extends javax.swing.JFrame {
 			}
 			
 			JLabel label = new JLabel("Seleccionar Zona:");
-			label.setBounds(20, 61, 133, 14);
+			label.setBounds(20, 60, 133, 14);
 			getContentPane().add(label);
 			
 			JLabel lblFecha = new JLabel("Seleccionar Fecha:");
@@ -135,69 +135,69 @@ public class TableroZona extends javax.swing.JFrame {
 			panel.setLayout(null);
 			{
 				lblNroCliente = new JLabel();
-				lblNroCliente.setBounds(20, 11, 130, 20);
+				lblNroCliente.setBounds(20, 10, 130, 20);
 				panel.add(lblNroCliente);
 				lblNroCliente.setText("N\u00FAmero Cliente:");
 			}
 			{
 				lblDescripcion = new JLabel();
-				lblDescripcion.setBounds(20, 49, 130, 20);
+				lblDescripcion.setBounds(20, 48, 130, 20);
 				panel.add(lblDescripcion);
 				lblDescripcion.setText("Descripci\u00F3n : ");
 			}
 			{
 				lblZonaReclamoView = new JLabel();
-				lblZonaReclamoView.setBounds(20, 87, 130, 20);
+				lblZonaReclamoView.setBounds(20, 86, 130, 20);
 				panel.add(lblZonaReclamoView);
 				lblZonaReclamoView.setText("Zona ReclamoView :");
 			}
 			{
 				lblFechaModif = new JLabel();
-				lblFechaModif.setBounds(20, 125, 130, 20);
+				lblFechaModif.setBounds(20, 124, 130, 20);
 				panel.add(lblFechaModif);
 				lblFechaModif.setText("Fecha Modificaci\u00F3n :");
 			}
 			{
 				lblDescModif = new JLabel();
-				lblDescModif.setBounds(20, 163, 130, 20);
+				lblDescModif.setBounds(20, 162, 130, 20);
 				panel.add(lblDescModif);
 				lblDescModif.setText("Descripci\u00F3n Modificaci\u00F3n : ");
 			}
 			{
 				lblEstado = new JLabel();
-				lblEstado.setBounds(20, 201, 130, 20);
+				lblEstado.setBounds(20, 200, 130, 20);
 				panel.add(lblEstado);
 				lblEstado.setText("Estado : ");
 			}
 			{
 				textNroCliente = new JLabel("<nroCliente>");
-				textNroCliente.setBounds(156, 11, 240, 20);
+				textNroCliente.setBounds(156, 10, 240, 20);
 				panel.add(textNroCliente);
 			}
 			{
 				textDescripcion = new JLabel("<Descripci\u00F3n>");
-				textDescripcion.setBounds(156, 49, 240, 20);
+				textDescripcion.setBounds(156, 48, 240, 20);
 				panel.add(textDescripcion);
 			}
 			{
 				textZona = new JLabel();
-				textZona.setBounds(156, 87, 240, 20);
+				textZona.setBounds(156, 86, 240, 20);
 				panel.add(textZona);
 				textZona.setText("<Zona>");
 			}
 			{
 				textFecha = new JTextField();
-				textFecha.setBounds(156, 125, 240, 20);
+				textFecha.setBounds(156, 124, 240, 20);
 				panel.add(textFecha);
 			}
 			{
 				textDescripModif = new JTextField();
-				textDescripModif.setBounds(155, 163, 241, 20);
+				textDescripModif.setBounds(155, 162, 241, 20);
 				panel.add(textDescripModif);
 			}
 			{
 				textEstado = new JTextField();
-				textEstado.setBounds(155, 201, 241, 20);
+				textEstado.setBounds(155, 200, 241, 20);
 				panel.add(textEstado);
 			}
 

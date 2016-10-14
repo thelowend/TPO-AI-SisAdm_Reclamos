@@ -28,11 +28,14 @@ import javax.swing.SwingUtilities;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
+@SuppressWarnings("serial")
 public class TableroDistribucion extends javax.swing.JFrame {
-    private JPanel    panel;
-    private JComboBox recProducto;
-    private JComboBox recCantidades;
-    private JComboBox recFaltantes;
+    @SuppressWarnings("rawtypes")
+	private JComboBox recProducto;
+    @SuppressWarnings({ "unused", "rawtypes" })
+	private JComboBox recCantidades;
+    @SuppressWarnings("rawtypes")
+	private JComboBox recFaltantes;
     private JLabel jLabel4;
     private JLabel jLabel3;
     private JLabel jLabel2;
@@ -69,15 +72,8 @@ public class TableroDistribucion extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
-			BorderLayout thisLayout = new BorderLayout();
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
-
-			panel = new JPanel();
-			BorderLayout panelLayout = new BorderLayout();
-			panel.setLayout(panelLayout);
-			getContentPane().add(panel, BorderLayout.WEST);
-			panel.setBounds(0, 0, 64, 118);
 			{
 				administracionReclamosZona = new JLabel();
 				getContentPane().add(administracionReclamosZona);
@@ -191,8 +187,8 @@ public class TableroDistribucion extends javax.swing.JFrame {
 
 		/*	panel.setPreferredSize(new java.awt.Dimension(113, 346));*/
 
-			pack();
-			this.setSize(578, 396);
+			//pack();
+			this.setSize(567, 381);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

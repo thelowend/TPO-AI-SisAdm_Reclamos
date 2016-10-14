@@ -53,10 +53,10 @@ public class MenuPrincipal extends JFrame {
 		lblBienvenidoa.setBounds(10, 11, 264, 14);
 		panel.add(lblBienvenidoa);
 		
-		JButton btnTableroDeAdministracin = new JButton("Tablero de Administraci\u00F3n de Reclamos");
+		JButton btnTableroDeAdministracin = new JButton("Tableros de Administraci\u00F3n de Reclamos");
 		btnTableroDeAdministracin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame subVentana = new RegistroReclamos();
+				JFrame subVentana = new Tableros();
 				subVentana.setVisible(true);
 				subVentana.setLocationRelativeTo(null);
 			}

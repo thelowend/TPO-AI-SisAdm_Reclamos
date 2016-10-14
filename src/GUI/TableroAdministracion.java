@@ -1,20 +1,21 @@
 package GUI;
 
-
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JEditorPane;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
-
 import javax.swing.WindowConstants;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import javax.swing.ComboBoxModel;
+import javax.swing.JEditorPane;
+import javax.swing.JList;
+import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 
 
@@ -33,7 +34,7 @@ import javax.swing.SwingUtilities;
 public class TableroAdministracion extends javax.swing.JFrame {
     private JPanel    panel;
     private JTextField texRol;
-    private JTextField textContraseña;
+    private JTextField textContrasena;
     private JTextField textUsuario;
     private JLabel Tipo;
     private JLabel clave;
@@ -126,9 +127,9 @@ public class TableroAdministracion extends javax.swing.JFrame {
 				textUsuario.setBounds(302, 68, 118, 23);
 			}
 			{
-				textContraseña = new JTextField();
-				getContentPane().add(textContraseña);
-				textContraseña.setBounds(302, 109, 113, 23);
+				textContrasena = new JTextField();
+				getContentPane().add(textContrasena);
+				textContrasena.setBounds(302, 109, 113, 23);
 			}
 			{
 				texRol = new JTextField();
@@ -138,7 +139,7 @@ public class TableroAdministracion extends javax.swing.JFrame {
 
 		/*	panel.setPreferredSize(new java.awt.Dimension(113, 346));*/
 
-			pack();
+			//pack();
 			this.setSize(578, 396);
 		} catch (Exception e) {
 			e.printStackTrace();

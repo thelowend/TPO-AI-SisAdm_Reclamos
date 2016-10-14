@@ -1,19 +1,13 @@
 package GUI;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JEditorPane;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
 
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -28,13 +22,14 @@ import javax.swing.SwingUtilities;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class TableroConsultas extends javax.swing.JFrame {
-    private JPanel    panel;
+@SuppressWarnings("serial")
+public class TableroConsulta extends javax.swing.JFrame {
     private JButton tiempoResp;
     private JButton tratRec;
     private JButton recMes;
     private JButton rankingCli;
-    private JComboBox recCantidades;
+    @SuppressWarnings({ "rawtypes", "unused" })
+	private JComboBox recCantidades;
     private JButton JBmodif;
     private JLabel administracionReclamosZona;
 	/**
@@ -43,40 +38,34 @@ public class TableroConsultas extends javax.swing.JFrame {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				TableroConsultas inst = new TableroConsultas();
+				TableroConsulta inst = new TableroConsulta();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
 		});
 	}
 	
-	public TableroConsultas() {
+	public TableroConsulta() {
 		super();
 		initGUI();
 	}
 	
 	private void initGUI() {
 		try {
-			BorderLayout thisLayout = new BorderLayout();
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
-
-			panel = new JPanel();
-			BorderLayout panelLayout = new BorderLayout();
-			panel.setLayout(panelLayout);
-			getContentPane().add(panel, BorderLayout.WEST);
-			panel.setBounds(0, 0, 64, 118);
 			{
 				administracionReclamosZona = new JLabel();
+				administracionReclamosZona.setHorizontalAlignment(SwingConstants.CENTER);
 				getContentPane().add(administracionReclamosZona);
-				administracionReclamosZona.setText("       Generacion de Reportes");
-				administracionReclamosZona.setBounds(218, 12, 221, 43);
+				administracionReclamosZona.setText("Generacion de Reportes");
+				administracionReclamosZona.setBounds(102, 55, 195, 43);
 			}
 			{
 				JBmodif = new JButton();
 				getContentPane().add(JBmodif);
 				JBmodif.setText("Archivar");
-				JBmodif.setBounds(234, 311, 99, 23);
+				JBmodif.setBounds(152, 231, 99, 23);
 			}
 			{
 				rankingCli = new JButton();
@@ -105,7 +94,7 @@ public class TableroConsultas extends javax.swing.JFrame {
 
 		/*	panel.setPreferredSize(new java.awt.Dimension(113, 346));*/
 
-			pack();
+			//pack();
 			this.setSize(578, 396);
 		} catch (Exception e) {
 			e.printStackTrace();
