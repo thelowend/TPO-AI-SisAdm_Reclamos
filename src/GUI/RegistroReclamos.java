@@ -1,4 +1,4 @@
-package RegistroReclamos;
+package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -7,13 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
-import javax.swing.JSplitPane;
-import java.awt.GridLayout;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
 import java.awt.Component;
 import javax.swing.JButton;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 

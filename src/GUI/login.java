@@ -1,15 +1,22 @@
-package Main;
-import RegistroReclamos.RegistroReclamos;
+package GUI;
+import Vistas.RoleView;
+import Vistas.UsuarioView;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import javax.swing.WindowConstants;
+
+import Main.Controller;
+
 import javax.swing.SwingUtilities;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -116,17 +123,29 @@ public class login extends javax.swing.JFrame {
 	}
 	
 	private void tryLogin() {
-		if (Controller.getInstancia().ValidarIngreso(txtUsuario.getText(), new String(pswClave.getPassword())).getRoles()
-				.stream().filter(role -> role.getRoleName().compareTo("CallCenter") == 0).count() > 0){
-			RegistroReclamos rcl = new RegistroReclamos();
-			rcl.setVisible(true);
-			rcl.setLocationRelativeTo(null);
+		UsuarioView u = Controller.getInstancia().ValidarIngreso(txtUsuario.getText(), new String(pswClave.getPassword()));
+		ArrayList<RoleView> roles = u.getRoles();
+		JFrame frame = new JFrame();
+		if (roles.stream().filter(role -> role.getRoleName().compareTo("Administrador") == 0).count() > 0) {
+			frame = new MenuPrincipal(txtUsuario.getText());
 		}
+		else if (roles.stream().filter(role -> role.getRoleName().compareTo("Facturacion") == 0).count() > 0) {
+			frame = new MenuPrincipal(txtUsuario.getText());
+		}
+		else if (roles.stream().filter(role -> role.getRoleName().compareTo("Distribucion") == 0).count() > 0) {
+			frame = new MenuPrincipal(txtUsuario.getText());
+		}
+		else if (roles.stream().filter(role -> role.getRoleName().compareTo("Entrega") == 0).count() > 0) {
+			frame = new MenuPrincipal(txtUsuario.getText());
+		}
+		else if (roles.stream().filter(role -> role.getRoleName().compareTo("CallCenter") == 0).count() > 0) {
+			frame = new RegistroReclamos();
+		} 
 		else {
-			MenuPrincipal menup = new MenuPrincipal(txtUsuario.getText());
-			menup.setVisible(true);
-			menup.setLocationRelativeTo(null);
+			
 		}
+		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
 		inst.setVisible(false);
 	}
 }
