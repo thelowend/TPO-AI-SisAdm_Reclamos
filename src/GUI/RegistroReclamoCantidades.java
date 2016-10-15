@@ -1,5 +1,12 @@
 package GUI;
 
+import Main.Controller;
+import Model.EstadoReclamo;
+import Vistas.DetalleProductoView;
+import Vistas.DetalleReclamoView;
+import Vistas.ProductoView;
+import Vistas.ReclamoCantidadsView;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -9,6 +16,11 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
@@ -51,9 +63,10 @@ public class RegistroReclamoCantidades extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
 		JComboBox cbSeleccionarProducto = new JComboBox();
-		cbSeleccionarProducto.setModel(new DefaultComboBoxModel(new String[] {"Producto1", "Producto2", "Producto3"}));
+		ArrayList<ProductoView> pv = Main.Controller.getInstancia().listProductos();//.stream().map(ProductoView::getTitulo).collect(Collectors.toList());
+		pv.stream().forEach(p -> cbSeleccionarProducto.addItem(p));
+
 		cbSeleccionarProducto.setBounds(10, 108, 190, 20);
 		contentPane.add(cbSeleccionarProducto);
 		
@@ -69,46 +82,34 @@ public class RegistroReclamoCantidades extends JFrame {
 		txtCantidad.setBounds(210, 108, 86, 20);
 		contentPane.add(txtCantidad);
 		txtCantidad.setColumns(10);
-		
-		JButton btnAgregarAlReclamo = new JButton("Agregar");
-		btnAgregarAlReclamo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		
-		btnAgregarAlReclamo.setBounds(306, 107, 118, 23);
-		contentPane.add(btnAgregarAlReclamo);
-		
-		JButton btnRegistrarReclamo = new JButton("Registrar ReclamoView");
-		btnRegistrarReclamo.setBounds(10, 307, 414, 23);
-		contentPane.add(btnRegistrarReclamo);
-		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(10, 139, 414, 160);
 		contentPane.add(scrollPane);
-		
-		tblProductosReclamo = new JTable();
+
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.addColumn("ProductoId");
+		dtm.addColumn("Produco");
+		dtm.addColumn("Cantidad");
+		tblProductosReclamo = new JTable(dtm);
 		tblProductosReclamo.setShowVerticalLines(false);
 		tblProductosReclamo.setFillsViewportHeight(true);
 		scrollPane.setViewportView(tblProductosReclamo);
-		tblProductosReclamo.setModel(new DefaultTableModel(
+		tblProductosReclamo.setModel(dtm);/*new DefaultTableModel(
 			new Object[][] {
-				{"Producto1", new Integer(2)},
-				{"Producto2", new Integer(5)},
 			},
 			new String[] {
-				"Producto", "Cantidad"
+				"ProductoId", "Producto", "Cantidad"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				String.class, Integer.class
+				Integer.class, String.class, Integer.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
-		
+		*/
 		JLabel lblCliente = new JLabel("Cliente:");
 		lblCliente.setBounds(10, 11, 46, 14);
 		contentPane.add(lblCliente);
@@ -130,5 +131,33 @@ public class RegistroReclamoCantidades extends JFrame {
 		contentPane.add(lblDescripcinReclamo);
 		tblProductosReclamo.getColumnModel().getColumn(0).setResizable(false);
 		tblProductosReclamo.getColumnModel().getColumn(1).setResizable(false);
+		tblProductosReclamo.getColumnModel().getColumn(2).setResizable(false);
+		JButton btnAgregarAlReclamo = new JButton("Agregar");
+		btnAgregarAlReclamo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ProductoView pv = (ProductoView)cbSeleccionarProducto.getSelectedItem();
+				dtm.addRow(new Object[]{pv.getCodigo(),pv,Integer.parseInt(txtCantidad.getText())});
+			}
+		});
+
+		btnAgregarAlReclamo.setBounds(306, 107, 118, 23);
+		contentPane.add(btnAgregarAlReclamo);
+
+		JButton btnRegistrarReclamo = new JButton("Registrar ReclamoView");
+		btnRegistrarReclamo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ReclamoCantidadsView rcv = new ReclamoCantidadsView();
+				rcv.setCliente(Integer.parseInt(txtCliente.getText()));
+				rcv.getHashReclamos().put(EstadoReclamo.Ingresado,new DetalleReclamoView(new Date(),null,null));
+				rcv.setDescripcion(txtDescripcionReclamo.getText());
+				for (int i = 0 ; i < dtm.getRowCount() ; i++)
+						rcv.getProductos().add(new DetalleProductoView((ProductoView)dtm.getValueAt(i,1),
+								Integer.parseInt(dtm.getValueAt(i,2).toString())));
+				Controller.getInstancia().addReclamo(rcv);
+			}
+		});
+
+		btnRegistrarReclamo.setBounds(10, 307, 414, 23);
+		contentPane.add(btnRegistrarReclamo);
 	}
 }

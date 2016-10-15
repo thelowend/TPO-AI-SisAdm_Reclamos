@@ -323,53 +323,6 @@ public class AdministradorPersistenciaReclamos {
         }
     }
 
-
-    public Producto getProducto(int codigo){
-        Connection con = PoolConnection.getPoolConnection().getConnection();
-        Producto producto = new Producto();
-        try {
-            String query = "SELECT * from Productos where codigo = ?";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1,codigo);
-            ResultSet result = ps.executeQuery();
-            while(result.next()){
-                producto.setCodigo(result.getInt("codigo"));
-                producto.setDescripcion(result.getString("descripcion"));
-                producto.setPrecio(result.getFloat("precio"));
-                producto.setTitulo(result.getString("titulo"));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            producto = null;
-        } finally {
-            PoolConnection.getPoolConnection().realeaseConnection(con);
-            return producto;
-        }
-    }
-
-    public Factura getFactura(int numero){
-        Connection con = PoolConnection.getPoolConnection().getConnection();
-        Factura factura = new Factura();
-        try {
-            String query = "SELECT * from Facturas where numero = ?";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1,numero);
-            ResultSet result = ps.executeQuery();
-            while(result.next()) {
-                factura.setNumero(result.getInt("numero"));
-                factura.setFecha(result.getDate("fecha"));
-            }
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-            factura = null;
-        }
-        finally {
-            PoolConnection.getPoolConnection().realeaseConnection(con);
-            return factura;
-        }
-    }
-
     public Cliente getClienteByName(String nombre){
         Connection con = PoolConnection.getPoolConnection().getConnection();
         Cliente cliente = new Cliente();

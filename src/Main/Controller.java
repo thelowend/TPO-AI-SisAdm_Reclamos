@@ -1,21 +1,71 @@
 package Main;
 import Model.*;
-import Persistencia.AdministradorPersistenciaReclamos;
+import Persistencia.*;
 import Vistas.*;
 import Mapper.Mapper;
-import Persistencia.AdministradorPersistenciaUsuario;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Controller {
     private static Controller Sistema;
+    private ArrayList<Producto> productos;
+    private ArrayList<Cliente> clientes;
+    private ArrayList<Factura> facturas;
 
     public static Controller getInstancia() {
         if (Sistema == null) {
             Sistema = new Controller();
         }
         return Sistema;
+    }
+
+    private Controller(){
+        productos = AdministradorPersistenciaProductos.getInstancia().listProductos();
+        facturas = new ArrayList<Factura>();
+        clientes = new ArrayList<Cliente>();
+    }
+
+    private Cliente buscarCliente(int clienteId){
+        Cliente c = clientes.stream().filter(cl -> cl.getClienteId() == clienteId).findFirst().orElse(null);
+        if (c!=null){
+            return c;
+        }
+        else {
+            c = AdministradorPersistenciaCliente.getInstancia().getClienteById(clienteId);
+            if (c!=null){
+                clientes.add(c);
+                return c;
+            }
+        }
+        return null;
+    }
+
+    private Factura buscarFactura(int numero){
+        Factura f = facturas.stream().filter(fc -> fc.getNumero() == numero).findFirst().get();
+        if (f!=null){
+            return f;
+        }
+        else {
+            f = AdministradorPersistenciaFacturas.getInstancia().getFacturaId(numero);
+            if (f!=null){
+                facturas.add(f);
+                return f;
+            }
+        }
+        return null;
+    }
+
+    private Producto buscarProducto(int codigo){
+        Producto p = productos.stream().filter(pr -> pr.getCodigo() == codigo).findFirst().get();
+        return p;
+    }
+
+    public ArrayList<ProductoView> listProductos(){
+        ArrayList<ProductoView> productoViews = new ArrayList<ProductoView>();
+        productos.stream().forEach(p -> productoViews.add(Mapper.getMapper().ProductoToProductoView(p)));
+        return productoViews;
     }
 
     public UsuarioView ValidarIngreso(String legajo, String clave) {
@@ -54,7 +104,6 @@ public class Controller {
         }
     }
 
-
     public ArrayList<UsuarioView> listUsuarios(){
         try {
             ArrayList<UsuarioView> usuariosViews = new ArrayList<UsuarioView>();
@@ -81,26 +130,22 @@ public class Controller {
         }
     }
 
-    public Factura getFactura(int numero){
+    public void addReclamo(ReclamoZonaView reclamoView){
         try {
-            return AdministradorPersistenciaReclamos.getInstancia().getFactura(numero);
-        }
-        catch (Exception ex) {
-            throw ex;
-        }
-    }
-
-    public Producto getProducto(int codigo) {
-        try {
-            return AdministradorPersistenciaReclamos.getInstancia().getProducto(codigo);
+            ReclamoZona reclamo = Mapper.getMapper().ReclamoViewToReclamo(reclamoView);
+            reclamo.setCliente(buscarCliente(reclamoView.getClienteId()));
+            AdministradorPersistenciaReclamos.getInstancia().agregarReclamo(reclamo,0);
         } catch (Exception ex) {
             throw ex;
         }
     }
 
-    public void addReclamo(ReclamoZonaView reclamoView){
+    public void addReclamo(ReclamoCantidadsView reclamoView){
         try {
-            ReclamoZona reclamo = Mapper.getMapper().ReclamoViewToReclamo(reclamoView);
+            ReclamoCantidades reclamo = Mapper.getMapper().ReclamoViewToReclamo(reclamoView);
+            reclamo.setCliente(buscarCliente(reclamoView.getClienteId()));
+            reclamoView.getProductos().stream().forEach(dp -> reclamo.getProductos().add(
+                    new DetalleProducto(buscarProducto(dp.getProducto().getCodigo()),dp.getCantidad())));
             AdministradorPersistenciaReclamos.getInstancia().agregarReclamo(reclamo,0);
         } catch (Exception ex) {
             throw ex;

@@ -10,8 +10,9 @@ public class ReclamoView {
 	protected int clienteId;
 	protected String descripcion;
 	protected HashMap<EstadoReclamo,DetalleReclamoView> hashReclamos;
-	public ReclamoView() {
 
+	public ReclamoView(){
+		hashReclamos = new HashMap<EstadoReclamo,DetalleReclamoView>();
 	}
 
 	public int getNumeroReclamo() {

@@ -13,5 +13,7 @@ public class ReclamoCantidades extends Reclamo{
 
 	private ArrayList<DetalleProducto> productos;
 	
-	public ReclamoCantidades(){}
+	public ReclamoCantidades(){
+		productos = new ArrayList<DetalleProducto>();
+	}
 }

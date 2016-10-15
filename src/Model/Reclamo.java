@@ -9,7 +9,7 @@ public class Reclamo {
 	protected String descripcion;
  	protected HashMap<EstadoReclamo,DetalleReclamo> hashReclamos;
 	public Reclamo(){
-
+		hashReclamos = new HashMap<EstadoReclamo,DetalleReclamo>();
 	}
 
 	public int getNumeroReclamo() {

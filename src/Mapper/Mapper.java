@@ -66,28 +66,28 @@ public class Mapper {
     public ReclamoZona ReclamoViewToReclamo(ReclamoZonaView reclamoZonaView){
         ReclamoZona reclamoZona = new ReclamoZona();
         ReclamoViewToReclamo(reclamoZona,reclamoZonaView);
-        reclamoZona.setCliente(AdministradorPersistenciaCliente.getInstancia().getClienteById(reclamoZonaView.getClienteId()));
         reclamoZona.setZona(reclamoZonaView.getZona());
         return reclamoZona;
     }
-    public Cliente ClienteViewToCilente(ClienteView clienteView){
-        return AdministradorPersistenciaCliente.getInstancia().getClienteById(clienteView.getClienteId());
+
+    public ReclamoCantidades ReclamoViewToReclamo(ReclamoCantidadsView reclamoCantidadesView){
+        ReclamoCantidades reclamoCantidades = new ReclamoCantidades();
+        ReclamoViewToReclamo(reclamoCantidades,reclamoCantidadesView);
+        return reclamoCantidades;
     }
 
     private void ReclamoViewToReclamo(Reclamo reclamo,ReclamoView reclamoView){
-        HashMap<EstadoReclamo,DetalleReclamo> hashMapDetalleReclamos = new HashMap<EstadoReclamo,DetalleReclamo>();
-        for (EstadoReclamo key : reclamoView.getHashReclamos().keySet()) {
-            hashMapDetalleReclamos.put(key,DetalleReclamoViewToDetalle(
-                    reclamoView.getHashReclamos().get(key)));
-        }
-        reclamo.setHashReclamos(hashMapDetalleReclamos);
+        for (EstadoReclamo key : reclamoView.getHashReclamos().keySet())
+            reclamo.getHashReclamos().put(key,new DetalleReclamo(reclamoView.getHashReclamos().get(key).getFechaInicacion(),
+                    reclamoView.getHashReclamos().get(key).getFechaCierre(),reclamoView.getHashReclamos().get(key).getComentarios()));
         reclamo.setDescripcion(reclamoView.getDescripcion());
         reclamo.setNumeroReclamo(reclamoView.getNumeroReclamo());
     }
 
-    private DetalleReclamo DetalleReclamoViewToDetalle(DetalleReclamoView detalleReclamoView){
-        DetalleReclamo dr = new DetalleReclamo(detalleReclamoView.getFechaInicacion(),
-                detalleReclamoView.getFechaCierre(),detalleReclamoView.getComentarios());
-        return dr;
+
+    public ProductoView ProductoToProductoView(Producto producto){
+        ProductoView productoView = new ProductoView(producto.getCodigo(),producto.getTitulo());
+        return productoView;
     }
+
 }
