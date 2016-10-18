@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by eladh_000 on 15/10/2016.
@@ -45,6 +46,25 @@ public class AdministradorPersistenciaFacturas {
         try {
             String query = "select * from Facturas;";
             PreparedStatement ps = con.prepareStatement(query);
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+                facturas.add(new Factura(result.getInt("numero"), result.getDate("fecha")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            PoolConnection.getPoolConnection().realeaseConnection(con);
+            return facturas;
+        }
+    }
+
+    public ArrayList<Factura> getFacturasByFecha(Date fecha) {
+        Connection con = PoolConnection.getPoolConnection().getConnection();
+        ArrayList<Factura> facturas = new ArrayList<Factura>();
+        try {
+            String query = "select * from Facturas where CAST(? AS DATE) = CAST(fecha AS DATE);";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setTimestamp(1,new java.sql.Timestamp(fecha.getTime()));
             ResultSet result = ps.executeQuery();
             while (result.next()) {
                 facturas.add(new Factura(result.getInt("numero"), result.getDate("fecha")));

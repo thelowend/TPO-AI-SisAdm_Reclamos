@@ -1,17 +1,23 @@
 package GUI;
 
-import java.awt.EventQueue;
+import Main.Controller;
+import Model.EstadoReclamo;
+import Model.Factura;
+import Vistas.*;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.Exchanger;
+import java.util.zip.DataFormatException;
+
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JTextPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings({ "unchecked", "rawtypes", "serial" })
@@ -81,24 +87,13 @@ public class RegistroReclamoFacturacion extends JFrame {
 		
 		tblFacturasReclamo = new JTable();
 		tblFacturasReclamo.setFillsViewportHeight(true);
-		tblFacturasReclamo.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"12-03-2015", new Integer(4), "Cobro Incorrecto"},
-				{"26-09-2016", new Integer(56), null},
-			},
-			new String[] {
-				"Fecha", "ID Factura", "Descripcion"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, Integer.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.addColumn("Fecha");
+		dtm.addColumn("Factura");
 		scrollPane.setViewportView(tblFacturasReclamo);
-		
+		tblFacturasReclamo.setModel(dtm);
+		tblFacturasReclamo.getColumnModel().getColumn(0).setResizable(false);
+		tblFacturasReclamo.getColumnModel().getColumn(1).setResizable(false);
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.setBounds(324, 277, 100, 23);
 		contentPane.add(btnAgregar);
@@ -142,6 +137,51 @@ public class RegistroReclamoFacturacion extends JFrame {
 		JTextPane txtDescripcionInconsistencia = new JTextPane();
 		txtDescripcionInconsistencia.setText("Text");
 		scrollPane_2.setViewportView(txtDescripcionInconsistencia);
+
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					cbSeleccionarFactura.removeAllItems();
+					ArrayList<FacturaView> facturas = Controller.getInstancia().getFacturasByFecha(
+						new SimpleDateFormat("dd-MM-yyyy").parse(txtSeleccionarFecha.getText()));
+					facturas.forEach(f -> cbSeleccionarFactura.addItem(f));
+				} catch (ParseException ex) {
+					JOptionPane.showMessageDialog(null,"El formato de la fecha es incorrecto.");
+					txtSeleccionarFecha.setText("");
+				}
+			}
+		});
+
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cbSeleccionarFactura.getSelectedItem() != null) {
+					FacturaView fv = (FacturaView) cbSeleccionarFactura.getSelectedItem();
+					dtm.addRow(new Object[]{fv.getFecha(), fv});
+				}
+			}
+		});
+
+		btnQuitarFactura.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(tblFacturasReclamo.getSelectedRow() != -1){
+					dtm.removeRow(tblFacturasReclamo.getSelectedRow());
+				}
+			}
+		});
+
+		btnRegistrarReclamo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ReclamoFacturacionView rfv = new ReclamoFacturacionView();
+				rfv.setCliente(Integer.parseInt(txtCliente.getText()));
+				rfv.getHashReclamos().put(EstadoReclamo.Ingresado,new DetalleReclamoView(new Date()
+						,null,txtDescripcionInconsistencia.getText()));
+				rfv.setDescripcion(txtDescripcionReclamo.getText());
+				for (int i = 0 ; i < dtm.getRowCount() ; i++)
+					rfv.getFacturas().add(((FacturaView)dtm.getValueAt(i,1)));
+				Controller.getInstancia().addReclamo(rfv);
+			}
+		});
+
 	}
 
 }

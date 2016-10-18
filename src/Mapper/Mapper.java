@@ -76,6 +76,20 @@ public class Mapper {
         return reclamoCantidades;
     }
 
+    public ReclamoFacturacion ReclamoViewToReclamo(ReclamoFacturacionView reclamoFacturacionView){
+        ReclamoFacturacion reclamoFacturacion = new ReclamoFacturacion();
+        ReclamoViewToReclamo(reclamoFacturacion,reclamoFacturacionView);
+        reclamoFacturacionView.getFacturas().forEach(f -> reclamoFacturacion.getFacturas().add(
+                new Factura(f.getNumero(),f.getFecha())));
+        return reclamoFacturacion;
+    }
+
+    public ReclamoProducto ReclamoViewToReclamo(ReclamoProductoView reclamoProductoView){
+        ReclamoProducto reclamoProducto = new ReclamoProducto();
+        ReclamoViewToReclamo(reclamoProducto,reclamoProductoView);
+        return reclamoProducto;
+    }
+
     private void ReclamoViewToReclamo(Reclamo reclamo,ReclamoView reclamoView){
         for (EstadoReclamo key : reclamoView.getHashReclamos().keySet())
             reclamo.getHashReclamos().put(key,new DetalleReclamo(reclamoView.getHashReclamos().get(key).getFechaInicacion(),

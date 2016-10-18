@@ -5,6 +5,7 @@ import Vistas.*;
 import Mapper.Mapper;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,7 +44,7 @@ public class Controller {
     }
 
     private Factura buscarFactura(int numero){
-        Factura f = facturas.stream().filter(fc -> fc.getNumero() == numero).findFirst().get();
+        Factura f = facturas.stream().filter(fc -> fc.getNumero() == numero).findFirst().orElse(null);
         if (f!=null){
             return f;
         }
@@ -58,8 +59,15 @@ public class Controller {
     }
 
     private Producto buscarProducto(int codigo){
-        Producto p = productos.stream().filter(pr -> pr.getCodigo() == codigo).findFirst().get();
+        Producto p = productos.stream().filter(pr -> pr.getCodigo() == codigo).findFirst().orElse(null);
         return p;
+    }
+
+    public ArrayList<FacturaView> getFacturasByFecha(Date fecha){
+        ArrayList<Factura> facturas = AdministradorPersistenciaFacturas.getInstancia().getFacturasByFecha(fecha);
+        ArrayList<FacturaView> facturasView = new ArrayList<FacturaView>();
+        facturas.forEach(f -> facturasView.add(new FacturaView(f.getNumero(),f.getFecha())));
+        return facturasView;
     }
 
     public ArrayList<ProductoView> listProductos(){
@@ -146,6 +154,28 @@ public class Controller {
             reclamo.setCliente(buscarCliente(reclamoView.getClienteId()));
             reclamoView.getProductos().stream().forEach(dp -> reclamo.getProductos().add(
                     new DetalleProducto(buscarProducto(dp.getProducto().getCodigo()),dp.getCantidad())));
+            AdministradorPersistenciaReclamos.getInstancia().agregarReclamo(reclamo,0);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public void addReclamo(ReclamoProductoView reclamoView){
+        try {
+            ReclamoProducto reclamo = Mapper.getMapper().ReclamoViewToReclamo(reclamoView);
+            reclamo.setCliente(buscarCliente(reclamoView.getClienteId()));
+            reclamo.setDetalleProducto(new DetalleProducto(buscarProducto(
+                    reclamoView.getDetalleProducto().getProducto().getCodigo()),reclamoView.getDetalleProducto().getCantidad()));
+            AdministradorPersistenciaReclamos.getInstancia().agregarReclamo(reclamo,0);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public void addReclamo(ReclamoFacturacionView reclamoView){
+        try {
+            ReclamoFacturacion reclamo = Mapper.getMapper().ReclamoViewToReclamo(reclamoView);
+            reclamo.setCliente(buscarCliente(reclamoView.getClienteId()));
             AdministradorPersistenciaReclamos.getInstancia().agregarReclamo(reclamo,0);
         } catch (Exception ex) {
             throw ex;

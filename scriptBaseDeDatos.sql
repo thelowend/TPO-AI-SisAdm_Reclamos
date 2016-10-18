@@ -123,3 +123,12 @@ Insert Into Productos Values ('Remera','Remera Blanca',10),
 Insert Into Facturas Values (GETDATE()),(GETDATE())  
 
 Insert Into Clientes Values ('elad','av. sadfas','43315081','eladhaim22@gmail.com')
+
+select * from Productos
+select * from Clientes
+
+select * from Reclamos
+
+select * from Reclamos_Productos
+
+select * from facturas

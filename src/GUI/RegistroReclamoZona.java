@@ -8,6 +8,7 @@ import Vistas.ReclamoZonaView;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -87,21 +88,13 @@ public class RegistroReclamoZona extends JFrame {
 		scrollPane.setViewportView(txtDescripcionReclamo);
 		btnRegistrarReclamo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addReclamo();
+				ReclamoZonaView rzv = new ReclamoZonaView();
+				rzv.setCliente(Integer.parseInt(txtCliente.getText()));
+				rzv.getHashReclamos().put(EstadoReclamo.Ingresado,new DetalleReclamoView(new Date()
+						,null,null));
+				rzv.setDescripcion(txtDescripcionReclamo.getText());
+				Controller.getInstancia().addReclamo(rzv);
 			}
 		});
 	}
-
-	private void addReclamo(){
-		ReclamoZonaView r = new ReclamoZonaView();
-		r.setZona(String.valueOf(cbZonaReclamo.getSelectedItem()));
-		r.setDescripcion(txtDescripcionReclamo.getText());
-		r.setCliente(Integer.parseInt(txtCliente.getText()));
-		DetalleReclamoView detalleReclamoView = new DetalleReclamoView(new java.util.Date(),"comentario");
-		HashMap<EstadoReclamo, DetalleReclamoView> hm = new HashMap<EstadoReclamo, DetalleReclamoView>();
-		hm.put(EstadoReclamo.Ingresado,detalleReclamoView);
-		r.setHashReclamos(hm);
-		Controller.getInstancia().addReclamo(r);
-	}
-
 }

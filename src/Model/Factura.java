@@ -19,8 +19,8 @@ public class Factura {
 	}
 
 	public Factura(int numero, Date fecha) {
+		this.numero = numero;
 		this.fecha = fecha;
-
 	}
 
 	public Date getFecha() {

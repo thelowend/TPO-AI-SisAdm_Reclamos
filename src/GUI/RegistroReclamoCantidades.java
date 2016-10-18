@@ -95,21 +95,7 @@ public class RegistroReclamoCantidades extends JFrame {
 		tblProductosReclamo.setShowVerticalLines(false);
 		tblProductosReclamo.setFillsViewportHeight(true);
 		scrollPane.setViewportView(tblProductosReclamo);
-		tblProductosReclamo.setModel(dtm);/*new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"ProductoId", "Producto", "Cantidad"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Integer.class, String.class, Integer.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		*/
+		tblProductosReclamo.setModel(dtm);
 		JLabel lblCliente = new JLabel("Cliente:");
 		lblCliente.setBounds(10, 11, 46, 14);
 		contentPane.add(lblCliente);
