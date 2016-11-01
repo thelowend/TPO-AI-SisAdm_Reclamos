@@ -27,6 +27,9 @@ public class RegistroReclamoFacturacion extends JFrame {
 	private JTextField txtSeleccionarFecha;
 	private JTable tblFacturasReclamo;
 	private JTextField txtCliente;
+	private JTextPane txtDescripcionReclamo;
+	private JComboBox cbSeleccionarFactura;
+	private DefaultTableModel dtm;
 
 	/**
 	 * Launch the application.
@@ -61,7 +64,7 @@ public class RegistroReclamoFacturacion extends JFrame {
 		contentPane.add(lblSeleccionarFactura);
 		
 		JLabel lblFecha = new JLabel("Fecha de Facturaci\u00F3n (DD-MM-AAAA):");
-		lblFecha.setBounds(10, 91, 190, 14);
+		lblFecha.setBounds(10, 91, 200, 14);
 		contentPane.add(lblFecha);
 		
 		txtSeleccionarFecha = new JTextField();
@@ -69,25 +72,21 @@ public class RegistroReclamoFacturacion extends JFrame {
 		txtSeleccionarFecha.setBounds(10, 111, 120, 20);
 		contentPane.add(txtSeleccionarFecha);
 		
-		JComboBox cbSeleccionarFactura = new JComboBox();
+		cbSeleccionarFactura = new JComboBox();
 		cbSeleccionarFactura.setBounds(234, 111, 190, 20);
 		contentPane.add(cbSeleccionarFactura);
-		
-		JLabel lblDescripcinDeInconsistencia = new JLabel("Descripci\u00F3n de Inconsistencia:");
-		lblDescripcinDeInconsistencia.setBounds(10, 137, 190, 14);
-		contentPane.add(lblDescripcinDeInconsistencia);
-		
-		JLabel lblListadoDeFacturas = new JLabel("Listado de Facturas para ReclamoView:");
-		lblListadoDeFacturas.setBounds(10, 311, 190, 14);
+
+		JLabel lblListadoDeFacturas = new JLabel("Listado de Facturas para Reclamar:");
+		lblListadoDeFacturas.setBounds(10, 137, 250, 14);
 		contentPane.add(lblListadoDeFacturas);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 336, 414, 110);
+		scrollPane.setBounds(10, 160, 414, 110);
 		contentPane.add(scrollPane);
 		
 		tblFacturasReclamo = new JTable();
 		tblFacturasReclamo.setFillsViewportHeight(true);
-		DefaultTableModel dtm = new DefaultTableModel();
+		dtm = new DefaultTableModel();
 		dtm.addColumn("Fecha");
 		dtm.addColumn("Factura");
 		scrollPane.setViewportView(tblFacturasReclamo);
@@ -95,11 +94,11 @@ public class RegistroReclamoFacturacion extends JFrame {
 		tblFacturasReclamo.getColumnModel().getColumn(0).setResizable(false);
 		tblFacturasReclamo.getColumnModel().getColumn(1).setResizable(false);
 		JButton btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(324, 277, 100, 23);
+		btnAgregar.setBounds(200, 277, 100, 23);
 		contentPane.add(btnAgregar);
 		
 		JButton btnQuitarFactura = new JButton("Quitar");
-		btnQuitarFactura.setBounds(324, 457, 100, 23);
+		btnQuitarFactura.setBounds(324, 277, 100, 23);
 		contentPane.add(btnQuitarFactura);
 		
 		JButton btnRegistrarReclamo = new JButton("Registrar ReclamoView");
@@ -127,16 +126,12 @@ public class RegistroReclamoFacturacion extends JFrame {
 		scrollPane_1.setBounds(106, 31, 318, 49);
 		contentPane.add(scrollPane_1);
 		
-		JTextPane txtDescripcionReclamo = new JTextPane();
+		txtDescripcionReclamo = new JTextPane();
 		scrollPane_1.setViewportView(txtDescripcionReclamo);
-		
+
 		JScrollPane scrollPane_2 = new JScrollPane();
 		scrollPane_2.setBounds(10, 162, 414, 104);
 		contentPane.add(scrollPane_2);
-		
-		JTextPane txtDescripcionInconsistencia = new JTextPane();
-		txtDescripcionInconsistencia.setText("Text");
-		scrollPane_2.setViewportView(txtDescripcionInconsistencia);
 
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -151,6 +146,8 @@ public class RegistroReclamoFacturacion extends JFrame {
 				}
 			}
 		});
+		btnRegistrarReclamo.setBounds(10, 307, 414, 23);
+		contentPane.add(btnRegistrarReclamo);
 
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -174,14 +171,23 @@ public class RegistroReclamoFacturacion extends JFrame {
 				ReclamoFacturacionView rfv = new ReclamoFacturacionView();
 				rfv.setCliente(Integer.parseInt(txtCliente.getText()));
 				rfv.getHashReclamos().put(EstadoReclamo.Ingresado,new DetalleReclamoView(new Date()
-						,null,txtDescripcionInconsistencia.getText()));
+						,null,txtDescripcionReclamo.getText()));
 				rfv.setDescripcion(txtDescripcionReclamo.getText());
 				for (int i = 0 ; i < dtm.getRowCount() ; i++)
 					rfv.getFacturas().add(((FacturaView)dtm.getValueAt(i,1)));
 				Controller.getInstancia().addReclamo(rfv);
+				confiramarGrabado();
 			}
 		});
 
+	}
+	private void confiramarGrabado(){
+		JOptionPane.showMessageDialog(null, "El Reclamo se registro con exito");
+		cbSeleccionarFactura.removeAllItems();
+		txtSeleccionarFecha.setText("");
+		txtCliente.setText("");
+		txtDescripcionReclamo.setText("");
+		dtm.setRowCount(0);
 	}
 
 }

@@ -21,4 +21,8 @@ public class RoleView extends EntityVista{
 		super();
 		this.RoleName = roleName;
 	}
+
+	public String toString(){
+		return RoleName;
+	}
 }

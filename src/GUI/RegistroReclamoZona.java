@@ -97,4 +97,10 @@ public class RegistroReclamoZona extends JFrame {
 			}
 		});
 	}
+	private void confiramarGrabado(){
+		JOptionPane.showMessageDialog(null, "El Reclamo se registro con exito");
+		txtCliente.setText("");
+		txtDescripcionReclamo.setText("");
+		cbZonaReclamo.setSelectedIndex(0);
+	}
 }
