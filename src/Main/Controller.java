@@ -186,9 +186,16 @@ public class Controller {
     public void addReclamo(ReclamoProductoView reclamoView) {
         try {
             ReclamoProducto reclamo = Mapper.getMapper().ReclamoViewToReclamo(reclamoView);
+           
             reclamo.setCliente(buscarCliente(reclamoView.getClienteId()));
-            reclamo.setDetalleProducto(new DetalleProducto(buscarProducto(
-                    reclamoView.getDetalleProducto().getProducto().getCodigo()),reclamoView.getDetalleProducto().getCantidad()));
+            
+            reclamo.setDetalleProducto(
+            	new DetalleProducto(
+            		buscarProducto(reclamoView.getDetalleProducto().getProducto().getCodigo()),
+            		reclamoView.getDetalleProducto().getCantidad()
+            	)
+            );
+            
             AdministradorPersistenciaReclamos.getInstancia().agregarReclamo(reclamo,0);
         } catch (Exception ex) {
             throw ex;

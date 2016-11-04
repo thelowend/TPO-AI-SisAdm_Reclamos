@@ -19,7 +19,7 @@ public class AdministradorPersistenciaUsuario {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         Usuario usuario = new Usuario();
         try {
-            String query = "select  u.id as user_id,* from Roles r INNER JOIN Usuarios_Roles ur on r.Id = ur.role_id Inner Join " +
+            String query = "select  u.id as user_id, * from Roles r INNER JOIN Usuarios_Roles ur on r.Id = ur.role_id Inner Join " +
                     "Usuarios u on u.Id = ur.usuario_id where legajo = ? and clave = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, legajo);

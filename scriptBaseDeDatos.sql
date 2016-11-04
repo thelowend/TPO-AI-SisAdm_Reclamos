@@ -2,8 +2,9 @@ Create Table Usuarios (
 	Id int Identity(1,1),
 	legajo nvarchar(30) NOT NULL,
 	clave nvarchar(30) NOT NULL,
-	PRIMARY KEY (Id)		
+	PRIMARY KEY (Id)
 )
+
 Create Table Roles (
 	Id int Identity(1,1),
 	nombreRole nvarchar(30),
@@ -14,7 +15,7 @@ Create Table Usuarios_Roles (
 	Id int Identity(1,1),
 	usuario_id int NOT NULL,
 	role_id int NOT NULL,
-	PRIMARY KEY (Id),		
+	PRIMARY KEY (Id),
 	FOREIGN KEY (usuario_id) REFERENCES Usuarios(Id),
 	FOREIGN KEY (role_id) REFERENCES Roles(Id)
 )
@@ -59,9 +60,11 @@ Create Table DetalleReclamos(
 	estado int NOT NULL,
 	fechaInicio datetime NOT NULL,
 	fechaFin datetime NULL,
-	comentrio nvarchar(100) NULL,
+	comentario nvarchar(100) NULL,
+	responsable_id int NULL,
 	PRIMARY KEY (Id),
 	FOREIGN KEY (reclamo_id) REFERENCES Reclamos(Id),
+	FOREIGN KEY (responsable_id) REFERENCES Usuarios(Id),
 )
 
 Create Table Reclamos_Productos(
@@ -70,8 +73,8 @@ Create Table Reclamos_Productos(
 	reclamo_id int NOT NULL,
 	producto_id int NOT NULL,
 	PRIMARY KEY (Id),
-	FOREIGN KEY (reclamo_id) REFERENCES Reclamos(Id), 
-	FOREIGN KEY (producto_id) REFERENCES Productos(codigo) 
+	FOREIGN KEY (reclamo_id) REFERENCES Reclamos(Id),
+	FOREIGN KEY (producto_id) REFERENCES Productos(codigo)
 )
 
 Create Table Reclamos_Facturas(
@@ -79,8 +82,8 @@ Create Table Reclamos_Facturas(
 	reclamo_id int NOT NULL,
 	factura_id int NOT NULL,
 	PRIMARY KEY (Id),
-	FOREIGN KEY (reclamo_id) REFERENCES Reclamos(Id), 
-	FOREIGN KEY (factura_id) REFERENCES Facturas(numero) 
+	FOREIGN KEY (reclamo_id) REFERENCES Reclamos(Id),
+	FOREIGN KEY (factura_id) REFERENCES Facturas(numero)
 )
 
 
@@ -108,21 +111,22 @@ Insert Into Roles Values ('Administrador'),
 ('Consulta'),
 ('CallCenter')
 
-Insert Into Usuarios_Roles (usuario_id,role_id) Values 
+Insert Into Usuarios_Roles (usuario_id,role_id) Values
 ((select Id from Usuarios where legajo = 'Administrador'),(select Id from Roles where nombreRole = 'Administrador')),
 ((select Id from Usuarios where legajo = 'UsuarioFacturacion'),(select Id from Roles where nombreRole = 'Facturacion')),
 ((select Id from Usuarios where legajo = 'UsuarioDistribucion'),(select Id from Roles where nombreRole = 'Distrubucion')),
 ((select Id from Usuarios where legajo = 'UsuarioEntrega'),(select Id from Roles where nombreRole = 'Entrega')),
-((select Id from Usuarios where legajo = 'UsuarioConsulta'),(select Id from Roles where nombreRole = 'Consulta')),	
+((select Id from Usuarios where legajo = 'UsuarioConsulta'),(select Id from Roles where nombreRole = 'Consulta')),
 ((select Id from Usuarios where legajo = 'UsuarioCallCenter'),(select Id from Roles where nombreRole = 'CallCenter'))
 
 
 Insert Into Productos Values ('Remera','Remera Blanca',10),
 ('Pantalon','Pantalon Blanco',20)
 
-Insert Into Facturas Values (GETDATE()),(GETDATE())  
+Insert Into Facturas Values (GETDATE()),(GETDATE())
 
 Insert Into Clientes Values ('elad','av. sadfas','43315081','eladhaim22@gmail.com')
+INSERT Clientes VALUES ('Diego', 'Calle Falsa 123', '12344321', 'diegop@blos.com.ar')
 
 select * from Reclamos
 select * from Reclamos_Facturas

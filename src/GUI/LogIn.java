@@ -126,6 +126,8 @@ public class LogIn extends javax.swing.JFrame {
 		UsuarioView u = Controller.getInstancia().ValidarIngreso(txtUsuario.getText(), new String(pswClave.getPassword()));
 		ArrayList<RoleView> roles = u.getRoles();
 		JFrame frame = new JFrame();
+		
+
 		if (roles.stream().filter(role -> role.getRoleName().compareTo("Administrador") == 0).count() > 0) {
 			frame = new MenuPrincipal(txtUsuario.getText());
 		}
@@ -142,9 +144,9 @@ public class LogIn extends javax.swing.JFrame {
 			frame = new Reclamos();
 		} 
 		else {
-			
+			frame = new MenuPrincipal(txtUsuario.getText());
 		}
-		frame = new Reclamos();
+
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
 		inst.setVisible(false);

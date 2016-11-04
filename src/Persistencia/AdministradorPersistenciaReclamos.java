@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import Main.Controller;
+
 public class AdministradorPersistenciaReclamos {
     private static AdministradorPersistenciaReclamos pool;
 
@@ -21,20 +23,24 @@ public class AdministradorPersistenciaReclamos {
         try {
             String query = "INSERT INTO Reclamos Values (?,?,?,?,?);";
             PreparedStatement ps = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
-            if (id != 0)
-                ps.setInt(1,id);
-            else
-                ps.setObject(1,null);
-            ps.setString(2,reclamo.getClass().getSimpleName());
-            ps.setString(3,reclamo.getDescripcion());
-            ps.setInt(4,reclamo.getCliente().getClienteId());
-            ps.setObject(5,null);
-            ps.executeUpdate();
+            if (id != 0) {
+            	ps.setInt(1, id);
+            } else {
+            	ps.setObject(1, null);
+            }
+	            
+	        ps.setString(2, reclamo.getClass().getSimpleName());
+	        ps.setString(3, reclamo.getDescripcion());
+	        ps.setInt(4, reclamo.getCliente().getClienteId());
+	        ps.setObject(5, null);
+	        ps.executeUpdate();
+	            
             ResultSet result = ps.getGeneratedKeys();
+            
             if (result.next()) {
                 int reclamo_id = id != 0 ? id : result.getInt(1);
                 reclamo.setNumeroReclamo(reclamo_id);
-                if(reclamo.getClass().getSimpleName().compareTo("ReclamoCombo") == 0){
+                if(reclamo.getClass().getSimpleName().compareTo("ReclamoCombo") == 0) {
                     for(Reclamo r : ((ReclamoCombo)reclamo).getReclamos()) {
                         agregarDetallesReclamos(reclamo);
                         agregarReclamo(r, reclamo_id);
@@ -279,12 +285,12 @@ public class AdministradorPersistenciaReclamos {
         }
     }
 
-    private void agregarDetallesReclamos(Reclamo reclamo){
+    private void agregarDetallesReclamos(Reclamo reclamo) {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         try{
-            String query = "Insert Into DetalleReclamos Values (?,?,?,?,?)";
+            String query = "Insert Into DetalleReclamos Values (?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1,reclamo.getNumeroReclamo());
+            ps.setInt(1, reclamo.getNumeroReclamo());
             for (EstadoReclamo key : reclamo.getHashReclamos().keySet()) {
                 ps.setInt(2, key.ordinal());
                 ps.setTimestamp(3, new java.sql.Timestamp(reclamo.getHashReclamos().get(key).getFechaInicacion().getTime()));
@@ -292,7 +298,8 @@ public class AdministradorPersistenciaReclamos {
                     ps.setTimestamp(4, new java.sql.Timestamp(reclamo.getHashReclamos().get(key).getFechaCierre().getTime()));
                 else
                     ps.setNull(4,java.sql.Types.TIMESTAMP);
-                ps.setString(5,reclamo.getHashReclamos().get(key).getComentarios());
+                ps.setString(5, reclamo.getHashReclamos().get(key).getComentarios());
+                ps.setInt(6, Controller.getInstancia().getSesion().getId());
                 ps.execute();
             }
         }
