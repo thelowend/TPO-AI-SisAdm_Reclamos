@@ -6,6 +6,7 @@ import Mapper.Mapper;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,13 +23,13 @@ public class Controller {
         return Sistema;
     }
 
-    private Controller(){
+    private Controller() {
         productos = AdministradorPersistenciaProductos.getInstancia().listProductos();
         facturas = new ArrayList<Factura>();
         clientes = new ArrayList<Cliente>();
     }
 
-    private Cliente buscarCliente(int clienteId){
+    private Cliente buscarCliente(int clienteId) {
         Cliente c = clientes.stream().filter(cl -> cl.getClienteId() == clienteId).findFirst().orElse(null);
         if (c!=null){
             return c;
@@ -43,7 +44,7 @@ public class Controller {
         return null;
     }
 
-    private Factura buscarFactura(int numero){
+    private Factura buscarFactura(int numero) {
         Factura f = facturas.stream().filter(fc -> fc.getNumero() == numero).findFirst().orElse(null);
         if (f!=null){
             return f;
@@ -58,7 +59,7 @@ public class Controller {
         return null;
     }
 
-    private Producto buscarProducto(int codigo){
+    private Producto buscarProducto(int codigo) {
         Producto p = productos.stream().filter(pr -> pr.getCodigo() == codigo).findFirst().orElse(null);
         return p;
     }
@@ -70,10 +71,22 @@ public class Controller {
         return facturasView;
     }
 
-    public ArrayList<ProductoView> listProductos(){
+    public ArrayList<ProductoView> listProductos() {
         ArrayList<ProductoView> productoViews = new ArrayList<ProductoView>();
         productos.stream().forEach(p -> productoViews.add(Mapper.getMapper().ProductoToProductoView(p)));
         return productoViews;
+    }
+    
+    public ArrayList<ReclamoView> listReclamoView() {
+        ArrayList<Reclamo> reclamos = AdministradorPersistenciaReclamos.getInstancia().listarReclamos(null);
+        ArrayList<ReclamoView> reclamosView = new ArrayList<ReclamoView>();
+        
+        for (int i = 0; i < reclamos.size(); i++) {
+        	ReclamoView rView = Mapper.getMapper().ReclamoToReclamoView(reclamos.get(i));
+        	reclamosView.add(rView);
+        }
+        
+        return reclamosView;
     }
 
     public UsuarioView ValidarIngreso(String legajo, String clave) {
@@ -112,10 +125,10 @@ public class Controller {
         }
     }
 
-    public ArrayList<UsuarioView> listUsuarios(){
+    public ArrayList<UsuarioView> listUsuarios() {
         try {
             ArrayList<UsuarioView> usuariosViews = new ArrayList<UsuarioView>();
-            for(Usuario usuario : AdministradorPersistenciaUsuario.getInstancia().listarUsuarios()){
+            for (Usuario usuario : AdministradorPersistenciaUsuario.getInstancia().listarUsuarios()) {
                 usuariosViews.add(Mapper.getMapper().UsuarioToUsuarioView(usuario));
             }
             return usuariosViews;
@@ -125,7 +138,7 @@ public class Controller {
         }
     }
 
-    public ArrayList<RoleView> listRoles(){
+    public ArrayList<RoleView> listRoles() {
         try {
             ArrayList<RoleView> rolesViews = new ArrayList<RoleView>();
             for(Role role : AdministradorPersistenciaUsuario.getInstancia().listarRoles()){
@@ -138,7 +151,7 @@ public class Controller {
         }
     }
 
-    public void addReclamo(ReclamoZonaView reclamoView){
+    public void addReclamo(ReclamoZonaView reclamoView) {
         try {
             ReclamoZona reclamo = Mapper.getMapper().ReclamoViewToReclamo(reclamoView);
             reclamo.setCliente(buscarCliente(reclamoView.getClienteId()));
@@ -148,7 +161,7 @@ public class Controller {
         }
     }
 
-    public void addReclamo(ReclamoCantidadsView reclamoView){
+    public void addReclamo(ReclamoCantidadsView reclamoView) {
         try {
             ReclamoCantidades reclamo = Mapper.getMapper().ReclamoViewToReclamo(reclamoView);
             reclamo.setCliente(buscarCliente(reclamoView.getClienteId()));
@@ -160,7 +173,7 @@ public class Controller {
         }
     }
 
-    public void addReclamo(ReclamoProductoView reclamoView){
+    public void addReclamo(ReclamoProductoView reclamoView) {
         try {
             ReclamoProducto reclamo = Mapper.getMapper().ReclamoViewToReclamo(reclamoView);
             reclamo.setCliente(buscarCliente(reclamoView.getClienteId()));

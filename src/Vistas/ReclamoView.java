@@ -1,5 +1,7 @@
 package Vistas;
 
+import Model.Cliente;
+import Model.DetalleReclamo;
 import Model.EstadoReclamo;
 
 import java.util.HashMap;
@@ -11,10 +13,17 @@ public class ReclamoView {
 	protected String descripcion;
 	protected HashMap<EstadoReclamo,DetalleReclamoView> hashReclamos;
 
-	public ReclamoView(){
+	public ReclamoView() {
 		hashReclamos = new HashMap<EstadoReclamo,DetalleReclamoView>();
 	}
-
+	
+	public ReclamoView(int nReclamo, Cliente cliente, String desc, HashMap<EstadoReclamo, DetalleReclamoView> hashMap) {
+		this.numeroReclamo = nReclamo;
+		this.clienteId = cliente.getClienteId();
+		this.descripcion = desc;
+		this.hashReclamos = hashMap;
+	}
+	
 	public int getNumeroReclamo() {
 		return numeroReclamo;
 	}

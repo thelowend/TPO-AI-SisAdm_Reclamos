@@ -78,6 +78,9 @@ public class MenuPrincipal extends JFrame {
 		JButton btnZonaDeReportes = new JButton("Zona de Reportes");
 		btnZonaDeReportes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JFrame subVentana = new Reportes();
+				subVentana.setVisible(true);
+				subVentana.setLocationRelativeTo(null);
 			}
 		});
 		btnZonaDeReportes.setBounds(83, 118, 264, 23);
