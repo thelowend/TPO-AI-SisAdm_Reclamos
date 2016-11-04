@@ -89,8 +89,14 @@ public class RegistroReclamoZona extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ReclamoZonaView rzv = new ReclamoZonaView();
 				rzv.setCliente(Integer.parseInt(txtCliente.getText()));
-				rzv.getHashReclamos().put(EstadoReclamo.Ingresado,new DetalleReclamoView(new Date()
-						,null,null));
+				rzv.getHashReclamos().put(EstadoReclamo.Ingresado, 
+						new DetalleReclamoView(
+								new Date(),
+								null,
+								null, 
+								-1
+						)
+				);
 				rzv.setDescripcion(txtDescripcionReclamo.getText());
 				try {
 					Controller.getInstancia().addReclamo(rzv);

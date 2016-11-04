@@ -73,17 +73,36 @@ public class RegistroReclamoProducto extends JFrame {
 		txtCantidad.setBounds(210, 122, 86, 20);
 		contentPane.add(txtCantidad);
 
-		JButton btnRegistrarReclamo = new JButton("Registrar ReclamoView");
+		JButton btnRegistrarReclamo = new JButton("Registrar Reclamo");
 		btnRegistrarReclamo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ReclamoProductoView rpv = new ReclamoProductoView();
-				rpv.setCliente(Integer.parseInt(txtCliente.getText()));
-				rpv.getHashReclamos().put(EstadoReclamo.Ingresado,new DetalleReclamoView(new Date(),null,null));
-				rpv.setDescripcion(txtDescripcionReclamo.getText());
-				rpv.setDetalleProducto(new DetalleProductoView(
-						(ProductoView)cbSeleccionarProducto.getSelectedItem(),Integer.parseInt(txtCantidad.getText())));
-				Controller.getInstancia().addReclamo(rpv);
-				confiramarGrabado();
+				try {
+					ReclamoProductoView rpv = new ReclamoProductoView();
+					rpv.setCliente(Integer.parseInt(txtCliente.getText()));
+					rpv.getHashReclamos().put(EstadoReclamo.Ingresado, 
+							new DetalleReclamoView(
+									new Date(), 
+									null, 
+									null, 
+									Controller.getInstancia().getSesion().getId()
+							)
+					);
+					rpv.setDescripcion(txtDescripcionReclamo.getText());
+					rpv.setDetalleProducto(
+							new DetalleProductoView(
+								(ProductoView) cbSeleccionarProducto.getSelectedItem(),
+								Integer.parseInt( txtCantidad.getText() )
+							)
+					);
+					
+					Controller.getInstancia().addReclamo(rpv);
+					
+					confirmarGrabado();	
+				}
+				catch (Exception ex){
+					ex.printStackTrace();
+				}
+
 			}
 		});
 
@@ -99,7 +118,7 @@ public class RegistroReclamoProducto extends JFrame {
 		txtCliente.setBounds(11, 28, 86, 20);
 		contentPane.add(txtCliente);
 
-		JLabel lblDescripcionReclamo = new JLabel("Descripci\u00F3n ReclamoView:");
+		JLabel lblDescripcionReclamo = new JLabel("Descripci\u00F3n Reclamo:");
 		lblDescripcionReclamo.setBounds(107, 11, 170, 14);
 		contentPane.add(lblDescripcionReclamo);
 
@@ -112,7 +131,7 @@ public class RegistroReclamoProducto extends JFrame {
 
 	}
 
-	private void confiramarGrabado(){
+	private void confirmarGrabado(){
 		JOptionPane.showMessageDialog(null, "El Reclamo se registro con exito");
 		txtCantidad.setText("");
 		txtCliente.setText("");

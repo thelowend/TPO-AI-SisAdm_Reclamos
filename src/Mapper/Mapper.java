@@ -91,18 +91,35 @@ public class Mapper {
     }
 
     private void ReclamoViewToReclamo(Reclamo reclamo, ReclamoView reclamoView) {
-        for (EstadoReclamo key : reclamoView.getHashReclamos().keySet())
-            reclamo.getHashReclamos().put(key,new DetalleReclamo(reclamoView.getHashReclamos().get(key).getFechaInicacion(),
-                    reclamoView.getHashReclamos().get(key).getFechaCierre(),reclamoView.getHashReclamos().get(key).getComentarios()));
+        for (EstadoReclamo key : reclamoView.getHashReclamos().keySet()) {
+        	DetalleReclamoView drv = reclamoView.getHashReclamos().get(key);
+            reclamo.getHashReclamos().put(key, 
+            		new DetalleReclamo(
+	            		drv.getFechaInicacion(), 
+	            		drv.getFechaCierre(), 
+	            		drv.getComentarios(),
+	                    drv.getResponsableId()
+            		)
+            );
+
+        }
         reclamo.setDescripcion(reclamoView.getDescripcion());
-        reclamo.setNumeroReclamo(reclamoView.getNumeroReclamo());
+        reclamo.setNumeroReclamo(reclamoView.getNumeroReclamo());    	
     }
     
     public ReclamoView ReclamoToReclamoView (Reclamo reclamo) {
     	ReclamoView rView = new ReclamoView();
         for (EstadoReclamo key : reclamo.getHashReclamos().keySet()) {
-        	rView.getHashReclamos().put(key, new DetalleReclamoView(reclamo.getHashReclamos().get(key).getFechaInicacion(),
-            reclamo.getHashReclamos().get(key).getFechaCierre(), reclamo.getHashReclamos().get(key).getComentarios())); 	
+        	DetalleReclamo dr = reclamo.getHashReclamos().get(key);
+        	rView.getHashReclamos().put(key, 
+            		new DetalleReclamoView(
+            				dr.getFechaInicacion(), 
+            				dr.getFechaCierre(), 
+            				dr.getComentarios(),
+            				dr.getResponsableId()
+            		)
+            );
+        	
         }
         
         rView.setCliente(reclamo.getCliente().getClienteId());

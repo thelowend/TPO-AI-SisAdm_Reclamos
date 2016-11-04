@@ -125,7 +125,14 @@ public class RegistroReclamoCantidades extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ReclamoCantidadsView rcv = new ReclamoCantidadsView();
 				rcv.setCliente(Integer.parseInt(txtCliente.getText()));
-				rcv.getHashReclamos().put(EstadoReclamo.Ingresado,new DetalleReclamoView(new Date(),null,null));
+				rcv.getHashReclamos().put(EstadoReclamo.Ingresado, 
+						new DetalleReclamoView(
+							new Date(), 
+							null, 
+							null,
+							-1
+						)
+				);
 				rcv.setDescripcion(txtDescripcionReclamo.getText());
 				for (int i = 0 ; i < dtm.getRowCount() ; i++)
 						rcv.getProductos().add(new DetalleProductoView((ProductoView)dtm.getValueAt(i,1),

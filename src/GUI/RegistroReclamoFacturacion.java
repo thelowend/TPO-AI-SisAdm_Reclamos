@@ -166,8 +166,14 @@ public class RegistroReclamoFacturacion extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ReclamoFacturacionView rfv = new ReclamoFacturacionView();
 				rfv.setCliente(Integer.parseInt(txtCliente.getText()));
-				rfv.getHashReclamos().put(EstadoReclamo.Ingresado,new DetalleReclamoView(new Date()
-						,null,txtDescripcionReclamo.getText()));
+				rfv.getHashReclamos().put(EstadoReclamo.Ingresado, 
+						new DetalleReclamoView(
+							new Date(), 
+							null, 
+							txtDescripcionReclamo.getText(), 
+							-1
+						)
+				);
 				rfv.setDescripcion(txtDescripcionReclamo.getText());
 				for (int i = 0 ; i < dtm.getRowCount() ; i++)
 					rfv.getFacturas().add(((FacturaView)dtm.getValueAt(i,1)));

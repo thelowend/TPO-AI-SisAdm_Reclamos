@@ -313,7 +313,7 @@ public class AdministradorPersistenciaReclamos {
                 while (resultSet.next()) {
                     hashMapDetalleReclamos.put(EstadoReclamo.values()[resultSet.getInt("estado")],
                             new DetalleReclamo(resultSet.getDate("fechaInicio"), resultSet.getDate("fechaFin"),
-                                    resultSet.getString("comentrio")));
+                                    resultSet.getString("comentario"), resultSet.getInt("responsable_id")));
                 }
                 reclamo.setHashReclamos(hashMapDetalleReclamos);
             }

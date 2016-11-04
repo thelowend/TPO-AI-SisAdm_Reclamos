@@ -15,6 +15,7 @@ public class Controller {
     private ArrayList<Producto> productos;
     private ArrayList<Cliente> clientes;
     private ArrayList<Factura> facturas;
+    private UsuarioView sesion;
 
     public static Controller getInstancia() {
         if (Sistema == null) {
@@ -27,6 +28,11 @@ public class Controller {
         productos = AdministradorPersistenciaProductos.getInstancia().listProductos();
         facturas = new ArrayList<Factura>();
         clientes = new ArrayList<Cliente>();
+        sesion = null;
+    }
+    
+    public UsuarioView getSesion() {
+    	return this.sesion;
     }
 
     private Cliente buscarCliente(int clienteId) {
@@ -44,7 +50,7 @@ public class Controller {
         return null;
     }
 
-    private Factura buscarFactura(int numero) {
+    private Factura buscarFactura (int numero) {
         Factura f = facturas.stream().filter(fc -> fc.getNumero() == numero).findFirst().orElse(null);
         if (f!=null){
             return f;
@@ -91,8 +97,12 @@ public class Controller {
 
     public UsuarioView ValidarIngreso(String legajo, String clave) {
     	try {
-    		Usuario usuario =  AdministradorPersistenciaUsuario.getInstancia().login(legajo,clave);
-    		return Mapper.getMapper().UsuarioToUsuarioView(usuario);
+    		Usuario usuario =  AdministradorPersistenciaUsuario.getInstancia().login(legajo, clave);
+    		UsuarioView uv = Mapper.getMapper().UsuarioToUsuarioView(usuario);
+    		
+    		this.sesion = uv; //Guardo la vista del usuario en sesion
+    		
+    		return uv;
     	} catch (Exception ex) {
             throw ex;
         }

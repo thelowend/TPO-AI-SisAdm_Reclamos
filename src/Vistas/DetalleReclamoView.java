@@ -2,47 +2,50 @@ package Vistas;
 
 import java.util.Date;
 
-/**
- * Created by eladh_000 on 13/10/2016.
- */
 public class DetalleReclamoView {
     private Date fechaInicacion;
     private Date fechaCierre;
-
+    private String comentarios;
+    private int responsable_id;
+    
+    public Date getFechaInicacion() {
+        return fechaInicacion;
+    }
+    
     public void setFechaInicacion(Date fechaInicacion) {
         this.fechaInicacion = fechaInicacion;
     }
-
+    
+    public Date getFechaCierre() {
+        return fechaCierre;
+    }
+    
     public void setFechaCierre(Date fechaCierre) {
         this.fechaCierre = fechaCierre;
     }
-
+    
+    public String getComentarios() {
+        return comentarios;
+    }
+    
     public void setComentarios(String comentarios) {
         this.comentarios = comentarios;
     }
 
-    public String getComentarios() {
-
-        return comentarios;
+    public int getResponsableId() {
+        return responsable_id;
+    }
+    
+    public void setResponsableId(int responsable) {
+        this.responsable_id = responsable;
     }
 
-    public Date getFechaInicacion() {
-        return fechaInicacion;
-    }
-
-    public Date getFechaCierre() {
-        return fechaCierre;
-    }
-
-    private String comentarios;
-    public DetalleReclamoView(){};
-    public DetalleReclamoView(Date fechaInicacion, Date fechaCierre, String comentarios) {
+    public DetalleReclamoView(Date fechaInicacion, Date fechaCierre, String comentarios, int responsable) {
         this.fechaInicacion = fechaInicacion;
         this.fechaCierre = fechaCierre;
         this.comentarios = comentarios;
+        this.responsable_id = responsable;
     }
-    public DetalleReclamoView(Date fechaInicacion, String comentarios) {
-        this.fechaInicacion = fechaInicacion;
-        this.comentarios = comentarios;
-    }
+
 }
+
