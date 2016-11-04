@@ -12,7 +12,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
-public class Tableros extends JFrame {
+public class Configuracion extends JFrame {
 
 	private JPanel contentPane;
 
@@ -23,7 +23,7 @@ public class Tableros extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Tableros frame = new Tableros();
+					Configuracion frame = new Configuracion();
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -36,9 +36,9 @@ public class Tableros extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Tableros() {
+	public Configuracion() {
 		JFrame frame = this;
-		setTitle("Tablero de Administración");
+		setTitle("Configuración");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
@@ -73,16 +73,8 @@ public class Tableros extends JFrame {
 		});
 		
 		JFrame jfTableroUsuarios = new TableroUsuarios();
-		JFrame jfReportes = new Reportes();
-		JFrame jfTableroDistribucion = new TableroDistribucion();
-		JFrame jfTableroFacturacion = new TableroFacturacion();
-		JFrame jfTableroZona = new TableroZona();
 		
-		//tabbedPane.addTab("Usuarios", jfTableroUsuarios.getContentPane());
-		//tabbedPane.addTab("Reportes", jfReportes.getContentPane());
-		tabbedPane.addTab("Distribución", jfTableroDistribucion.getContentPane());
-		tabbedPane.addTab("Facturación", jfTableroFacturacion.getContentPane());
-		tabbedPane.addTab("Zona", jfTableroZona.getContentPane());
+		tabbedPane.addTab("Usuarios", jfTableroUsuarios.getContentPane());
 		
 		this.setSize(465, 530);
 	}

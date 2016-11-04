@@ -9,7 +9,6 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
-import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -93,11 +92,19 @@ public class RegistroReclamoZona extends JFrame {
 				rzv.getHashReclamos().put(EstadoReclamo.Ingresado,new DetalleReclamoView(new Date()
 						,null,null));
 				rzv.setDescripcion(txtDescripcionReclamo.getText());
-				Controller.getInstancia().addReclamo(rzv);
+				try {
+					Controller.getInstancia().addReclamo(rzv);
+					confirmarGrabado();
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, ex.getMessage());
+					ex.printStackTrace();
+				}
+				
+				
 			}
 		});
 	}
-	private void confiramarGrabado(){
+	private void confirmarGrabado() {
 		JOptionPane.showMessageDialog(null, "El Reclamo se registro con exito");
 		txtCliente.setText("");
 		txtDescripcionReclamo.setText("");

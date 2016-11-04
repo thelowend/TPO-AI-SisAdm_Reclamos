@@ -20,7 +20,7 @@ public class Mapper {
     }
 
     public RoleView RoleToRoleView(Role role){
-        RoleView roleView = new RoleView(role.getId(),role.getRoleName());
+        RoleView roleView = new RoleView(role.getId(), role.getRoleName());
         return roleView;
     }
 
@@ -113,7 +113,7 @@ public class Mapper {
     }
 
 
-    public ProductoView ProductoToProductoView(Producto producto){
+    public ProductoView ProductoToProductoView(Producto producto) {
         ProductoView productoView = new ProductoView(producto.getCodigo(),producto.getTitulo());
         return productoView;
     }

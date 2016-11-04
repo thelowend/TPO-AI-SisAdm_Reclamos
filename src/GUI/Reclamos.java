@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
-public class RegistroReclamos extends JFrame {
+public class Reclamos extends JFrame {
 
 	private JPanel contentPane;
 
@@ -24,7 +24,8 @@ public class RegistroReclamos extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegistroReclamos frame = new RegistroReclamos();
+					Reclamos frame = new Reclamos();
+					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +37,7 @@ public class RegistroReclamos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistroReclamos() {
+	public Reclamos() {
 		JFrame frame = this;
 		setTitle("Registro de Reclamos");
 		setResizable(false);
@@ -61,10 +62,10 @@ public class RegistroReclamos extends JFrame {
 		contentPane.add(panel2);
 		panel2.setLayout(new BorderLayout(0, 0));
 		
-		JButton btnCancel = new JButton("Cancelar");
-		panel2.add(btnCancel, BorderLayout.CENTER);
+		JButton btnVolver = new JButton("Volver");
+		panel2.add(btnVolver, BorderLayout.CENTER);
 		
-		btnCancel.addActionListener(new ActionListener() {
+		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
 			}

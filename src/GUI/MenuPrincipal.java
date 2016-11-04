@@ -45,6 +45,8 @@ public class MenuPrincipal extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
+		JFrame frame = this;
+		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
@@ -61,18 +63,18 @@ public class MenuPrincipal extends JFrame {
 				subVentana.setLocationRelativeTo(null);
 			}
 		});
-		btnTableroDeAdministracin.setBounds(83, 50, 264, 23);
+		btnTableroDeAdministracin.setBounds(10, 50, 414, 23);
 		panel.add(btnTableroDeAdministracin);
 		
 		JButton btnRegistroDeReclamos = new JButton("Registro de Reclamos");
 		btnRegistroDeReclamos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFrame subVentana = new RegistroReclamos();
+				JFrame subVentana = new Reclamos();
 				subVentana.setVisible(true);
 				subVentana.setLocationRelativeTo(null);
 			}
 		});
-		btnRegistroDeReclamos.setBounds(83, 84, 264, 23);
+		btnRegistroDeReclamos.setBounds(10, 84, 414, 23);
 		panel.add(btnRegistroDeReclamos);
 		
 		JButton btnZonaDeReportes = new JButton("Zona de Reportes");
@@ -83,16 +85,27 @@ public class MenuPrincipal extends JFrame {
 				subVentana.setLocationRelativeTo(null);
 			}
 		});
-		btnZonaDeReportes.setBounds(83, 118, 264, 23);
+		btnZonaDeReportes.setBounds(10, 118, 414, 23);
 		panel.add(btnZonaDeReportes);
 		
 		JButton btnConfiguracion = new JButton("Configuraci\u00F3n");
 		btnConfiguracion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				JFrame subVentana = new Configuracion();
+				subVentana.setVisible(true);
+				subVentana.setLocationRelativeTo(null);	
 			}
 		});
-		btnConfiguracion.setBounds(83, 152, 264, 23);
+		btnConfiguracion.setBounds(10, 158, 190, 23);
 		panel.add(btnConfiguracion);
+		
+		JButton btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		btnSalir.setBounds(234, 158, 190, 23);
+		panel.add(btnSalir);
 	}
 }

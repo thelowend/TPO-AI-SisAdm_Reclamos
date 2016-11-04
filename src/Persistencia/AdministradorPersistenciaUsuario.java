@@ -151,7 +151,7 @@ public class AdministradorPersistenciaUsuario {
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet result = ps.executeQuery();
             while(result.next()) {
-                roles.add(new Role(result.getInt("Id"),result.getString("nombreRole")));
+                roles.add(new Role(result.getInt("Id"), result.getString("nombreRole")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

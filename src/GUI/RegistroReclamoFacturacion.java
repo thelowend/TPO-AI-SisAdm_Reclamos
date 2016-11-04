@@ -2,7 +2,6 @@ package GUI;
 
 import Main.Controller;
 import Model.EstadoReclamo;
-import Model.Factura;
 import Vistas.*;
 
 import java.awt.EventQueue;
@@ -10,11 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.concurrent.Exchanger;
-import java.util.zip.DataFormatException;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

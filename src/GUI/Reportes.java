@@ -21,14 +21,12 @@ import java.awt.print.PrinterException;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
-import java.awt.Component;
 
 public class Reportes extends JFrame {
 
@@ -44,6 +42,7 @@ public class Reportes extends JFrame {
 			public void run() {
 				try {
 					Reportes frame = new Reportes();
+					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,7 +58,7 @@ public class Reportes extends JFrame {
 		JFrame frame = this;
 		setTitle("Generador de Reportes");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 510, 500);
+		setBounds(100, 100, 450, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -67,7 +66,7 @@ public class Reportes extends JFrame {
 		
 		JComboBox cmbReportes = new JComboBox();
 		cmbReportes.setModel(new DefaultComboBoxModel(new String[] {"Clientes con m\u00E1s reclamos", "Cantidad de reclamos tratados por mes", "Ranking de tratamiento de reclamos", "Tiempo promedio de respuesta de los reclamos por responsable"}));
-		cmbReportes.setBounds(10, 34, 474, 20);
+		cmbReportes.setBounds(10, 34, 414, 20);
 		contentPane.add(cmbReportes);
 		
 		JLabel lblTipoDeReporte = new JLabel("Tipo de Reporte:");
@@ -152,11 +151,14 @@ public class Reportes extends JFrame {
         			break;   
             	case 2: 
             		//ranking de tratamiento de reclamos
+    				//"Reclamos Finalizados"
 
+    				
         			System.out.println("2");
         			break;
             	case 3: 
             		//tiempo promedio de respuesta de los reclamos por responsable
+            		//"Resolucion Reclamo (tiempo)"
             		
         			System.out.println("3");
         			break;
@@ -166,7 +168,7 @@ public class Reportes extends JFrame {
 			    }
 			}
 		});
-		btnGenerar.setBounds(395, 65, 89, 23);
+		btnGenerar.setBounds(335, 59, 89, 23);
 		contentPane.add(btnGenerar);
 		
 		JButton btnVolver = new JButton("Volver");
@@ -175,11 +177,11 @@ public class Reportes extends JFrame {
 				frame.dispose();
 			}
 		});
-		btnVolver.setBounds(296, 427, 89, 23);
+		btnVolver.setBounds(236, 382, 89, 23);
 		contentPane.add(btnVolver);
 		
 		JScrollPane panelReporte = new JScrollPane();
-		panelReporte.setBounds(10, 93, 474, 323);
+		panelReporte.setBounds(10, 93, 414, 278);
 		contentPane.add(panelReporte);
 		
 		tblReporte = new JTable();
@@ -197,7 +199,7 @@ public class Reportes extends JFrame {
 				}
 			}
 		});
-		btnImprimir.setBounds(395, 427, 89, 23);
+		btnImprimir.setBounds(335, 382, 89, 23);
 		contentPane.add(btnImprimir);
 	}
 }

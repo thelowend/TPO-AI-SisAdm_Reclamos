@@ -20,6 +20,7 @@ public class RegistroReclamoProducto extends JFrame {
 	private JTextField txtCantidad;
 	private JTextField txtCliente;
 	private JTextPane txtDescripcionReclamo;
+	@SuppressWarnings("rawtypes")
 	private JComboBox cbSeleccionarProducto;
 
 	/**

@@ -139,12 +139,12 @@ public class LogIn extends javax.swing.JFrame {
 			frame = new MenuPrincipal(txtUsuario.getText());
 		}
 		else if (roles.stream().filter(role -> role.getRoleName().compareTo("CallCenter") == 0).count() > 0) {
-			frame = new RegistroReclamos();
+			frame = new Reclamos();
 		} 
 		else {
 			
 		}
-		frame = new RegistroReclamos();
+		frame = new Reclamos();
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
 		inst.setVisible(false);

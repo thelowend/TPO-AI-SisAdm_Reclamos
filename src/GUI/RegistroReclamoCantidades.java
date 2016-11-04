@@ -13,9 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings({ "unchecked", "rawtypes", "serial" })

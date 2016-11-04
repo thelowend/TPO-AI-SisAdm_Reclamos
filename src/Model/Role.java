@@ -8,11 +8,10 @@ public class Role extends Entity{
 	}
 
 	public String getRoleName() {
-
 		return RoleName;
 	}
 
-	public Role(int id,String roleName){
+	public Role(int id, String roleName){
 		super(id);
 		this.RoleName = roleName;
 	}
