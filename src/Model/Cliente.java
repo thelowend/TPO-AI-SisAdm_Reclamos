@@ -1,12 +1,25 @@
 package Model;
 
 public class Cliente {
+	
+	// ====================================
+	// == Attributes
+	// ====================================
+	
 	private int clienteId;
-	
 	private String nombre;
-	
 	private String domicilio;
+	private String telefono;
+	private String mail;
 
+	// ====================================
+	// == Constructor(s)
+	// ====================================
+	
+	public Cliente(){
+
+	}	
+	
 	public Cliente(int clienteId, String nombre, String domicilio, String telefono, String mail) {
 		this.clienteId = clienteId;
 		this.nombre = nombre;
@@ -14,6 +27,10 @@ public class Cliente {
 		this.telefono = telefono;
 		this.mail = mail;
 	}
+	
+	// ====================================
+	// == Accesors (Getters/Setters)
+	// ====================================	
 
 	public void setClienteId(int clienteId) {
 		this.clienteId = clienteId;
@@ -36,32 +53,23 @@ public class Cliente {
 	}
 
 	public int getClienteId() {
-
-		return clienteId;
+		return this.clienteId;
 	}
 
 	public String getNombre() {
-		return nombre;
+		return this.nombre;
 	}
 
 	public String getDomicilio() {
-		return domicilio;
+		return this.domicilio;
 	}
 
 	public String getTelefono() {
-		return telefono;
+		return this.telefono;
 	}
 
 	public String getMail() {
-		return mail;
+		return this.mail;
 	}
 
-	private String telefono;
-	
-	private String mail;
-
-
-	public Cliente(){
-
-	}
 }
