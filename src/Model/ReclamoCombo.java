@@ -1,19 +1,29 @@
 package Model;
 
-
 import java.util.ArrayList;
 
 public class ReclamoCombo extends Reclamo {
-	private ArrayList<Reclamo> reclamos; 
-	
-	
+
+	// ====================================
+	// == Attributes
+	// ====================================
+    
+    private ArrayList<Reclamo> reclamos; 
+
+	// ====================================
+	// == Constructor(s)
+	// ====================================
+    
 	public ReclamoCombo(){
-		reclamos = new ArrayList<Reclamo>();
+		this.reclamos = new ArrayList<Reclamo>();
 	}
 
+	// ====================================
+	// == Accesors (Getters/Setters)
+	// ====================================    
+    
 	public ArrayList<Reclamo> getReclamos() {
-		return reclamos;
+		return this.reclamos;
 	}
+    
 }
-	
-	
