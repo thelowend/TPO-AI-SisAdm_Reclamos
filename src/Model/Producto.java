@@ -1,30 +1,49 @@
 package Model;
 
 public class Producto {
+    
+	// ====================================
+	// == Attributes
+	// ====================================    
+    
 	private int codigo;
-	
 	private String titulo;
+	private String descripcion;
+    private float precio;
 
+	// ====================================
+	// == Constructor(s)
+	// ====================================	
+	
+    public Producto(){
+    }
+    
+	public Producto(int code, String title, String description, float price){
+		this.codigo = code;
+		this.titulo = title;
+		this.descripcion = description;
+		this.precio = price;
+	}    
+	
+	// ====================================
+	// == Accesors (Getters/Setters)
+	// ====================================    
+    
 	public int getCodigo() {
-		return codigo;
+		return this.codigo;
 	}
 
 	public String getTitulo() {
-		return titulo;
+		return this.titulo;
 	}
 
 	public String getDescripcion() {
-		return descripcion;
+		return this.descripcion;
 	}
 
 	public float getPrecio() {
-		return precio;
+		return this.precio;
 	}
-
-	private String descripcion;
-	
-	private float precio;
-	public Producto(){}
 
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
@@ -42,10 +61,4 @@ public class Producto {
 		this.precio = precio;
 	}
 
-	public Producto(int code, String title, String description, float price){
-		this.codigo = code;
-		this.titulo = title;
-		this.descripcion = description;
-		this.precio = price;
-	}
 }
