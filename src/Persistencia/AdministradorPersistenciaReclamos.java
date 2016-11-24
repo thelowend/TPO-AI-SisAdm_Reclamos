@@ -1,27 +1,41 @@
 package Persistencia;
 
 import Model.*;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-
 import Main.Controller;
 
 public class AdministradorPersistenciaReclamos {
+    
+	// ====================================
+	// == Attributes
+	// ====================================
+    
     private static AdministradorPersistenciaReclamos pool;
 
+	// ====================================
+	// == Constructor(s)
+	// ====================================    
+    
+    private AdministradorPersistenciaReclamos() {
+    }
+    
     public static AdministradorPersistenciaReclamos getInstancia() {
         if (pool == null)
             pool = new AdministradorPersistenciaReclamos();
         return pool;
     }
+    
+	// ====================================
+	// == Execution
+	// ====================================    
 
-    public void agregarReclamo(Reclamo reclamo,int id) {
+    public void agregarReclamo(Reclamo reclamo, int id) {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         try {
-            String query = "INSERT INTO Reclamos Values (?,?,?,?,?);";
+            String query = "INSERT INTO Reclamos Values (?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
             if (id != 0) {
             	ps.setInt(1, id);
@@ -147,7 +161,6 @@ public class AdministradorPersistenciaReclamos {
             System.out.println(e.getMessage());
         } finally {
             PoolConnection.getPoolConnection().realeaseConnection(con);
-
         }
     }
 
@@ -267,7 +280,6 @@ public class AdministradorPersistenciaReclamos {
         }
     }
 
-
     private void setCamposBasicos(ResultSet result,Reclamo reclamo) {
         try {
             Cliente cliente = new Cliente();
@@ -356,5 +368,3 @@ public class AdministradorPersistenciaReclamos {
         }
     }
 }
-
-
