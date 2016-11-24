@@ -2,14 +2,31 @@ package Model;
 
 import java.util.Date;
 
-
 public class Factura {
-	
+
+	// ====================================
+	// == Attributes
+	// ====================================    
+    
 	private Date fecha;
 	private int numero;
 	
-	public Factura(){}
+	// ====================================
+	// == Constructor(s)
+	// ====================================    
+    
+	public Factura(){
+    }
+    
+	public Factura(int numero, Date fecha) {
+		this.numero = numero;
+		this.fecha = fecha;
+	}    
 
+	// ====================================
+	// == Accesors (Getters/Setters)
+	// ====================================
+    
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
@@ -18,16 +35,11 @@ public class Factura {
 		this.numero = numero;
 	}
 
-	public Factura(int numero, Date fecha) {
-		this.numero = numero;
-		this.fecha = fecha;
-	}
-
 	public Date getFecha() {
-		return fecha;
+		return this.fecha;
 	}
 
 	public int getNumero() {
-		return numero;
+		return this.numero;
 	}
 }
