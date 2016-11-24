@@ -3,13 +3,33 @@ package Model;
 import java.util.Date;
 
 public class DetalleReclamo {
+    
+	// ====================================
+	// == Attributes
+	// ====================================    
+    
     private Date fechaInicacion;
     private Date fechaCierre;
     private String comentarios;
-    private int responsable_id;
+    private int responsableId;
+    
+	// ====================================
+	// == Constructor(s)
+	// ====================================    
+    
+    public DetalleReclamo(Date fechaInicacion, Date fechaCierre, String comentarios, int responsable) {
+        this.fechaInicacion = fechaInicacion;
+        this.fechaCierre = fechaCierre;
+        this.comentarios = comentarios;
+        this.responsableId = responsable;
+    }
+    
+	// ====================================
+	// == Accesors (Getters/Setters)
+	// ====================================
     
     public Date getFechaInicacion() {
-        return fechaInicacion;
+        return this.fechaInicacion;
     }
     
     public void setFechaInicacion(Date fechaInicacion) {
@@ -17,7 +37,7 @@ public class DetalleReclamo {
     }
     
     public Date getFechaCierre() {
-        return fechaCierre;
+        return this.fechaCierre;
     }
     
     public void setFechaCierre(Date fechaCierre) {
@@ -25,7 +45,7 @@ public class DetalleReclamo {
     }
     
     public String getComentarios() {
-        return comentarios;
+        return this.comentarios;
     }
     
     public void setComentarios(String comentarios) {
@@ -33,18 +53,11 @@ public class DetalleReclamo {
     }
 
     public int getResponsableId() {
-        return responsable_id;
+        return this.responsableId;
     }
     
     public void setResponsableId(int responsable) {
-        this.responsable_id = responsable;
+        this.responsableId = responsable;
     }
-
-    public DetalleReclamo(Date fechaInicacion, Date fechaCierre, String comentarios, int responsable) {
-        this.fechaInicacion = fechaInicacion;
-        this.fechaCierre = fechaCierre;
-        this.comentarios = comentarios;
-        this.responsable_id = responsable;
-    }
-
+    
 }
