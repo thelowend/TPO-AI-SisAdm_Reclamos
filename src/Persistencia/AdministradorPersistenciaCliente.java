@@ -4,13 +4,29 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class AdministradorPersistenciaCliente {
+    
+	// ====================================
+	// == Attributes
+	// ====================================    
+    
     private static AdministradorPersistenciaCliente pool;
+    
+	// ====================================
+	// == Constructor(s)
+	// ====================================    
+    
+    private AdministradorPersistenciaCliente(){
+    }
 
     public static AdministradorPersistenciaCliente getInstancia() {
         if (pool == null)
             pool = new AdministradorPersistenciaCliente();
         return pool;
     }
+    
+	// ====================================
+	// == Execution
+	// ====================================    
 
     public Cliente getClienteById(int id) {
         Connection con = PoolConnection.getPoolConnection().getConnection();
@@ -44,7 +60,7 @@ public class AdministradorPersistenciaCliente {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         ArrayList<Cliente> clientes = new ArrayList<Cliente>();
         try {
-            String query = "select * from Clientes;";
+            String query = "select * from Clientes";
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet result = ps.executeQuery();
             while (result.next()) {
