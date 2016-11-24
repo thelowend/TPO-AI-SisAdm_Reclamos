@@ -4,18 +4,30 @@ import java.util.ArrayList;
 
 public class Usuario extends Entity {
 	
+	// ====================================
+	// == Attributes
+	// ====================================
+    
 	private ArrayList<Role> roles;
 	private String legajo;
 	private String clave;
+    
+    // ====================================
+	// == Constructor(s)
+	// ====================================
 
 	public Usuario(){
-		roles = new ArrayList<Role>();
-	};
+		this.roles = new ArrayList<Role>();
+	}
 
 	public Usuario(int id){
 		super(id);
-		roles = new ArrayList<Role>();
+		this.roles = new ArrayList<Role>();
 	}
+    
+	// ====================================
+	// == Accesors (Getters/Setters)
+	// ====================================    
 
 	public void setRoles(ArrayList<Role> roles) {
 		this.roles = roles;
@@ -30,15 +42,15 @@ public class Usuario extends Entity {
 	}
 
 	public ArrayList<Role> getRoles() {
-
-		return roles;
+		return this.roles;
 	}
 
 	public String getLegajo() {
-		return legajo;
+		return this.legajo;
 	}
 
 	public String getClave() {
-		return clave;
+		return this.clave;
 	}
+    
 }
