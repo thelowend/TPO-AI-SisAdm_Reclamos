@@ -1,16 +1,30 @@
 package Model;
 
 public class ReclamoZona extends Reclamo {
+    
+	// ====================================
+	// == Attributes
+	// ====================================    
+	
 	private String zona;
 	
-	public ReclamoZona(){}
+	// ====================================
+	// == Constructor(s)
+	// ====================================    
+    
+	public ReclamoZona() {
+    }
+    
+	// ====================================
+	// == Accesors (Getters/Setters)
+	// ====================================    
 
 	public void setZona(String zona) {
 		this.zona = zona;
 	}
 
 	public String getZona() {
-
-		return zona;
+		return this.zona;
 	}
+    
 }
