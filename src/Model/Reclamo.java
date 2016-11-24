@@ -4,24 +4,38 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class Reclamo {
+    
+	// ====================================
+	// == Attributes
+	// ====================================
+    
 	protected int numeroReclamo;
 	protected Cliente cliente;
 	protected String descripcion;
  	protected HashMap<EstadoReclamo,DetalleReclamo> hashReclamos;
+    
+	// ====================================
+	// == Constructor(s)
+	// ====================================
+    
 	public Reclamo(){
-		hashReclamos = new HashMap<EstadoReclamo,DetalleReclamo>();
+		this.hashReclamos = new HashMap<EstadoReclamo,DetalleReclamo>();
 	}
+    
+	// ====================================
+	// == Accesors (Getters/Setters)
+	// ====================================    
 
 	public int getNumeroReclamo() {
-		return numeroReclamo;
+		return this.numeroReclamo;
 	}
 
 	public Cliente getCliente() {
-		return cliente;
+		return this.cliente;
 	}
 
 	public String getDescripcion() {
-		return descripcion;
+		return this.descripcion;
 	}
 
 	public void setNumeroReclamo(int numeroReclamo) {
@@ -41,6 +55,6 @@ public class Reclamo {
 	}
 
 	public HashMap<EstadoReclamo, DetalleReclamo> getHashReclamos() {
-		return hashReclamos;
+		return this.hashReclamos;
 	}
 }
