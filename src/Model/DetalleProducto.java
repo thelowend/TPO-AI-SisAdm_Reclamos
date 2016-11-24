@@ -6,8 +6,8 @@ public class DetalleProducto {
 	// == Attributes
 	// ====================================
     
-    private Producto producto;
-    private int cantidad;    
+	private Producto producto;
+	private int cantidad;    
     
 	// ====================================
 	// == Constructor(s)
