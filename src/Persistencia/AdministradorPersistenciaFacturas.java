@@ -13,13 +13,29 @@ import java.util.Date;
  * Created by eladh_000 on 15/10/2016.
  */
 public class AdministradorPersistenciaFacturas {
-    private static AdministradorPersistenciaFacturas pool;
 
+    // ====================================
+	// == Attributes
+	// ====================================
+    
+    private static AdministradorPersistenciaFacturas pool;
+    
+	// ====================================
+	// == Constructor(s)
+	// ====================================    
+
+    private AdministradorPersistenciaFacturas() {
+    }
+    
     public static AdministradorPersistenciaFacturas getInstancia() {
         if (pool == null)
             pool = new AdministradorPersistenciaFacturas();
         return pool;
     }
+    
+	// ====================================
+	// == Execution
+	// ====================================    
 
     public Factura getFacturaId(int id) {
         Connection con = PoolConnection.getPoolConnection().getConnection();
@@ -44,7 +60,7 @@ public class AdministradorPersistenciaFacturas {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         ArrayList<Factura> facturas = new ArrayList<Factura>();
         try {
-            String query = "select * from Facturas;";
+            String query = "select * from Facturas";
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet result = ps.executeQuery();
             while (result.next()) {
@@ -62,7 +78,7 @@ public class AdministradorPersistenciaFacturas {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         ArrayList<Factura> facturas = new ArrayList<Factura>();
         try {
-            String query = "select * from Facturas where CAST(? AS DATE) = CAST(fecha AS DATE);";
+            String query = "select * from Facturas where CAST(? AS DATE) = CAST(fecha AS DATE)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setTimestamp(1,new java.sql.Timestamp(fecha.getTime()));
             ResultSet result = ps.executeQuery();
