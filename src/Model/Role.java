@@ -1,18 +1,32 @@
 package Model;
 
 public class Role extends Entity{
-	private String RoleName;
+    
+	// ====================================
+	// == Attributes
+	// ====================================    
+    
+	private String roleName;
+    
+	// ====================================
+	// == Constructor(s)
+	// ====================================
+
+   	public Role(int id, String roleName){
+		super(id);
+		this.roleName = roleName;
+	}
+
+	// ====================================
+	// == Accesors (Getters/Setters)
+	// ====================================    
 
 	public void setRoleName(String roleName) {
-		RoleName = roleName;
+		this.roleName = roleName;
 	}
 
 	public String getRoleName() {
-		return RoleName;
+		return this.roleName;
 	}
 
-	public Role(int id, String roleName){
-		super(id);
-		this.RoleName = roleName;
-	}
 }
