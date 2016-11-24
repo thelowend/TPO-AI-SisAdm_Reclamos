@@ -12,19 +12,35 @@ import java.util.ArrayList;
  * Created by eladh_000 on 15/10/2016.
  */
 public class AdministradorPersistenciaProductos {
+    
+	// ====================================
+	// == Attributes
+	// ====================================    
+    
     private static AdministradorPersistenciaProductos pool;
+    
+	// ====================================
+	// == Constructor(s)
+	// ====================================    
 
+    private AdministradorPersistenciaProductos() {
+    }
+    
     public static AdministradorPersistenciaProductos getInstancia() {
         if (pool == null)
             pool = new AdministradorPersistenciaProductos();
         return pool;
     }
 
+    // ====================================
+	// == Execution
+	// ====================================    
+    
     public Producto getProductoById(int id) {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         Producto producto = null;
         try {
-            String query = "select * from Producto where codigo = ?";
+            String query = "select * from Productos where codigo = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1,id);
             ResultSet result = ps.executeQuery();
@@ -45,7 +61,7 @@ public class AdministradorPersistenciaProductos {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         ArrayList<Producto> productos = new ArrayList<Producto>();
         try {
-            String query = "select * from Productos;";
+            String query = "select * from Productos";
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet result = ps.executeQuery();
             while (result.next()) {
