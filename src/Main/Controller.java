@@ -189,6 +189,20 @@ public class Controller {
             throw ex;
         }
     }
+    
+    public void addReclamo(ReclamoFaltantesView reclamoView) {
+        try {
+            ReclamoFaltantes reclamo = Mapper.getMapper().ReclamoViewToReclamo(reclamoView);
+            reclamo.setCliente(buscarCliente(reclamoView.getClienteId()));
+            
+            reclamoView.getProductos().stream().forEach(dp -> reclamo.getProductos().add(
+                    new DetalleProducto(buscarProducto(dp.getProducto().getCodigo()), dp.getCantidad(), dp.getCantidadPedida())));
+            
+            AdministradorPersistenciaReclamos.getInstancia().agregarReclamo(reclamo,0);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
 
     public void addReclamo(ReclamoProductoView reclamoView) {
         try {

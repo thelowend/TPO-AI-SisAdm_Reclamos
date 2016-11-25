@@ -6,6 +6,7 @@ package Vistas;
 public class DetalleProductoView {
     private ProductoView producto;
     private int cantidad;
+	private int cantidad_pedida;
 
     public ProductoView getProducto() {
 
@@ -15,12 +16,23 @@ public class DetalleProductoView {
     public int getCantidad() {
         return cantidad;
     }
-
+    
+    public int getCantidadPedida() {
+    	return cantidad_pedida;
+    }
+    
     public DetalleProductoView(ProductoView producto, int cantidad) {
         this.producto = producto;
         this.cantidad = cantidad;
+        this.cantidad_pedida = -1;
     }
-
+    
+    public DetalleProductoView(ProductoView producto, int cantidad, int pedida) {
+        this.producto = producto;
+        this.cantidad = cantidad;
+        this.cantidad_pedida = pedida;
+    }
+    
     public DetalleProductoView(){
 
     }

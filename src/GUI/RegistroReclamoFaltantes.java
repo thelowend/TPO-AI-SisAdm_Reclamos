@@ -7,17 +7,23 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Main.Controller;
+import Model.EstadoReclamo;
+import Vistas.DetalleProductoView;
+import Vistas.DetalleReclamoView;
 import Vistas.ProductoView;
+import Vistas.ReclamoFaltantesView;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextPane;
@@ -32,6 +38,8 @@ public class RegistroReclamoFaltantes extends JFrame {
 	private JTextField txtCliente;
 	private ArrayList<ProductoView> productos;
 	private DefaultTableModel dtm;
+	private JTextPane txtDescripcionReclamo;
+	private JComboBox cbSeleccionarProducto;
 
 	/**
 	 * Launch the application.
@@ -67,7 +75,7 @@ public class RegistroReclamoFaltantes extends JFrame {
 		DefaultComboBoxModel dcbm = new DefaultComboBoxModel();
 		productos.stream().forEach(p -> dcbm.addElement(p));
 		
-		JComboBox cbSeleccionarProducto = new JComboBox();
+		cbSeleccionarProducto = new JComboBox();
 		cbSeleccionarProducto.setModel(dcbm);
 		cbSeleccionarProducto.setBounds(10, 107, 200, 20);
 		contentPane.add(cbSeleccionarProducto);
@@ -88,15 +96,20 @@ public class RegistroReclamoFaltantes extends JFrame {
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String producto = cbSeleccionarProducto.getSelectedItem().toString();
+				
+				ProductoView pv = (ProductoView) cbSeleccionarProducto.getSelectedItem();
 				
 				for (int i=0; i < dtm.getRowCount(); i++) {
-					if (dtm.getValueAt(i, 0) == producto) {
+					if (dtm.getValueAt(i, 0) == pv) {
 						dtm.removeRow(i);
 					}
 				}
 				
-				dtm.addRow(new Object[] {producto, txtSolicitada.getText(), txtRecibida.getText()});
+				dtm.addRow(new Object[]{ pv, Integer.parseInt(txtSolicitada.getText()), Integer.parseInt(txtRecibida.getText()) });
+				txtSolicitada.setText("");
+				txtRecibida.setText("");
+				cbSeleccionarProducto.setSelectedIndex(0);
+
 			}
 		});
 		btnAgregar.setBounds(324, 138, 100, 23);
@@ -137,25 +150,38 @@ public class RegistroReclamoFaltantes extends JFrame {
 		JButton btnRegistrarReclamo = new JButton("Registrar ReclamoView");
 		btnRegistrarReclamo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				/*
-				ReclamoFaltantesView = rfv = ReclamoFaltantesView();
 				
-				ReclamoFacturacionView rfv = new ReclamoFacturacionView();
+				ReclamoFaltantesView rfv = new ReclamoFaltantesView();
+				
 				rfv.setCliente(Integer.parseInt(txtCliente.getText()));
 				rfv.getHashReclamos().put(EstadoReclamo.Ingresado, 
 						new DetalleReclamoView(
 							new Date(), 
 							null, 
-							txtDescripcionReclamo.getText(), 
+							null,
 							-1
 						)
 				);
+				
 				rfv.setDescripcion(txtDescripcionReclamo.getText());
-				for (int i = 0 ; i < dtm.getRowCount() ; i++)
-					rfv.getFacturas().add(((FacturaView)dtm.getValueAt(i,1)));
-				Controller.getInstancia().addReclamo(rfv);
-				confirmarGrabado();
-				*/
+				for (int i = 0 ; i < dtm.getRowCount() ; i++) {
+					
+					ProductoView pv = (ProductoView) dtm.getValueAt(i, 0);
+					int solicitada = Integer.parseInt(dtm.getValueAt(i,1).toString());
+					int recibida = Integer.parseInt(dtm.getValueAt(i,2).toString());
+					
+					rfv.getProductos().add(
+							new DetalleProductoView(
+									pv,
+									solicitada,
+									recibida
+							)
+					);
+				}
+				
+
+			Controller.getInstancia().addReclamo(rfv);
+			confirmarGrabado();
 			}
 		});
 		btnRegistrarReclamo.setBounds(10, 347, 414, 23);
@@ -178,10 +204,18 @@ public class RegistroReclamoFaltantes extends JFrame {
 		scrollPane_1.setBounds(106, 28, 318, 49);
 		contentPane.add(scrollPane_1);
 		
-		JTextPane txtDescripcionReclamo = new JTextPane();
+		txtDescripcionReclamo = new JTextPane();
 		scrollPane_1.setViewportView(txtDescripcionReclamo);
 		
-		
+	}
+	private void confirmarGrabado() {
+		JOptionPane.showMessageDialog(null, "El Reclamo se registro con exito");
+		txtRecibida.setText("");
+		txtSolicitada.setText("");
+		txtCliente.setText("");
+		cbSeleccionarProducto.setSelectedIndex(0);
+		txtDescripcionReclamo.setText("");
+		dtm.setRowCount(0);
 	}
 
 }

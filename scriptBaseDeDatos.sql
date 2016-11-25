@@ -92,6 +92,17 @@ Create Table Reclamos_Facturas (
 	FOREIGN KEY (factura_id) REFERENCES Facturas(numero)
 )
 
+Create Table Reclamos_Faltantes (
+	Id int Identity(1,1),
+	cantidad_pedida int NOT NULL,
+	cantidad_recibida int NOT NULL,
+	reclamo_id int NOT NULL,
+	producto_id int NOT NULL,
+	PRIMARY KEY (Id),
+	FOREIGN KEY (reclamo_id) REFERENCES Reclamos(Id),
+	FOREIGN KEY (producto_id) REFERENCES Productos(codigo)
+)
+
 
 ---post deployment script
 
@@ -136,6 +147,3 @@ Insert Into Zonas Values ('Capital Federal'), ('Lomas de Zamora'), ('Baradero')
 Insert Into Clientes Values ('elad','av. sadfas','43315081','eladhaim22@gmail.com')
 INSERT Clientes VALUES ('Diego', 'Calle Falsa 123', '12344321', 'diegop@blos.com.ar')
 
-select * from Reclamos
-select * from Reclamos_Facturas
-select * from facturas

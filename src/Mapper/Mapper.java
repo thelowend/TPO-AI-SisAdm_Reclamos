@@ -77,7 +77,13 @@ public class Mapper {
         ReclamoViewToReclamo(reclamoCantidades, reclamoCantidadesView);
         return reclamoCantidades;
     }
-
+    
+    public ReclamoFaltantes ReclamoViewToReclamo(ReclamoFaltantesView reclamoFaltantesView){
+    	ReclamoFaltantes reclamoFaltantes = new ReclamoFaltantes();
+        ReclamoViewToReclamo(reclamoFaltantes, reclamoFaltantesView);
+        return reclamoFaltantes;
+    }
+    
     public ReclamoFacturacion ReclamoViewToReclamo(ReclamoFacturacionView reclamoFacturacionView){
         ReclamoFacturacion reclamoFacturacion = new ReclamoFacturacion();
         ReclamoViewToReclamo(reclamoFacturacion,reclamoFacturacionView);

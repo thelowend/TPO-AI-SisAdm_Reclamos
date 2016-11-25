@@ -80,6 +80,7 @@ public class AdministradorPersistenciaReclamos {
             String query2 = "INSERT INTO Reclamos_Productos VALUES (?,?,?)";
             String query3 = "INSERT INTO Reclamos_Facturas VALUES (?,?)";
             String query4 = "UPDATE Reclamos SET zona = ? where Id = ?";
+            String query5 = "INSERT INTO Reclamos_Faltantes VALUES (?,?,?,?)";
             PreparedStatement ps;
             String reclamoName = reclamo.getClass().getSimpleName();
             switch (reclamoName) {
@@ -104,6 +105,16 @@ public class AdministradorPersistenciaReclamos {
                         ps = con.prepareStatement(query3);
                         ps.setInt(1, reclamo.getNumeroReclamo());
                         ps.setInt(2, factura.getNumero());
+                        ps.execute();
+                    }
+                    break;
+                case "ReclamoFaltantes":
+                    for (DetalleProducto detalleProducto : ((ReclamoFaltantes) reclamo).getProductos()) {
+                        ps = con.prepareStatement(query5);
+                        ps.setInt(1, detalleProducto.getCantidad());
+                        ps.setInt(2, detalleProducto.getCantidadPedida());
+                        ps.setInt(3, reclamo.getNumeroReclamo());
+                        ps.setInt(4, detalleProducto.getProducto().getCodigo());
                         ps.execute();
                     }
                     break;
@@ -280,6 +291,7 @@ public class AdministradorPersistenciaReclamos {
                         r = reclamoFacturacion;
                         break;
                     case "ReclamoCantidades":
+                    case "ReclamoFaltantes":
                     case "ReclamoProducto":
                         String query3 = "SELECT * FROM Productos p INNER JOIN Reclamos_Productos rp on p.codigo = rp.producto_id where rp.reclamo_id = ?";
                         ps = con.prepareStatement(query3);
@@ -296,11 +308,17 @@ public class AdministradorPersistenciaReclamos {
                             reclamoP.setProductos(detalleProductos);
                             r = reclamoP;
                         }
-                        else{
+                        else if (tipoReclamo.compareTo("ReclamoProducto") == 0) {
                             ReclamoProducto reclamoP = new ReclamoProducto();
                             setCamposBasicos(result, reclamoP);
                             reclamoP.setDetalleProducto(detalleProductos.get(0));
                             r = reclamoP;
+                        } else {
+                        	//ReclamoFaltantes
+                        	ReclamoFaltantes reclamoF = new ReclamoFaltantes();
+                            setCamposBasicos(result, reclamoF);
+                            reclamoF.setProductos(detalleProductos);
+                            r = reclamoF;
                         }
                         break;
                     case "ReclamoZona":

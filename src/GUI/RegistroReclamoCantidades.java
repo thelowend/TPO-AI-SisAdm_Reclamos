@@ -78,7 +78,7 @@ public class RegistroReclamoCantidades extends JFrame {
 
 		dtm = new DefaultTableModel();
 		dtm.addColumn("ProductoId");
-		dtm.addColumn("Produco");
+		dtm.addColumn("Producto");
 		dtm.addColumn("Cantidad");
 		tblProductosReclamo = new JTable(dtm);
 		tblProductosReclamo.setShowVerticalLines(false);

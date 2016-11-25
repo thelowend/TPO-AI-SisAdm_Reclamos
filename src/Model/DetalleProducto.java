@@ -7,7 +7,8 @@ public class DetalleProducto {
 	// ====================================
     
 	private Producto producto;
-	private int cantidad;    
+	private int cantidad;
+	private int cantidad_pedida;
     
 	// ====================================
 	// == Constructor(s)
@@ -20,6 +21,13 @@ public class DetalleProducto {
     public DetalleProducto(Producto producto, int cantidad) {
         this.producto = producto;
         this.cantidad = cantidad;
+        this.cantidad_pedida = -1;
+    }
+    
+    public DetalleProducto(Producto producto, int cantidad, int pedida) {
+        this.producto = producto;
+        this.cantidad = cantidad;
+        this.cantidad_pedida = pedida;
     }
     
 	// ====================================
@@ -32,6 +40,9 @@ public class DetalleProducto {
 
     public int getCantidad() {
         return this.cantidad;
+    }
+    public int getCantidadPedida() {
+        return this.cantidad_pedida;
     }
 
 }
