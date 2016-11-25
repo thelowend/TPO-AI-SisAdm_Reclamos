@@ -204,8 +204,7 @@ public class TableroFacturacion extends JFrame {
 						Controller.getInstancia().actualizarReclamo(rpv);
 						
 						updateVistaReclamos();
-						JOptionPane.showMessageDialog(null, "¡Actualizado con éxito! La tabla duplica el valor porque JAVA es basura y no se pueden limpiar las tablas sin que tire error. Si cerrás y volvés a entrar se ve mejor.");
-						
+						JOptionPane.showMessageDialog(null, "¡Actualizado con éxito!");
 					}
 					catch (Exception ex){
 						ex.printStackTrace();
@@ -228,7 +227,9 @@ public class TableroFacturacion extends JFrame {
 		
 		tblReclamoCantidades.getSelectionModel().addListSelectionListener(new ListSelectionListener (){
 	        public void valueChanged(ListSelectionEvent event) {
-	        	showSelectedData(reclamosView.get(tblReclamoCantidades.getSelectedRow()));
+	        	if (tblReclamoCantidades.getSelectedRow() != -1) {
+	        		showSelectedData(reclamosView.get(tblReclamoCantidades.getSelectedRow()));
+	        	}
 	        }
 	    });
 
@@ -240,14 +241,7 @@ public class TableroFacturacion extends JFrame {
 	
 	private void updateVistaReclamos() {
 
-		
-		//////////// NO SE COMO MIERDA LIMPIAR LA TABLA, JAVA ES PURA BASURA. ////////////////
-		//tblReclamoCantidades.getSelectionModel().removeListSelectionListener(listener);    
-		//tblReclamosCantidades.setRowCount(0);
-		//tblReclamoCantidades.getSelectionModel().addListSelectionListener(listener);
-		////////////NO SE COMO MIERDA LIMPIAR LA TABLA, JAVA ES PURA BASURA. ////////////////
-		
-		
+		tblReclamosCantidades.setRowCount(0);
 		reclamosView = Controller.getInstancia().listReclamoView("ReclamoFacturacion");
 		
 		for (int i = 0; i < reclamosView.size(); i++) {

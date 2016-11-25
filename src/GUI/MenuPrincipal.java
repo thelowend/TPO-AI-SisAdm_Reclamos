@@ -124,6 +124,7 @@ public class MenuPrincipal extends JFrame {
 			panel.add(btnRegistroDeReclamos);
 		}
 		else if (roles.stream().filter(role -> role.getRoleName().compareTo("Consulta") == 0).count() > 0) {
+			panel.add(btnTableroDeAdministracin);
 			panel.add(btnZonaDeReportes);
 		}
 		

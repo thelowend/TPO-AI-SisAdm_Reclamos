@@ -18,12 +18,14 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
@@ -73,6 +75,7 @@ public class TableroCantidades extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		JFrame theframe = this;
 		
 		JLabel lblListaDeReclamos = new JLabel("Lista de Reclamos:");
 		lblListaDeReclamos.setBounds(10, 11, 120, 14);
@@ -186,7 +189,7 @@ public class TableroCantidades extends JFrame {
 						rpv.setDescripcion(txtDescripcion.getText());
 						EstadoReclamo nuevoEstadoReclamo = EstadoReclamo.valueOf(cbEstadoReclamo.getSelectedItem().toString());
 						rpv.setNumeroReclamo(Integer.parseInt(lblReclamoId.getText()));
-						//HashMap<EstadoReclamo, DetalleReclamoView> oldHash = currentRCV.getHashReclamos();
+						
 						HashMap<EstadoReclamo, DetalleReclamoView> newHash = new HashMap<EstadoReclamo, DetalleReclamoView>();
 						
 						DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
@@ -200,12 +203,10 @@ public class TableroCantidades extends JFrame {
 						));
 						
 						rpv.setHashReclamos(newHash);
-						//rpv.setProductos(currentRCV.getProductos());
-						
 						Controller.getInstancia().actualizarReclamo(rpv);
 						
 						updateVistaReclamos();
-						JOptionPane.showMessageDialog(null, "¡Actualizado con éxito! La tabla duplica el valor porque JAVA es basura y no se pueden limpiar las tablas sin que tire error. Si cerrás y volvés a entrar se ve mejor.");
+						JOptionPane.showMessageDialog(null, "¡Actualizado con éxito!");
 						
 					}
 					catch (Exception ex){
@@ -214,6 +215,7 @@ public class TableroCantidades extends JFrame {
 
 				}
 			});
+			
 			btnActualizarReclamo.setBounds(94, 259, 310, 23);
 			pnlReclamo.add(btnActualizarReclamo);	
 		}
@@ -230,7 +232,9 @@ public class TableroCantidades extends JFrame {
 		
 		tblReclamoCantidades.getSelectionModel().addListSelectionListener(new ListSelectionListener (){
 	        public void valueChanged(ListSelectionEvent event) {
-	        	showSelectedData(reclamosView.get(tblReclamoCantidades.getSelectedRow()));
+	        	if (tblReclamoCantidades.getSelectedRow() != -1) {
+	        		showSelectedData(reclamosView.get(tblReclamoCantidades.getSelectedRow()));
+	        	}
 	        }
 	    });
 
@@ -241,15 +245,8 @@ public class TableroCantidades extends JFrame {
 	}
 	
 	private void updateVistaReclamos() {
-
 		
-		//////////// NO SE COMO MIERDA LIMPIAR LA TABLA, JAVA ES PURA BASURA. ////////////////
-		//tblReclamoCantidades.getSelectionModel().removeListSelectionListener(listener);    
-		//tblReclamosCantidades.setRowCount(0);
-		//tblReclamoCantidades.getSelectionModel().addListSelectionListener(listener);
-		////////////NO SE COMO MIERDA LIMPIAR LA TABLA, JAVA ES PURA BASURA. ////////////////
-		
-		
+		tblReclamosCantidades.setRowCount(0);
 		reclamosView = Controller.getInstancia().listReclamoView("ReclamoCantidades");
 		
 		for (int i = 0; i < reclamosView.size(); i++) {

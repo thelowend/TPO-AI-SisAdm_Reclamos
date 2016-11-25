@@ -106,8 +106,7 @@ public class Reportes extends JFrame {
             		tblReporte.setAutoCreateRowSorter(true);
             		
             		//Ordena por mayor cantidad de reclamos (Hay que llamarlo 2 veces si o si)
-            		tblReporte.getRowSorter().toggleSortOrder(0);
-            		tblReporte.getRowSorter().toggleSortOrder(0);
+            		tblReporte.getRowSorter().toggleSortOrder(1);
             		
 	        		break;
             	case 1: 
