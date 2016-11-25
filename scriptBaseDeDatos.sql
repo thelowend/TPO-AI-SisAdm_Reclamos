@@ -55,9 +55,10 @@ Create Table Reclamos (
 	tipoReclamo nvarchar(50) NOT NULL,
 	descripcion nvarchar(100),
 	cliente_id int NOT NULL,
-	zona nvarchar(100) NULL,
+	zona int NULL,
 	PRIMARY KEY (Id),
 	FOREIGN KEY (cliente_id) REFERENCES Clientes(Id),
+	FOREIGN KEY (zona) REFERENCES Zonas(Id)
 )
 
 Create Table DetalleReclamos (
