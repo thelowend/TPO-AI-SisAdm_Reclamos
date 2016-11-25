@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -89,7 +90,13 @@ public class LogIn extends javax.swing.JFrame {
 			JButton btnLogIn = new JButton();
 			btnLogIn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					tryLogin();
+					try {
+						tryLogin();
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
+						ex.getMessage();
+					}
+					
 				}
 			});
 			btnLogIn.setText("Iniciar Sesion");

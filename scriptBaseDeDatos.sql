@@ -114,12 +114,12 @@ create login A_Interactivas_ with password = '1234', default_database = Api, che
 go
 
 
-Insert Into Usuarios (legajo,clave) Values ('Administrador','Administrador'),
-('UsuarioFacturacion','UsuarioFacturacion'),
-('UsuarioDistribucion','UsuarioDistribucion'),
-('UsuarioEntrega','UsuarioEntrega'),
-('UsuarioConsulta','UsuarioConsulta'),
-('UsuarioCallCenter','UsuarioCallCenter')
+Insert Into Usuarios (legajo,clave) Values ('Administrador','uade'),
+('UsuarioFacturacion','uade'),
+('UsuarioDistribucion','uade'),
+('UsuarioEntrega','uade'),
+('UsuarioConsulta','uade'),
+('UsuarioCallCenter','uade')
 
 Insert Into Roles Values ('Administrador'),
 ('Facturacion'),
