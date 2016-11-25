@@ -299,6 +299,7 @@ public class TableroZona extends JFrame {
 			lblFechaIngresado.setText(fechaInicio);
 			lblFechaModificado.setText(fechaUltima);
 			cbEstadoReclamo.setSelectedItem(estadoReclamo);
+			txtModificacion.setText(drView.getComentarios());
 		}
 		
 		
