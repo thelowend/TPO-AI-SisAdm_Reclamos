@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 
@@ -190,7 +191,49 @@ public class Reportes extends JFrame {
             		//tiempo promedio de respuesta de los reclamos por responsable
             		//"Resolucion Reclamo (tiempo)"
             		
-        			System.out.println("3");
+            		reclamosView = Controller.getInstancia().listReclamoView(null);
+            		String[] atendidos = {"ID Responsable", "Tiempo promedio (Horas)"};
+            		
+            		Hashtable<Integer, Long> htTiempoMedio = new Hashtable<Integer, Long>();
+
+            		for (int i = 0; i < reclamosView.size(); i++) {
+            			HashMap<EstadoReclamo, DetalleReclamoView> hashReclamo = reclamosView.get(i).getHashReclamos();
+            			
+            	        for (EstadoReclamo key : hashReclamo.keySet()) {
+            	        	
+            	        	int responsableID = hashReclamo.get(key).getResponsableId();
+            	        	Date fechaInicio = hashReclamo.get(key).getFechaInicacion();
+            	        	Date fechaActualizado = hashReclamo.get(key).getFechaCierre();
+            	        	
+            	        	if (fechaActualizado != null) {
+            	        	    long diffInMillies = fechaActualizado.getTime() - fechaInicio.getTime();
+            	        	    long diff =TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            	        	    
+                    			if (!htTiempoMedio.containsKey(responsableID)) {
+                    				htTiempoMedio.put(responsableID, diff);
+                    			} else {
+                    				//voy haciendo sumatoria del promedio
+                    				long newDiff = (htTiempoMedio.get(responsableID) + diff) / 2;
+                    				htTiempoMedio.put(responsableID, newDiff);
+                    			}
+            	        	    
+            	        	}
+            	        	
+            	        }		
+            		}
+            		
+            	    DefaultTableModel tblReporteAtendidosModel = new DefaultTableModel(atendidos, 0);     	    
+            		
+            		for(Entry<?, ?> entry: htTiempoMedio.entrySet()) {
+            			tblReporteAtendidosModel.addRow(new Object[] {entry.getKey(), entry.getValue()});
+            		}
+            		
+            		tblReporte.setModel(tblReporteAtendidosModel);
+            		tblReporte.setAutoCreateRowSorter(true);
+            		
+            		//Ordena por menor tiempo promedio cantidad (si lo llamo 1 vez, es descendente)
+            		tblReporte.getRowSorter().toggleSortOrder(1);
+            		
         			break;
             	default:
         			System.out.println("Def");
