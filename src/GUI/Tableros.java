@@ -73,16 +73,17 @@ public class Tableros extends JFrame {
 		});
 		
 		JFrame jfTableroCantidades = new TableroCantidades();
+		
 		JFrame jfTableroFacturacion = new TableroFacturacion();
-		//JFrame jfTableroFaltantes = new TableroFaltantes();
-		//JFrame jfTableroProducto = new TableroProducto();
+		JFrame jfTableroFaltantes = new TableroFaltantes();
+		JFrame jfTableroProductos = new TableroProductos();
 		JFrame jfTableroZona = new TableroZona();
 		
 
 		tabbedPane.addTab("Cantidades", jfTableroCantidades.getContentPane());
 		tabbedPane.addTab("Facturación", jfTableroFacturacion.getContentPane());
-		//tabbedPane.addTab("Faltantes", jfTableroFaltantes.getContentPane());
-		//tabbedPane.addTab("Producto", jfTableroProducto.getContentPane());
+		tabbedPane.addTab("Faltantes", jfTableroFaltantes.getContentPane());
+		tabbedPane.addTab("Productos", jfTableroProductos.getContentPane());
 		tabbedPane.addTab("Zona", jfTableroZona.getContentPane());
 		
 		this.setSize(465, 650);

@@ -28,7 +28,7 @@ import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings({"rawtypes", "serial" })
-public class TableroZona extends JFrame {
+public class TableroProductos extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel pnlReclamo;
@@ -51,7 +51,7 @@ public class TableroZona extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TableroZona frame = new TableroZona();
+					TableroProductos frame = new TableroProductos();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,8 +63,8 @@ public class TableroZona extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TableroZona() {
-		setTitle("Tablero Reclamo Zona");
+	public TableroProductos() {
+		setTitle("Tablero Reclamo Productos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 550);
 		contentPane = new JPanel();
@@ -241,7 +241,7 @@ public class TableroZona extends JFrame {
 		////////////NO SE COMO MIERDA LIMPIAR LA TABLA, JAVA ES PURA BASURA. ////////////////
 		
 		
-		reclamosView = Controller.getInstancia().listReclamoView("ReclamoZona");
+		reclamosView = Controller.getInstancia().listReclamoView("ReclamoProducto");
 		
 		for (int i = 0; i < reclamosView.size(); i++) {
 			
