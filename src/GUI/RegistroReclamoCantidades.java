@@ -138,14 +138,14 @@ public class RegistroReclamoCantidades extends JFrame {
 						rcv.getProductos().add(new DetalleProductoView((ProductoView)dtm.getValueAt(i,1),
 								Integer.parseInt(dtm.getValueAt(i,2).toString())));
 				Controller.getInstancia().addReclamo(rcv);
-				confiramarGrabado();
+				confirmarGrabado();
 			}
 		});
 
 		btnRegistrarReclamo.setBounds(10, 307, 414, 23);
 		contentPane.add(btnRegistrarReclamo);
 	}
-	private void confiramarGrabado(){
+	private void confirmarGrabado(){
 		JOptionPane.showMessageDialog(null, "El Reclamo se registro con exito");
 		txtCantidad.setText("");
 		txtCliente.setText("");

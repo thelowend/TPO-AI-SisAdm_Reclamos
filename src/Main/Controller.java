@@ -6,9 +6,7 @@ import Mapper.Mapper;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Controller {
     private static Controller Sistema;
@@ -50,7 +48,8 @@ public class Controller {
         return null;
     }
 
-    private Factura buscarFactura (int numero) {
+    @SuppressWarnings("unused")
+	private Factura buscarFactura (int numero) {
         Factura f = facturas.stream().filter(fc -> fc.getNumero() == numero).findFirst().orElse(null);
         if (f!=null){
             return f;
@@ -83,8 +82,8 @@ public class Controller {
         return productoViews;
     }
     
-    public ArrayList<ReclamoView> listReclamoView() {
-        ArrayList<Reclamo> reclamos = AdministradorPersistenciaReclamos.getInstancia().listarReclamos(null);
+    public ArrayList<ReclamoView> listReclamoView(String tipoDeReclamo) {
+        ArrayList<Reclamo> reclamos = AdministradorPersistenciaReclamos.getInstancia().listarReclamos(tipoDeReclamo);
         ArrayList<ReclamoView> reclamosView = new ArrayList<ReclamoView>();
         
         for (int i = 0; i < reclamos.size(); i++) {
@@ -211,6 +210,15 @@ public class Controller {
             throw ex;
         }
     }
+    
+    public void actualizarReclamo(ReclamoCantidadsView reclamoView) {
+        try {
+            ReclamoCantidades reclamo = Mapper.getMapper().ReclamoViewToReclamo(reclamoView);
+            AdministradorPersistenciaReclamos.getInstancia().actualizarReclamo(reclamo);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
 
     public Cliente getClienteByName(String nombre){
         try {
@@ -220,9 +228,9 @@ public class Controller {
         }
     }
 
-    public List<Reclamo> listReclamos(){
+    public List<Reclamo> listReclamos(String tipoDeReclamo){
         try {
-            return AdministradorPersistenciaReclamos.getInstancia().listarReclamos(null);
+            return AdministradorPersistenciaReclamos.getInstancia().listarReclamos(tipoDeReclamo);
         } catch (Exception ex) {
             throw ex;
         }

@@ -48,17 +48,17 @@ public class Tableros extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel1 = new JPanel();
-		panel1.setBounds(5, 5, 450, 450);
+		panel1.setBounds(5, 5, 450, 550);
 		panel1.setAlignmentX(Component.LEFT_ALIGNMENT);
 		contentPane.add(panel1);
 		panel1.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 450, 450);
+		tabbedPane.setBounds(0, 0, 450, 550);
 		panel1.add(tabbedPane);
 		
 		JPanel panel2 = new JPanel();
-		panel2.setBounds(5, 450, 450, 40);
+		panel2.setBounds(5, 570, 450, 40);
 		frame.getContentPane().add(panel2);
 		panel2.setLayout(null);
 		
@@ -72,19 +72,20 @@ public class Tableros extends JFrame {
 			}
 		});
 		
-		JFrame jfTableroUsuarios = new TableroUsuarios();
-		JFrame jfReportes = new Reportes();
-		JFrame jfTableroDistribucion = new TableroDistribucion();
+		JFrame jfTableroCantidades = new TableroCantidades();
 		JFrame jfTableroFacturacion = new TableroFacturacion();
+		//JFrame jfTableroFaltantes = new TableroFaltantes();
+		//JFrame jfTableroProducto = new TableroProducto();
 		JFrame jfTableroZona = new TableroZona();
 		
-		//tabbedPane.addTab("Usuarios", jfTableroUsuarios.getContentPane());
-		//tabbedPane.addTab("Reportes", jfReportes.getContentPane());
-		tabbedPane.addTab("Distribución", jfTableroDistribucion.getContentPane());
+
+		tabbedPane.addTab("Cantidades", jfTableroCantidades.getContentPane());
 		tabbedPane.addTab("Facturación", jfTableroFacturacion.getContentPane());
+		//tabbedPane.addTab("Faltantes", jfTableroFaltantes.getContentPane());
+		//tabbedPane.addTab("Producto", jfTableroProducto.getContentPane());
 		tabbedPane.addTab("Zona", jfTableroZona.getContentPane());
 		
-		this.setSize(465, 530);
+		this.setSize(465, 650);
 	}
 
 }

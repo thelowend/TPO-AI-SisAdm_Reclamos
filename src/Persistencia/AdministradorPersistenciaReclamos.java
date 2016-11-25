@@ -1,10 +1,12 @@
 package Persistencia;
 
 import Model.*;
+
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map.Entry;
+
 import Main.Controller;
 
 public class AdministradorPersistenciaReclamos {
@@ -118,7 +120,7 @@ public class AdministradorPersistenciaReclamos {
     }
 
     //TODO
-    public void cambiarEstadoReclamo(Reclamo reclamo,EstadoReclamo estado) {
+    public void cambiarEstadoReclamo(Reclamo reclamo, EstadoReclamo estado) {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         try {
                 String query;
@@ -127,8 +129,60 @@ public class AdministradorPersistenciaReclamos {
                 else
                     query = "Update Reclamos Set estado = ? where Id = ?";
                 PreparedStatement ps = con.prepareStatement(query);
-                ps.setInt(1,estado.ordinal());
-                ps.setInt(2,reclamo.getNumeroReclamo());
+                ps.setInt(1, estado.ordinal());
+                ps.setInt(2, reclamo.getNumeroReclamo());
+                ps.execute();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            PoolConnection.getPoolConnection().realeaseConnection(con);
+
+        }
+    }
+    
+    public void actualizarReclamo(Reclamo reclamo) {
+        Connection con = PoolConnection.getPoolConnection().getConnection();
+        try {
+                String query;
+                
+                if (reclamo.getClass().getSimpleName() == "ReclamoCombo") 
+                    query = "Update DetalleReclamos Set estado = ?, fechaFin = ?, comentario = ? where combo_id = ?";
+                else
+                    query = "Update DetalleReclamos Set estado = ?, fechaFin = ?, comentario = ? where Id = ?";
+                
+                PreparedStatement ps = con.prepareStatement(query);
+                String reclamoName = reclamo.getClass().getSimpleName();
+                
+                switch (reclamoName) {
+                    case "ReclamoProducto":
+                        break;
+                    case "ReclamoCantidades":
+                    	
+                		HashMap<EstadoReclamo, DetalleReclamo> hashReclamo = reclamo.getHashReclamos();
+                		
+                		for(Entry<?, ?> entry: hashReclamo.entrySet()) {
+                			String estadoReclamo = entry.getKey().toString();
+                			
+                			
+                			DetalleReclamo dr = (DetalleReclamo) entry.getValue();
+                			String comentarios = dr.getComentarios();
+                			Date dFechaUltima = new java.sql.Date(dr.getFechaCierre().getTime()); ;
+                			
+                            ps.setInt(1, EstadoReclamo.valueOf(estadoReclamo).ordinal());
+                            ps.setDate(2, dFechaUltima);
+                            ps.setString(3, comentarios);
+                            ps.setInt(4, reclamo.getNumeroReclamo());
+                		}
+                    	
+                        break;
+                    case "ReclamoFacturacion":
+                        break;
+                    case "ReclamoZona":
+                    	break;
+                }
+                
+                
+
                 ps.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -172,12 +226,12 @@ public class AdministradorPersistenciaReclamos {
             String query = "";
             PreparedStatement ps;
             ResultSet result2;
+            
             if (tipoDeReclamo == null) {
-                query = "SELECT r.Id as reclamo_id,* FROM Reclamos r INNER JOIN Clientes c on r.cliente_id = c.Id where r.combo_id IS NULL ";
+                query = "SELECT r.Id as reclamo_id, * FROM Reclamos r INNER JOIN Clientes c on r.cliente_id = c.Id where r.combo_id IS NULL";
                 ps = con.prepareStatement(query);
             } else {
-                query = "SELECT r.Id as reclamo_id,* FROM Reclamos r INNER JOIN Clientes c on r.cliente_id = c.Id  where tipoReclamo = ?" +
-                "And r.combo_id IS NULL";
+                query = "SELECT r.Id as reclamo_id, * FROM Reclamos r INNER JOIN Clientes c on r.cliente_id = c.Id where tipoReclamo = ? And r.combo_id IS NULL";
                 ps = con.prepareStatement(query);
                 ps.setString(1, tipoDeReclamo);
             }

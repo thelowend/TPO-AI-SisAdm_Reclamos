@@ -102,7 +102,6 @@ public class RegistroReclamoProducto extends JFrame {
 				catch (Exception ex){
 					ex.printStackTrace();
 				}
-
 			}
 		});
 

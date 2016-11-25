@@ -81,7 +81,7 @@ public class Reportes extends JFrame {
 			    switch (cmbReportes.getSelectedIndex()) {
             	case 0: 
             		//ranking de clientes con mayor reclamos
-            		reclamosView = Controller.getInstancia().listReclamoView();
+            		reclamosView = Controller.getInstancia().listReclamoView(null);
             		Hashtable<Integer, Integer> htMasReclamos = new Hashtable<Integer, Integer>();
 
             		for (int i = 0; i < reclamosView.size(); i++) {
@@ -105,17 +105,17 @@ public class Reportes extends JFrame {
             		tblReporte.setAutoCreateRowSorter(true);
             		
             		//Ordena por mayor cantidad de reclamos
-            		tblReporte.getRowSorter().toggleSortOrder(1);
+            		tblReporte.getRowSorter().toggleSortOrder(0);
             		
 	        		break;
             	case 1: 
             		//cantidad de reclamos tratados por mes
-            		reclamosView = Controller.getInstancia().listReclamoView();
+            		reclamosView = Controller.getInstancia().listReclamoView(null);
             		Calendar cal = Calendar.getInstance();
             		String[] mes = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
             		
             		
-            		ArrayList<ReclamoView> reclamosView = Controller.getInstancia().listReclamoView();
+            		ArrayList<ReclamoView> reclamosView = Controller.getInstancia().listReclamoView(null);
             		Hashtable<String, Integer> htReclamosMensales = new Hashtable<String, Integer>();
 
             		for (int i = 0; i < reclamosView.size(); i++) {

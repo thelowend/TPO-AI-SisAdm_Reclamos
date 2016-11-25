@@ -6,6 +6,8 @@ import Vistas.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Main.Controller;
+
 /**
  * Created by eladh_000 on 21/9/2016.
  */
@@ -72,7 +74,7 @@ public class Mapper {
 
     public ReclamoCantidades ReclamoViewToReclamo(ReclamoCantidadsView reclamoCantidadesView){
         ReclamoCantidades reclamoCantidades = new ReclamoCantidades();
-        ReclamoViewToReclamo(reclamoCantidades,reclamoCantidadesView);
+        ReclamoViewToReclamo(reclamoCantidades, reclamoCantidadesView);
         return reclamoCantidades;
     }
 
