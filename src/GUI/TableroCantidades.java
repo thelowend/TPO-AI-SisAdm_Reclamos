@@ -8,6 +8,7 @@ import Vistas.ProductoView;
 import Vistas.ReclamoCantidadsView;
 import Vistas.ReclamoProductoView;
 import Vistas.ReclamoView;
+import Vistas.RoleView;
 
 import java.awt.EventQueue;
 
@@ -43,6 +44,7 @@ public class TableroCantidades extends JFrame {
 	private JTextArea txtModificacion;
 	private ArrayList<ReclamoView> reclamosView;
 	private DefaultTableModel tblReclamosCantidades;
+	private JButton btnActualizarReclamo;
 	private ReclamoView currentRCV;
 	/**
 	 * Launch the application.
@@ -139,7 +141,7 @@ public class TableroCantidades extends JFrame {
 		lblIngresado.setBounds(144, 39, 60, 14);
 		pnlReclamo.add(lblIngresado);
 		
-		lblFechaIngresado = new JLabel("10/10/16");
+		lblFechaIngresado = new JLabel();
 		lblFechaIngresado.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		lblFechaIngresado.setBounds(210, 39, 60, 14);
 		pnlReclamo.add(lblFechaIngresado);
@@ -148,7 +150,7 @@ public class TableroCantidades extends JFrame {
 		lblModificado.setBounds(274, 39, 70, 14);
 		pnlReclamo.add(lblModificado);
 		
-		lblFechaModificado = new JLabel("11/10/16");
+		lblFechaModificado = new JLabel();
 		lblFechaModificado.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		lblFechaModificado.setBounds(344, 39, 60, 14);
 		pnlReclamo.add(lblFechaModificado);
@@ -169,46 +171,52 @@ public class TableroCantidades extends JFrame {
 		txtModificacion.setBounds(94, 188, 310, 60);
 		pnlReclamo.add(txtModificacion);
 		
-		JButton btnActualizarReclamo = new JButton("Actualizar Reclamo");
 		
-		btnActualizarReclamo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					ReclamoCantidadsView rpv = new ReclamoCantidadsView();
-					rpv.setCliente(Integer.parseInt(txtCliente.getText()));
-					rpv.setDescripcion(txtDescripcion.getText());
-					EstadoReclamo nuevoEstadoReclamo = EstadoReclamo.valueOf(cbEstadoReclamo.getSelectedItem().toString());
-					rpv.setNumeroReclamo(Integer.parseInt(lblReclamoId.getText()));
-					//HashMap<EstadoReclamo, DetalleReclamoView> oldHash = currentRCV.getHashReclamos();
-					HashMap<EstadoReclamo, DetalleReclamoView> newHash = new HashMap<EstadoReclamo, DetalleReclamoView>();
-					
-					DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
-					Date startDate = df.parse(lblFechaIngresado.getText());
-					
-					newHash.put(nuevoEstadoReclamo, new DetalleReclamoView(
-							startDate, 
-							new Date(), 
-							txtModificacion.getText(),
-							Controller.getInstancia().getSesion().getId()
-					));
-					
-					rpv.setHashReclamos(newHash);
-					//rpv.setProductos(currentRCV.getProductos());
-					
-					Controller.getInstancia().actualizarReclamo(rpv);
-					
-					updateVistaReclamos();
-					JOptionPane.showMessageDialog(null, "¡Actualizado con éxito! La tabla duplica el valor porque JAVA es basura y no se pueden limpiar las tablas sin que tire error. Si cerrás y volvés a entrar se ve mejor.");
-					
-				}
-				catch (Exception ex){
-					ex.printStackTrace();
-				}	
+		ArrayList<RoleView> roles = Controller.getInstancia().getSesion().getRoles();
+		//Si el usuario NO es de consulta, agrego el botón de Actualizar Reclamo
+		if (roles.stream().filter(role -> role.getRoleName().compareTo("Consulta") != 0).count() > 0) {
+			btnActualizarReclamo = new JButton("Actualizar Reclamo");
+			
+			btnActualizarReclamo.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						ReclamoCantidadsView rpv = new ReclamoCantidadsView();
+						rpv.setCliente(Integer.parseInt(txtCliente.getText()));
+						rpv.setDescripcion(txtDescripcion.getText());
+						EstadoReclamo nuevoEstadoReclamo = EstadoReclamo.valueOf(cbEstadoReclamo.getSelectedItem().toString());
+						rpv.setNumeroReclamo(Integer.parseInt(lblReclamoId.getText()));
+						//HashMap<EstadoReclamo, DetalleReclamoView> oldHash = currentRCV.getHashReclamos();
+						HashMap<EstadoReclamo, DetalleReclamoView> newHash = new HashMap<EstadoReclamo, DetalleReclamoView>();
+						
+						DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+						Date startDate = df.parse(lblFechaIngresado.getText());
+						
+						newHash.put(nuevoEstadoReclamo, new DetalleReclamoView(
+								startDate, 
+								new Date(), 
+								txtModificacion.getText(),
+								Controller.getInstancia().getSesion().getId()
+						));
+						
+						rpv.setHashReclamos(newHash);
+						//rpv.setProductos(currentRCV.getProductos());
+						
+						Controller.getInstancia().actualizarReclamo(rpv);
+						
+						updateVistaReclamos();
+						JOptionPane.showMessageDialog(null, "¡Actualizado con éxito! La tabla duplica el valor porque JAVA es basura y no se pueden limpiar las tablas sin que tire error. Si cerrás y volvés a entrar se ve mejor.");
+						
+					}
+					catch (Exception ex){
+						ex.printStackTrace();
+					}	
 
-			}
-		});
-		btnActualizarReclamo.setBounds(94, 259, 310, 23);
-		pnlReclamo.add(btnActualizarReclamo);
+				}
+			});
+			btnActualizarReclamo.setBounds(94, 259, 310, 23);
+			pnlReclamo.add(btnActualizarReclamo);	
+		}
+
 		
 		JLabel lblReclamo = new JLabel("Reclamo:");
 		lblReclamo.setBounds(10, 11, 86, 14);

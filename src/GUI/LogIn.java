@@ -140,7 +140,7 @@ public class LogIn extends javax.swing.JFrame {
 			frame = new MenuPrincipal(txtUsuario.getText());
 		}
 		else if (roles.stream().filter(role -> role.getRoleName().compareTo("CallCenter") == 0).count() > 0) {
-			frame = new Reclamos();
+			frame = new MenuPrincipal(txtUsuario.getText());
 		} 
 		else {
 			frame = new MenuPrincipal(txtUsuario.getText());

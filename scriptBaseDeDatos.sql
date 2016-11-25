@@ -43,7 +43,7 @@ Create Table Clientes (
 	PRIMARY KEY (Id)
 )
 
-Create Table Reclamos(
+Create Table Reclamos (
 	Id int Identity(1,1),
 	combo_id int NULL,
 	tipoReclamo nvarchar(50) NOT NULL,
@@ -54,7 +54,7 @@ Create Table Reclamos(
 	FOREIGN KEY (cliente_id) REFERENCES Clientes(Id),
 )
 
-Create Table DetalleReclamos(
+Create Table DetalleReclamos (
 	Id int Identity(1,1),
 	reclamo_id int Not NULL,
 	estado int NOT NULL,
@@ -67,7 +67,7 @@ Create Table DetalleReclamos(
 	FOREIGN KEY (responsable_id) REFERENCES Usuarios(Id),
 )
 
-Create Table Reclamos_Productos(
+Create Table Reclamos_Productos (
 	Id int Identity(1,1),
 	cantidad int NOT NULL,
 	reclamo_id int NOT NULL,
@@ -77,7 +77,7 @@ Create Table Reclamos_Productos(
 	FOREIGN KEY (producto_id) REFERENCES Productos(codigo)
 )
 
-Create Table Reclamos_Facturas(
+Create Table Reclamos_Facturas (
 	Id int Identity(1,1),
 	reclamo_id int NOT NULL,
 	factura_id int NOT NULL,
@@ -106,7 +106,7 @@ Insert Into Usuarios (legajo,clave) Values ('Administrador','Administrador'),
 
 Insert Into Roles Values ('Administrador'),
 ('Facturacion'),
-('Distrubucion'),
+('Distribucion'),
 ('Entrega'),
 ('Consulta'),
 ('CallCenter')
@@ -114,7 +114,7 @@ Insert Into Roles Values ('Administrador'),
 Insert Into Usuarios_Roles (usuario_id,role_id) Values
 ((select Id from Usuarios where legajo = 'Administrador'),(select Id from Roles where nombreRole = 'Administrador')),
 ((select Id from Usuarios where legajo = 'UsuarioFacturacion'),(select Id from Roles where nombreRole = 'Facturacion')),
-((select Id from Usuarios where legajo = 'UsuarioDistribucion'),(select Id from Roles where nombreRole = 'Distrubucion')),
+((select Id from Usuarios where legajo = 'UsuarioDistribucion'),(select Id from Roles where nombreRole = 'Distribucion')),
 ((select Id from Usuarios where legajo = 'UsuarioEntrega'),(select Id from Roles where nombreRole = 'Entrega')),
 ((select Id from Usuarios where legajo = 'UsuarioConsulta'),(select Id from Roles where nombreRole = 'Consulta')),
 ((select Id from Usuarios where legajo = 'UsuarioCallCenter'),(select Id from Roles where nombreRole = 'CallCenter'))

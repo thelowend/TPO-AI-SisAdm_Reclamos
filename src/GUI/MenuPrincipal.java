@@ -6,16 +6,25 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Main.Controller;
+import Vistas.RoleView;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class MenuPrincipal extends JFrame {
 
 	private JPanel contentPane;
-
+	JButton btnTableroDeAdministracin;
+	JButton btnRegistroDeReclamos;
+	JButton btnZonaDeReportes;
+	JButton btnConfiguracion;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -55,7 +64,7 @@ public class MenuPrincipal extends JFrame {
 		lblBienvenidoa.setBounds(10, 11, 264, 14);
 		panel.add(lblBienvenidoa);
 		
-		JButton btnTableroDeAdministracin = new JButton("Tableros de Administraci\u00F3n de Reclamos");
+		btnTableroDeAdministracin = new JButton("Tableros de Administraci\u00F3n de Reclamos");
 		btnTableroDeAdministracin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame subVentana = new Tableros();
@@ -64,7 +73,6 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		btnTableroDeAdministracin.setBounds(10, 50, 414, 23);
-		panel.add(btnTableroDeAdministracin);
 		
 		JButton btnRegistroDeReclamos = new JButton("Registro de Reclamos");
 		btnRegistroDeReclamos.addActionListener(new ActionListener() {
@@ -75,9 +83,8 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		btnRegistroDeReclamos.setBounds(10, 84, 414, 23);
-		panel.add(btnRegistroDeReclamos);
 		
-		JButton btnZonaDeReportes = new JButton("Zona de Reportes");
+		btnZonaDeReportes = new JButton("Zona de Reportes");
 		btnZonaDeReportes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame subVentana = new Reportes();
@@ -86,9 +93,8 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		btnZonaDeReportes.setBounds(10, 118, 414, 23);
-		panel.add(btnZonaDeReportes);
 		
-		JButton btnConfiguracion = new JButton("Configuraci\u00F3n");
+		btnConfiguracion = new JButton("Configuraci\u00F3n");
 		btnConfiguracion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame subVentana = new Configuracion();
@@ -97,7 +103,29 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		btnConfiguracion.setBounds(10, 158, 190, 23);
-		panel.add(btnConfiguracion);
+		
+
+		
+		ArrayList<RoleView> roles = Controller.getInstancia().getSesion().getRoles();
+		
+		if (roles.stream().filter(role -> role.getRoleName().compareTo("Administrador") == 0).count() > 0) {
+			panel.add(btnConfiguracion);
+		}
+		else if (roles.stream().filter(role -> role.getRoleName().compareTo("Facturacion") == 0).count() > 0) {
+			panel.add(btnTableroDeAdministracin);
+		}
+		else if (roles.stream().filter(role -> role.getRoleName().compareTo("Distribucion") == 0).count() > 0) {
+			panel.add(btnTableroDeAdministracin);
+		}
+		else if (roles.stream().filter(role -> role.getRoleName().compareTo("Entrega") == 0).count() > 0) {
+			panel.add(btnTableroDeAdministracin);
+		}
+		else if (roles.stream().filter(role -> role.getRoleName().compareTo("CallCenter") == 0).count() > 0) {
+			panel.add(btnRegistroDeReclamos);
+		}
+		else if (roles.stream().filter(role -> role.getRoleName().compareTo("Consulta") == 0).count() > 0) {
+			panel.add(btnZonaDeReportes);
+		}
 		
 		JButton btnSalir = new JButton("Salir");
 		btnSalir.addActionListener(new ActionListener() {

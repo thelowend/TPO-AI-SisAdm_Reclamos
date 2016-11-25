@@ -4,12 +4,16 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
+
+import Main.Controller;
+import Vistas.RoleView;
 
 @SuppressWarnings("serial")
 public class Tableros extends JFrame {
@@ -72,19 +76,48 @@ public class Tableros extends JFrame {
 			}
 		});
 		
-		JFrame jfTableroCantidades = new TableroCantidades();
+		ArrayList<RoleView> roles = Controller.getInstancia().getSesion().getRoles();
 		
-		JFrame jfTableroFacturacion = new TableroFacturacion();
-		JFrame jfTableroFaltantes = new TableroFaltantes();
-		JFrame jfTableroProductos = new TableroProductos();
-		JFrame jfTableroZona = new TableroZona();
-		
+		if (roles.stream().filter(role -> role.getRoleName().compareTo("Administrador") == 0).count() > 0) {
+			frame.dispose();
+		}
+		else if (roles.stream().filter(role -> role.getRoleName().compareTo("Facturacion") == 0).count() > 0) {
+			JFrame jfTableroFacturacion = new TableroFacturacion();
+			tabbedPane.addTab("Facturación", jfTableroFacturacion.getContentPane());
+		}
+		else if (roles.stream().filter(role -> role.getRoleName().compareTo("Distribucion") == 0).count() > 0) {
+			JFrame jfTableroCantidades = new TableroCantidades();
+			JFrame jfTableroFaltantes = new TableroFaltantes();
+			JFrame jfTableroProductos = new TableroProductos();
+			JFrame jfTableroZona = new TableroZona();
+			tabbedPane.addTab("Cantidades", jfTableroCantidades.getContentPane());
+			tabbedPane.addTab("Faltantes", jfTableroFaltantes.getContentPane());
+			tabbedPane.addTab("Productos", jfTableroProductos.getContentPane());
+			tabbedPane.addTab("Zona", jfTableroZona.getContentPane());
+		}
+		else if (roles.stream().filter(role -> role.getRoleName().compareTo("Entrega") == 0).count() > 0) {
+			JFrame jfTableroZona = new TableroZona();
+			tabbedPane.addTab("Zona", jfTableroZona.getContentPane());
+		}
+		else if (roles.stream().filter(role -> role.getRoleName().compareTo("CallCenter") == 0).count() > 0) {
+			frame.dispose();
+		} 
+		else if (roles.stream().filter(role -> role.getRoleName().compareTo("Consulta") == 0).count() > 0) {
+			JFrame jfTableroCantidades = new TableroCantidades();
+			JFrame jfTableroFacturacion = new TableroFacturacion();
+			JFrame jfTableroFaltantes = new TableroFaltantes();
+			JFrame jfTableroProductos = new TableroProductos();
+			JFrame jfTableroZona = new TableroZona();
+			tabbedPane.addTab("Cantidades", jfTableroCantidades.getContentPane());
+			tabbedPane.addTab("Facturación", jfTableroFacturacion.getContentPane());
+			tabbedPane.addTab("Faltantes", jfTableroFaltantes.getContentPane());
+			tabbedPane.addTab("Productos", jfTableroProductos.getContentPane());
+			tabbedPane.addTab("Zona", jfTableroZona.getContentPane());
+		} 
+		else {
+			frame.dispose();
+		}
 
-		tabbedPane.addTab("Cantidades", jfTableroCantidades.getContentPane());
-		tabbedPane.addTab("Facturación", jfTableroFacturacion.getContentPane());
-		tabbedPane.addTab("Faltantes", jfTableroFaltantes.getContentPane());
-		tabbedPane.addTab("Productos", jfTableroProductos.getContentPane());
-		tabbedPane.addTab("Zona", jfTableroZona.getContentPane());
 		
 		this.setSize(465, 650);
 	}
