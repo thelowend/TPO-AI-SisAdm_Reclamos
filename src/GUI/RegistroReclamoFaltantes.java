@@ -10,10 +10,15 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import Main.Controller;
+import Vistas.ProductoView;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextPane;
 
@@ -25,6 +30,8 @@ public class RegistroReclamoFaltantes extends JFrame {
 	private JTextField txtRecibida;
 	private JTable tblFaltantesReclamo;
 	private JTextField txtCliente;
+	private ArrayList<ProductoView> productos;
+	private DefaultTableModel dtm;
 
 	/**
 	 * Launch the application.
@@ -55,8 +62,13 @@ public class RegistroReclamoFaltantes extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		productos = Controller.getInstancia().listProductos();
+		
+		DefaultComboBoxModel dcbm = new DefaultComboBoxModel();
+		productos.stream().forEach(p -> dcbm.addElement(p));
+		
 		JComboBox cbSeleccionarProducto = new JComboBox();
-		cbSeleccionarProducto.setModel(new DefaultComboBoxModel(new String[] {"Producto1", "Producto2"}));
+		cbSeleccionarProducto.setModel(dcbm);
 		cbSeleccionarProducto.setBounds(10, 107, 200, 20);
 		contentPane.add(cbSeleccionarProducto);
 		
@@ -74,6 +86,19 @@ public class RegistroReclamoFaltantes extends JFrame {
 		contentPane.add(txtSolicitada);
 		
 		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String producto = cbSeleccionarProducto.getSelectedItem().toString();
+				
+				for (int i=0; i < dtm.getRowCount(); i++) {
+					if (dtm.getValueAt(i, 0) == producto) {
+						dtm.removeRow(i);
+					}
+				}
+				
+				dtm.addRow(new Object[] {producto, txtSolicitada.getText(), txtRecibida.getText()});
+			}
+		});
 		btnAgregar.setBounds(324, 138, 100, 23);
 		contentPane.add(btnAgregar);
 		
@@ -89,6 +114,9 @@ public class RegistroReclamoFaltantes extends JFrame {
 		JButton btnQuitar = new JButton("Quitar");
 		btnQuitar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(tblFaltantesReclamo.getSelectedRow() != -1){
+					dtm.removeRow(tblFaltantesReclamo.getSelectedRow());
+				}
 			}
 		});
 		btnQuitar.setBounds(324, 309, 100, 23);
@@ -101,26 +129,35 @@ public class RegistroReclamoFaltantes extends JFrame {
 		tblFaltantesReclamo = new JTable();
 		tblFaltantesReclamo.setFillsViewportHeight(true);
 		tblFaltantesReclamo.setShowVerticalLines(false);
-		tblFaltantesReclamo.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Producto1", new Integer(12), new Integer(5)},
-			},
-			new String[] {
-				"Producto", "Cantidad Solicitada", "Cantidad Recibida"
-			}
-		) {
-
-			Class[] columnTypes = new Class[] {
-				String.class, Integer.class, Integer.class
-			};
-
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+		String[] headersFaltantesReclamo = {"Producto", "Cantidad Solicitada", "Cantidad Recibida"};
+		dtm = new DefaultTableModel(headersFaltantesReclamo, 0);
+		tblFaltantesReclamo.setModel(dtm);
 		scrollPane.setViewportView(tblFaltantesReclamo);
 		
 		JButton btnRegistrarReclamo = new JButton("Registrar ReclamoView");
+		btnRegistrarReclamo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				/*
+				ReclamoFaltantesView = rfv = ReclamoFaltantesView();
+				
+				ReclamoFacturacionView rfv = new ReclamoFacturacionView();
+				rfv.setCliente(Integer.parseInt(txtCliente.getText()));
+				rfv.getHashReclamos().put(EstadoReclamo.Ingresado, 
+						new DetalleReclamoView(
+							new Date(), 
+							null, 
+							txtDescripcionReclamo.getText(), 
+							-1
+						)
+				);
+				rfv.setDescripcion(txtDescripcionReclamo.getText());
+				for (int i = 0 ; i < dtm.getRowCount() ; i++)
+					rfv.getFacturas().add(((FacturaView)dtm.getValueAt(i,1)));
+				Controller.getInstancia().addReclamo(rfv);
+				confirmarGrabado();
+				*/
+			}
+		});
 		btnRegistrarReclamo.setBounds(10, 347, 414, 23);
 		contentPane.add(btnRegistrarReclamo);
 		
@@ -143,6 +180,8 @@ public class RegistroReclamoFaltantes extends JFrame {
 		
 		JTextPane txtDescripcionReclamo = new JTextPane();
 		scrollPane_1.setViewportView(txtDescripcionReclamo);
+		
+		
 	}
 
 }

@@ -105,6 +105,7 @@ public class TableroFacturacion extends JFrame {
 		pnlReclamo.add(lblCliente);
 		
 		txtCliente = new JTextField();
+		txtCliente.setEditable(false);
 		txtCliente.setBounds(94, 36, 40, 20);
 		pnlReclamo.add(txtCliente);
 		txtCliente.setColumns(10);

@@ -34,6 +34,12 @@ Create Table Facturas (
 	PRIMARY KEY (numero)
 )
 
+Create Table Zonas (
+	Id int Identity(1,1),
+	zona nvarchar(100),
+	PRIMARY KEY (Id)
+)
+
 Create Table Clientes (
 	Id int Identity(1,1),
 	nombre nvarchar(100),
@@ -124,6 +130,8 @@ Insert Into Productos Values ('Remera','Remera Blanca',10),
 ('Pantalon','Pantalon Blanco',20)
 
 Insert Into Facturas Values (GETDATE()),(GETDATE())
+
+Insert Into Zonas Values ('Capital Federal'), ('Lomas de Zamora'), ('Baradero')
 
 Insert Into Clientes Values ('elad','av. sadfas','43315081','eladhaim22@gmail.com')
 INSERT Clientes VALUES ('Diego', 'Calle Falsa 123', '12344321', 'diegop@blos.com.ar')

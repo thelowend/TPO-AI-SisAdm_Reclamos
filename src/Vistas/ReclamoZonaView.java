@@ -1,15 +1,15 @@
 package Vistas;
 
 public class ReclamoZonaView extends ReclamoView {
-	private String zona;
+	private int zona;
 
 	public ReclamoZonaView(){}
 
-	public void setZona(String zona) {
+	public void setZona(int zona) {
 		this.zona = zona;
 	}
 
-	public String getZona() {
+	public int getZona() {
 
 		return zona;
 	}

@@ -11,6 +11,7 @@ import java.util.List;
 public class Controller {
     private static Controller Sistema;
     private ArrayList<Producto> productos;
+    private ArrayList<Zona> zonas;
     private ArrayList<Cliente> clientes;
     private ArrayList<Factura> facturas;
     private UsuarioView sesion;
@@ -80,6 +81,13 @@ public class Controller {
         ArrayList<ProductoView> productoViews = new ArrayList<ProductoView>();
         productos.stream().forEach(p -> productoViews.add(Mapper.getMapper().ProductoToProductoView(p)));
         return productoViews;
+    }
+    
+    public ArrayList<ZonaView> listZonas(int zona) {
+        ArrayList<Zona> zonas = AdministradorPersistenciaZonas.getInstancia().listZonas(-1);
+        ArrayList<ZonaView> zonaViews = new ArrayList<ZonaView>();
+        zonas.stream().forEach(z -> zonaViews.add(Mapper.getMapper().ZonaToZonaView(z)));
+        return zonaViews;
     }
     
     public ArrayList<ReclamoView> listReclamoView(String tipoDeReclamo) {

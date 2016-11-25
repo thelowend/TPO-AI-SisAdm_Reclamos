@@ -109,7 +109,7 @@ public class AdministradorPersistenciaReclamos {
                     break;
                 case "ReclamoZona":
                     ps = con.prepareStatement(query4);
-                    ps.setString(1, ((ReclamoZona) reclamo).getZona());
+                    ps.setInt(1, ((ReclamoZona) reclamo).getZona());
                     ps.setInt(2, reclamo.getNumeroReclamo());
                     ps.execute();
             }
@@ -250,7 +250,7 @@ public class AdministradorPersistenciaReclamos {
         }
     }
 
-    public Reclamo getReclamobyId(int reclamoId){
+    public Reclamo getReclamobyId(int reclamoId) {
         Connection con = PoolConnection.getPoolConnection().getConnection();
         Reclamo r = new Reclamo();
         try {
@@ -275,7 +275,7 @@ public class AdministradorPersistenciaReclamos {
                             facturas.add(new Factura(result2.getInt("numero"), result2.getDate("fecha")));
                         }
                         ReclamoFacturacion reclamoFacturacion = new ReclamoFacturacion();
-                        setCamposBasicos(result,reclamoFacturacion);
+                        setCamposBasicos(result, reclamoFacturacion);
                         reclamoFacturacion.setFacturas(facturas);
                         r = reclamoFacturacion;
                         break;
@@ -292,26 +292,26 @@ public class AdministradorPersistenciaReclamos {
                         }
                         if (tipoReclamo.compareTo("ReclamoCantidades") == 0) {
                             ReclamoCantidades reclamoP = new ReclamoCantidades();
-                            setCamposBasicos(result,reclamoP);
+                            setCamposBasicos(result, reclamoP);
                             reclamoP.setProductos(detalleProductos);
                             r = reclamoP;
                         }
                         else{
                             ReclamoProducto reclamoP = new ReclamoProducto();
-                            setCamposBasicos(result,reclamoP);
+                            setCamposBasicos(result, reclamoP);
                             reclamoP.setDetalleProducto(detalleProductos.get(0));
                             r = reclamoP;
                         }
                         break;
                     case "ReclamoZona":
                         ReclamoZona reclamoZona = new ReclamoZona();
-                        setCamposBasicos(result,reclamoZona);
-                        reclamoZona.setZona(result.getString("zona"));
+                        setCamposBasicos(result, reclamoZona);
+                        reclamoZona.setZona(result.getInt("zona"));
                         r = reclamoZona;
                         break;
                     case "ReclamoCombo":
                         ReclamoCombo reclamoCombo = new ReclamoCombo();
-                        setCamposBasicos(result,reclamoCombo);
+                        setCamposBasicos(result, reclamoCombo);
                         String query4 = "Select * from Reclamos where combo_id = ?";
                         ps = con.prepareStatement(query4);
                         ps.setInt(1, reclamoCombo.getNumeroReclamo());

@@ -104,7 +104,8 @@ public class Reportes extends JFrame {
             		tblReporte.setModel(tblReporteModelMasReclamos);
             		tblReporte.setAutoCreateRowSorter(true);
             		
-            		//Ordena por mayor cantidad de reclamos
+            		//Ordena por mayor cantidad de reclamos (Hay que llamarlo 2 veces si o si)
+            		tblReporte.getRowSorter().toggleSortOrder(0);
             		tblReporte.getRowSorter().toggleSortOrder(0);
             		
 	        		break;
@@ -114,8 +115,6 @@ public class Reportes extends JFrame {
             		Calendar cal = Calendar.getInstance();
             		String[] mes = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
             		
-            		
-            		ArrayList<ReclamoView> reclamosView = Controller.getInstancia().listReclamoView(null);
             		Hashtable<String, Integer> htReclamosMensales = new Hashtable<String, Integer>();
 
             		for (int i = 0; i < reclamosView.size(); i++) {
@@ -152,9 +151,40 @@ public class Reportes extends JFrame {
             	case 2: 
             		//ranking de tratamiento de reclamos
     				//"Reclamos Finalizados"
+            		reclamosView = Controller.getInstancia().listReclamoView(null);
+            		String[] finalizados = {"ID Responsable", "Cantidad de Reclamos Tratados"};
+            		
+            		Hashtable<Integer, Integer> htReclamosFinalizados = new Hashtable<Integer, Integer>();
 
-    				
-        			System.out.println("2");
+            		for (int i = 0; i < reclamosView.size(); i++) {
+            			HashMap<EstadoReclamo, DetalleReclamoView> hashReclamo = reclamosView.get(i).getHashReclamos();
+            			
+            	        for (EstadoReclamo key : hashReclamo.keySet()) {
+            	        	
+            	        	if (key == EstadoReclamo.Cerrado || key == EstadoReclamo.Solucionado) {
+                    			int responsableID = hashReclamo.get(key).getResponsableId();
+                    			if (!htReclamosFinalizados.containsKey(responsableID)) {
+                    				htReclamosFinalizados.put(responsableID, 1);
+                    			} else {
+                    				htReclamosFinalizados.put(responsableID,  htReclamosFinalizados.get(responsableID) + 1);
+                    			}
+            	        	}
+            	        	
+            	        }		
+            		}
+            		
+            	    DefaultTableModel tblReporteFinalizadosModel = new DefaultTableModel(finalizados, 0);     	    
+            		
+            		for(Entry<?, ?> entry: htReclamosFinalizados.entrySet()) {
+            			tblReporteFinalizadosModel.addRow(new Object[] {entry.getKey(), entry.getValue()});
+            		}
+            		
+            		tblReporte.setModel(tblReporteFinalizadosModel);
+            		tblReporte.setAutoCreateRowSorter(true);
+            		
+            		//Ordena por mayor cantidad de reclamos tratados (Hay que llamarlo 2 veces si o si)
+            		tblReporte.getRowSorter().toggleSortOrder(1);
+            		tblReporte.getRowSorter().toggleSortOrder(1);
         			break;
             	case 3: 
             		//tiempo promedio de respuesta de los reclamos por responsable

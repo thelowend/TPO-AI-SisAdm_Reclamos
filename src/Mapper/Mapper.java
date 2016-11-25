@@ -136,5 +136,10 @@ public class Mapper {
         ProductoView productoView = new ProductoView(producto.getCodigo(),producto.getTitulo());
         return productoView;
     }
+    
+    public ZonaView ZonaToZonaView(Zona zona) {
+    	ZonaView zv = new ZonaView(zona.getId(), zona.getZona());
+    	return zv;
+    }
 
 }

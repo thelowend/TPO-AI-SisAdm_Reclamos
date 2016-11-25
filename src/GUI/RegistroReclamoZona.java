@@ -3,11 +3,14 @@ package GUI;
 import Main.Controller;
 import Model.EstadoReclamo;
 import Vistas.DetalleReclamoView;
+import Vistas.ProductoView;
 import Vistas.ReclamoZonaView;
+import Vistas.ZonaView;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -55,10 +58,9 @@ public class RegistroReclamoZona extends JFrame {
 		contentPane.add(lblSeleccionarZona);
 		
 		cbZonaReclamo = new JComboBox();
-		cbZonaReclamo.addItem("Buenos Aires");
-		cbZonaReclamo.addItem("Cordoba");
-		cbZonaReclamo.addItem("Santa Fe");
-		cbZonaReclamo.addItem("Mendoza");
+		ArrayList<ZonaView> pv = Main.Controller.getInstancia().listZonas(-1);
+		pv.stream().forEach(p -> cbZonaReclamo.addItem(p.getZona()));
+
 		cbZonaReclamo.setBounds(10, 106, 414, 20);
 		contentPane.add(cbZonaReclamo);
 
@@ -98,6 +100,7 @@ public class RegistroReclamoZona extends JFrame {
 						)
 				);
 				rzv.setDescripcion(txtDescripcionReclamo.getText());
+				rzv.setZona(cbZonaReclamo.getSelectedIndex() + 1);
 				try {
 					Controller.getInstancia().addReclamo(rzv);
 					confirmarGrabado();

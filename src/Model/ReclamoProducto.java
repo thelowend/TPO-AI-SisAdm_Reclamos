@@ -12,7 +12,7 @@ public class ReclamoProducto extends Reclamo {
 	// == Constructor(s)
 	// ====================================    
 
-	public ReclamoProducto(){
+	public ReclamoProducto() {
 
 	}
     
